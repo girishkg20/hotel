@@ -13,13 +13,6 @@ p {
 
 body {
     transition: all 0.3s ease-in-out;
-    /* transform: translateX(0); */
     scroll-behavior: smooth;
     backface-visibility: hidden;
-    /* will-change: transform; */
   }
-  
-  /* div:hover {
-    transform: translateX(1px);
-  } */
-  
