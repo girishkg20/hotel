@@ -1,0 +1,43 @@
+.hotelname {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0;
+  padding: 10px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  text-transform: capitalize;
+}
+
+.profile {
+  width: 32px;
+  height: 32px;
+  padding: 10px 10px 5px 10px;
+  filter: drop-shadow(0px 4px 9px rgba(0, 0, 0, 0.14));
+}
+
+.appbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: #f8f8f8;
+  box-shadow: 0px 4px 9px rgba(0, 0, 0, 0.28);
+}
+
+.sticky + .linehidden {
+  padding-top: 127px;
+}
+
+.header {
+  z-index: 10;
+}
+
+.linehidden {
+  border: transparent;
+}

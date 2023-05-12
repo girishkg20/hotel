@@ -1,0 +1,13 @@
+::placeholder {
+    color: #B2AEB9;
+    font-weight: normal;
+}
+
+::-webkit-search-cancel-button {
+    display: none;
+}
+
+p {
+    margin: 0;
+}
+  
