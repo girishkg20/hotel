@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './SearchBar.css';
-import reset from '../search_bar/Source/reset.png';
-import search from '../search_bar/Source/search.png';
+import reset from './Source/reset.png';
+import search from './Source/search.png';
 /////Redux
 import { useSelector } from 'react-redux';
 import {textEntered} from '../../Redux/reducer';
