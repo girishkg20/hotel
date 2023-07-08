@@ -42,7 +42,7 @@ const Restaurantslisting = () => {
 
               {eachRestaurant.rating > 0 ? (
                 <p className="rating">
-                  <span className="star">⭐ &nbsp;</span>
+                  <span className="rlstar">⭐ &nbsp;</span>
                   {eachRestaurant.rating.toFixed(1)}
                 </p>
               ) : null}

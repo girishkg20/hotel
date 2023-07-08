@@ -44,8 +44,7 @@
     text-transform: capitalize;
 }
 
-.star {
-    padding-left: 10px;
+.rlstar {
     white-space: nowrap;
     color: transparent;
     text-shadow: 0 0 0 #42A606;

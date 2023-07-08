@@ -1,10 +1,11 @@
 import { ReactNode, useEffect, useState } from "react";
 import Homepagedata from './HomePageData.jsx';
+import { useParams } from "react-router-dom";
 
 
 const Homepageapi = ({ children }: { children: React.ReactNode }) => {
 
-    let hotelid = "H002";
+    let {hotelid} = useParams();
     let mainurl = `https://prod-server.tipplr.in/hotel/merchant/${hotelid}`;
 
     const [Useraddress, setUseraddress] = useState([]);
