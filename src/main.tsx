@@ -11,16 +11,16 @@ import Menupage1 from './Menu Page/MenuPage1';
 
 const Router = createBrowserRouter([
     {
-      path: ":hotelid",
+      path: "/:hotelid",
       element: <Homepage/>,
       errorElement: <div><h1>Wrong URL! Channa</h1></div>,
     },
     {
-      path: ":hotelid/profile",
+      path: "/:hotelid/profile",
       element: <Profile/>,
     },
     {
-      path: ":hotelid/:merchantid",
+      path: "/:hotelid/:merchantid",
       element: <Menupage1/>
     }
 ]);
