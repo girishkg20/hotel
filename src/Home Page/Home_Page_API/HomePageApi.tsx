@@ -6,7 +6,8 @@ const Homepageapi = ({ children }: { children: React.ReactNode }) => {
 
     let hotelid = "H002";
     let mainurl = `https://prod-server.tipplr.in/hotel/merchant/${hotelid}`;
-  
+
+    const [Useraddress, setUseraddress] = useState([]);
     const [Hotelname, setHotelname] = useState('Loading...');
     const [Cuisines, setCuisines] = useState([]);
     const [Data, setData] = useState([]);
@@ -15,8 +16,9 @@ const Homepageapi = ({ children }: { children: React.ReactNode }) => {
       fetch(mainurl)
         .then((response) => response.json())
         .then((data) => {
+          setUseraddress(data.response.address);
           setHotelname(data.response.data.name);
-  
+
           let limit = 100;
           let skip = 0;
           let latitude = data.response.address.location_lat;
@@ -37,7 +39,7 @@ const Homepageapi = ({ children }: { children: React.ReactNode }) => {
     
     }, []);
     
-    return ( <Homepagedata.Provider value={{Hotelname, Cuisines, Data}}>
+    return ( <Homepagedata.Provider value={{Useraddress, Hotelname, Cuisines, Data}}>
               { children } 
             </Homepagedata.Provider>
     );

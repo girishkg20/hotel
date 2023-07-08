@@ -3,11 +3,15 @@ import "./RestaurantsListing.css";
 import locationpin from "./Source/location pin.png";
 import discountimg from "./Source/offer.png";
 import Homepagedata from "../Home_Page_API/HomePageData.jsx";
+import { useNavigate } from "react-router-dom";
 
 const Restaurantslisting = () => {
   const { Hotelname, Cuisines, Data } = useContext(Homepagedata);
   const Default_Cover_Image =
     "https://res.cloudinary.com/tipplr-server/image/upload/fl_lossy,f_auto,q_auto,c_fill,w_512,h_256/v1679409245/ty1nlgx7buizm5onqseu.jpg";
+
+  const navigate = useNavigate();
+
 
   return (
     <>
@@ -15,7 +19,7 @@ const Restaurantslisting = () => {
 
       <div className="restaurantholder" id="restaurantscontainer">
         {Data.map((eachRestaurant: any) => (
-          <div key={eachRestaurant._id} className="restaurantcard">
+          <div key={eachRestaurant._id} className="restaurantcard" onClick={()=>navigate(eachRestaurant._id)}>
             <img
               className="restaurantimg"
               loading="lazy"
