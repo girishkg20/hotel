@@ -22,10 +22,6 @@ const Router = createBrowserRouter([
     {
       path: "/:hotelid/:merchantid",
       element: <Menupage1/>
-    },
-    {
-      path: "/",
-      element: <Homepage/>
     }
 ]);
 
