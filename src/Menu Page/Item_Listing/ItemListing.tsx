@@ -81,7 +81,7 @@ const Itemlisting = () => {
                                     <div className="fooditemside">
                                         <img className="vegstatus" src={
                                             eachfooditem.veg_status == "veg" ? veg :
-                                            eachfooditem.veg_status == "nonveg" ? non_veg : egg
+                                            eachfooditem.veg_status == "egg" ? egg : non_veg
                                         } alt="Veg Status" />
                                         <p className="itemname">{eachfooditem.name}</p>
                                         <p className="itemprice">₹ {eachfooditem.original_price}</p>
@@ -113,7 +113,7 @@ const Itemlisting = () => {
                                             <div className="fooditemside">
                                                 <img className="vegstatus" src={
                                                     eachfooditem.veg_status == "veg" ? veg :
-                                                    eachfooditem.veg_status == "non_veg" ? non_veg : egg
+                                                    eachfooditem.veg_status == "egg" ? egg : non_veg
                                                 } alt="Veg Status"/>
                                                 <p className="itemname">{eachfooditem.name}</p>
                                                 <p className="itemprice">₹ {eachfooditem.original_price}</p>
