@@ -1,7 +1,8 @@
 .menupagetop {
-    background-color: #F9F8F8;
+    background-color: #F1F1F1;
     padding-bottom: 1px;
     border-radius: 0 0 33px 33px;
+    padding: 0 15px 15px 15px;
 }
 
 .mpheader {
@@ -11,7 +12,7 @@
     justify-content: space-between;
     position: sticky;
     top: 0;
-    background-color: rgba(249, 248, 248, 0.80);
+    background-color: rgba(241, 241, 241, 0.90);
     z-index: 1;
 }
 

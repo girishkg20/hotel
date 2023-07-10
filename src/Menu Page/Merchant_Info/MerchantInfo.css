@@ -1,7 +1,6 @@
 .infocard {
     display: flex;
     flex-direction: column;
-    margin: 0 15px 15px 15px;
     padding: 15px;
     border-radius: 23px;
     background-color: white;
