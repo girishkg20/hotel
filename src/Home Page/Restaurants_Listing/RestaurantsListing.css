@@ -85,6 +85,8 @@
 
 .divider {
     margin: 0;
+    border: 0px solid #B2AEB9;
+    border-bottom: 1px solid #B2AEB9;
 }
 
 .peopledistance {
