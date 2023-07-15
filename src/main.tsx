@@ -7,6 +7,7 @@ import './index.css';
 import Homepage from './Home Page/HomePage.js';
 import Profile from './Profile/Profile.js';
 import Menupage1 from './Menu Page/MenuPage1';
+import Itempopup from './Menu Page/Item_Popup/ItemPopup';
 
 
 const Router = createBrowserRouter([
@@ -21,7 +22,11 @@ const Router = createBrowserRouter([
     },
     {
       path: "/:hotelid/:merchantid",
-      element: <Menupage1/>
+      element: <Menupage1/>,
+      children: [{
+        path: "/:hotelid/:merchantid/:itemid",
+        element: <Itempopup/>
+      }]
     }
 ]);
 

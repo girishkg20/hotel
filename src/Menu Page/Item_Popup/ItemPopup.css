@@ -1,0 +1,49 @@
+.popoverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.popover {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    background-color: white;
+    border-radius: 25px 25px 0 0;
+    overflow: hidden;
+}
+
+.fullimage {
+    width: 100%;
+    max-height: 100vw;
+    object-fit: cover;
+    margin-bottom: -25px;
+}
+
+.popfoodcard {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 35px 15px 15px 15px;
+}
+
+.itemdescription {
+    padding: 0 15px 35px 15px;
+    text-transform: capitalize;
+    font-size: 12px;
+    font-weight: 500;
+    color: #787878;
+}
+
+.closebutton {
+    position: fixed;
+    right: 15px;
+    padding-top: 15px;
+    width: 25px;
+}

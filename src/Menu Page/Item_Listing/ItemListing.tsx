@@ -7,6 +7,8 @@ import { useContext, useEffect, useState } from 'react';
 
 import Menupagedata from '../Menu_Page_API/MenuPageData';
 import React from 'react';
+import { Outlet, useNavigate, useParams } from 'react-router-dom';
+
 
 
 
@@ -16,6 +18,13 @@ const Itemlisting = () => {
     const { menu } = useContext(Menupagedata);
 
     const [Menu, setMenu] = useState<any>([{}]);
+
+    const [image, setimage] = useState<any>();
+    const [item_name, setitem_name] = useState<any>();
+    const [veg_status, setveg_status] = useState<any>();
+    const [price, setprice] = useState<any>();
+    const [dprice, setdprice] = useState<any>();
+    const [description, setdescription] = useState<any>();
 
     useEffect(() => {
 
@@ -57,10 +66,32 @@ const Itemlisting = () => {
 
     },[Menu]);
 
+    const navigate = useNavigate();
+    const {itemid} = useParams();
+    
+    const generateData = (
+            iimage: any,
+            iname: any,
+            vstate: any,
+            iprice: any,
+            diprice: any,
+            idescription: any,
+            itemid: any
+            ) => {
+        setimage(iimage)
+        setitem_name(iname)
+        setveg_status(vstate)
+        setprice(iprice)
+        setdprice(diprice)
+        setdescription(idescription)
+
+        navigate(itemid)
+    }
+    
 
 
 
-    return (
+    return (<Menupagedata.Provider value={{image, item_name, veg_status, price, dprice, description}}>
         <>
             <div className="fullmenu">
                 <div><h2 className="menuheading">- Menu -</h2></div>
@@ -78,24 +109,49 @@ const Itemlisting = () => {
 
                             Menu[eachcatagorykey].food_items.map((eachfooditem: any) => (
                                 <div className="foodcard" key={`foodcard-${eachcatagorykey}-${eachfooditem.name}`}>
+
                                     <div className="fooditemside">
                                         <img className="vegstatus" src={
                                             eachfooditem.veg_status == "veg" ? veg :
                                             eachfooditem.veg_status == "egg" ? egg : non_veg
                                         } alt="Veg Status" />
                                         <p className="itemname">{eachfooditem.name}</p>
-                                        <p className="itemprice">₹ {eachfooditem.original_price}</p>
-                                        <p className="morebutton">
+                                        <div className='pricebox'>
+                                            <p className="itemprice">₹ {Math.round(eachfooditem.price)}</p>
+                                            <p className="displayprice">₹ {Math.round(eachfooditem.offer_price)}</p>
+                                        </div>
+                                        <p className="morebutton" onClick={() =>
+                                                generateData(
+                                                    eachfooditem.food_image,
+                                                    eachfooditem.name,
+                                                    eachfooditem.veg_status,
+                                                    eachfooditem.price,
+                                                    eachfooditem.offer_price,
+                                                    eachfooditem.description,
+                                                    eachfooditem._id
+                                                )
+                                            }>
                                             More Details <img className="arrowright" src={right} alt="" />
                                         </p>
                                     </div>
 
                                     <div className="foodimageside">
                                         {eachfooditem.food_image && (
-                                            <img className="foodimage" src={eachfooditem.food_image} alt="Food Image" />
+                                            <img className="foodimage" src={eachfooditem.food_image} alt="Food Image" onClick={() =>
+                                                generateData(
+                                                    eachfooditem.food_image,
+                                                    eachfooditem.name,
+                                                    eachfooditem.veg_status,
+                                                    eachfooditem.price,
+                                                    eachfooditem.offer_price,
+                                                    eachfooditem.description,
+                                                    eachfooditem._id
+                                                )
+                                            }/>
                                         )}
                                         <button className="addbutton">ADD</button>
                                     </div>
+
                                 </div>
                             ))
                         }
@@ -116,15 +172,38 @@ const Itemlisting = () => {
                                                     eachfooditem.veg_status == "egg" ? egg : non_veg
                                                 } alt="Veg Status"/>
                                                 <p className="itemname">{eachfooditem.name}</p>
-                                                <p className="itemprice">₹ {eachfooditem.original_price}</p>
-                                                <p className="morebutton">
+                                                <div className='pricebox'>
+                                                    <p className="itemprice">₹ {Math.round(eachfooditem.price)}</p>
+                                                    <p className="displayprice">₹ {Math.round(eachfooditem.offer_price)}</p>
+                                                </div>
+                                                <p className="morebutton" onClick={() =>
+                                                    generateData(
+                                                        eachfooditem.food_image,
+                                                        eachfooditem.name,
+                                                        eachfooditem.veg_status,
+                                                        eachfooditem.price,
+                                                        eachfooditem.offer_price,
+                                                        eachfooditem.description,
+                                                        eachfooditem._id
+                                                    )
+                                                }>
                                                     More Details <img className="arrowright" src={right} alt="" />
                                                 </p>
                                             </div>
 
                                             <div className="foodimageside">
                                                 {eachfooditem.food_image && (
-                                                    <img className="foodimage" src={eachfooditem.food_image} alt="Food Image" />
+                                                    <img className="foodimage" src={eachfooditem.food_image} alt="Food Image" onClick={() =>
+                                                        generateData(
+                                                            eachfooditem.food_image,
+                                                            eachfooditem.name,
+                                                            eachfooditem.veg_status,
+                                                            eachfooditem.price,
+                                                            eachfooditem.offer_price,
+                                                            eachfooditem.description,
+                                                            eachfooditem._id
+                                                        )
+                                                    }/>
                                                 )}
                                                 <button className="addbutton">ADD</button>
                                             </div>
@@ -137,7 +216,8 @@ const Itemlisting = () => {
                     </div>
                 ))}
             </div>
-        </>
+            <Outlet/>
+        </></Menupagedata.Provider>
     );
 };
 export default Itemlisting;
