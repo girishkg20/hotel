@@ -1,3 +1,14 @@
+@keyframes popoverAnimation {
+    0% {
+      opacity: 0;
+      transform: translateY(100%);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+}
+
 .popoverlay {
     position: fixed;
     top: 0;
@@ -17,6 +28,7 @@
     background-color: white;
     border-radius: 25px 25px 0 0;
     overflow: hidden;
+    animation: popoverAnimation 0.3s normal;
 }
 
 .fullimage {
@@ -35,7 +47,6 @@
 
 .itemdescription {
     padding: 0 15px 35px 15px;
-    text-transform: capitalize;
     font-size: 12px;
     font-weight: 500;
     color: #787878;
