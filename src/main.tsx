@@ -9,6 +9,8 @@ import Profile from './Profile/Profile.js';
 import Menupage1 from './Menu Page/MenuPage1';
 import Itempopup from './Menu Page/Item_Popup/ItemPopup';
 
+import { Link } from 'react-router-dom';
+
 
 const Router = createBrowserRouter([
     {
@@ -27,7 +29,15 @@ const Router = createBrowserRouter([
         path: "/:hotelid/:merchantid/:itemid",
         element: <Itempopup/>
       }]
-    }
+    },
+    {
+      path: "*",
+      element: 
+      <div>
+        <h1>Click On Home Button!</h1>
+        <Link to="/H001"><button>Home</button></Link>
+      </div>,
+    },
 ]);
 
 
