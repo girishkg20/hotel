@@ -99,3 +99,57 @@
     display: flex;
     align-items: center;
 }
+
+.fssaicard {
+    padding: 15px 15px 90px 15px;
+    background-color: #F1F1F1;
+}
+
+.fssaiholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-bottom: 1px dashed #9D9D9D;
+    padding-bottom: 5px;
+}
+
+.fssailogo {
+    width: 64px;
+    padding: 5px;
+}
+
+.fssaino {
+    font-size: 13px;
+    color: #787878;
+}
+
+.frestaurantname {
+    text-transform: capitalize;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 10px 0 2px 0;
+}
+
+.fareaname {
+    text-transform: capitalize;
+    font-size: 12px;
+    color: #787878;
+}
+
+.faddress {
+    font-size: 12px;
+    padding: 10px 0 20px 0;
+    color: #787878;
+}
+
+.fdisclaimer {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.fnote {
+    font-size: 12px;
+    color: #787878;
+    padding-left: 15px;
+    margin-top: 5px;
+}

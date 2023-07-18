@@ -24,6 +24,8 @@ const Itemlisting = () => {
     const [veg_status, setveg_status] = useState<any>();
     const [price, setprice] = useState<any>();
     const [dprice, setdprice] = useState<any>();
+    const [defprice, setdefprice] = useState<any>();
+    const [dcprice, setdcprice] = useState<any>();
     const [description, setdescription] = useState<any>();
 
     useEffect(() => {
@@ -75,6 +77,8 @@ const Itemlisting = () => {
             vstate: any,
             iprice: any,
             diprice: any,
+            defaultp: any,
+            discountp: any,
             idescription: any,
             itemid: any
             ) => {
@@ -83,6 +87,8 @@ const Itemlisting = () => {
         setveg_status(vstate)
         setprice(iprice)
         setdprice(diprice)
+        setdefprice(defaultp)
+        setdcprice(discountp)
         setdescription(idescription)
 
         navigate(itemid)
@@ -91,7 +97,7 @@ const Itemlisting = () => {
 
 
 
-    return (<Menupagedata.Provider value={{image, item_name, veg_status, price, dprice, description}}>
+    return (<Menupagedata.Provider value={{image, item_name, veg_status, price, dprice, defprice, dcprice, description}}>
         <>
             <div className="fullmenu">
                 <div><h2 className="menuheading">- Menu -</h2></div>
@@ -116,10 +122,23 @@ const Itemlisting = () => {
                                             eachfooditem.veg_status == "egg" ? egg : non_veg
                                         } alt="Veg Status" />
                                         <p className="itemname">{eachfooditem.name}</p>
-                                        <div className='pricebox'>
-                                            <p className="itemprice">₹ {Math.round(eachfooditem.price)}</p>
-                                            <p className="displayprice">₹ {Math.round(eachfooditem.offer_price)}</p>
-                                        </div>
+
+                                        {
+                                            eachfooditem.price == 0 ?
+                                                <div className='pricebox'>
+                                                    <p className="itemprice">₹ {Math.round(eachfooditem.default_price)}</p>
+                                                    <p className="displayprice">₹ {Math.round(eachfooditem.default_price - eachfooditem.discounted_price_rupees)}</p>
+                                                </div>:
+                                            eachfooditem.hasOwnProperty('offer_price')?
+                                                <div className='pricebox'>
+                                                    <p className="itemprice">₹ {Math.round(eachfooditem.price)}</p>
+                                                    <p className="displayprice">₹ {Math.round(eachfooditem.offer_price)}</p>
+                                                </div>:
+                                                <div className='pricebox'>
+                                                    <p className="displayprice">₹ {Math.round(eachfooditem.price)}</p>
+                                                </div>
+                                        }
+
                                         <p className="morebutton" onClick={() =>
                                                 generateData(
                                                     eachfooditem.food_image,
@@ -127,6 +146,8 @@ const Itemlisting = () => {
                                                     eachfooditem.veg_status,
                                                     eachfooditem.price,
                                                     eachfooditem.offer_price,
+                                                    eachfooditem.default_price,
+                                                    eachfooditem.discounted_price_rupees,
                                                     eachfooditem.description,
                                                     eachfooditem._id
                                                 )
@@ -137,13 +158,15 @@ const Itemlisting = () => {
 
                                     <div className="foodimageside">
                                         {eachfooditem.food_image && (
-                                            <img className="foodimage" src={eachfooditem.food_image} alt="Food Image" onClick={() =>
+                                            <img className="foodimage" loading='lazy' src={eachfooditem.food_image} alt="Food Image" onClick={() =>
                                                 generateData(
                                                     eachfooditem.food_image,
                                                     eachfooditem.name,
                                                     eachfooditem.veg_status,
                                                     eachfooditem.price,
                                                     eachfooditem.offer_price,
+                                                    eachfooditem.default_price,
+                                                    eachfooditem.discounted_price_rupees,
                                                     eachfooditem.description,
                                                     eachfooditem._id
                                                 )
@@ -172,10 +195,23 @@ const Itemlisting = () => {
                                                     eachfooditem.veg_status == "egg" ? egg : non_veg
                                                 } alt="Veg Status"/>
                                                 <p className="itemname">{eachfooditem.name}</p>
-                                                <div className='pricebox'>
-                                                    <p className="itemprice">₹ {Math.round(eachfooditem.price)}</p>
-                                                    <p className="displayprice">₹ {Math.round(eachfooditem.offer_price)}</p>
-                                                </div>
+                                                
+                                                {
+                                                    eachfooditem.price == 0 ?
+                                                        <div className='pricebox'>
+                                                            <p className="itemprice">₹ {Math.round(eachfooditem.default_price)}</p>
+                                                            <p className="displayprice">₹ {Math.round(eachfooditem.default_price - eachfooditem.discounted_price_rupees)}</p>
+                                                        </div>:
+                                                    eachfooditem.hasOwnProperty('offer_price')?
+                                                        <div className='pricebox'>
+                                                            <p className="itemprice">₹ {Math.round(eachfooditem.price)}</p>
+                                                            <p className="displayprice">₹ {Math.round(eachfooditem.offer_price)}</p>
+                                                        </div>:
+                                                        <div className='pricebox'>
+                                                            <p className="displayprice">₹ {Math.round(eachfooditem.price)}</p>
+                                                        </div>
+                                                }
+
                                                 <p className="morebutton" onClick={() =>
                                                     generateData(
                                                         eachfooditem.food_image,
@@ -183,6 +219,8 @@ const Itemlisting = () => {
                                                         eachfooditem.veg_status,
                                                         eachfooditem.price,
                                                         eachfooditem.offer_price,
+                                                        eachfooditem.default_price,
+                                                        eachfooditem.discounted_price_rupees,
                                                         eachfooditem.description,
                                                         eachfooditem._id
                                                     )
@@ -193,13 +231,15 @@ const Itemlisting = () => {
 
                                             <div className="foodimageside">
                                                 {eachfooditem.food_image && (
-                                                    <img className="foodimage" src={eachfooditem.food_image} alt="Food Image" onClick={() =>
+                                                    <img className="foodimage" loading='lazy' src={eachfooditem.food_image} alt="Food Image" onClick={() =>
                                                         generateData(
                                                             eachfooditem.food_image,
                                                             eachfooditem.name,
                                                             eachfooditem.veg_status,
                                                             eachfooditem.price,
                                                             eachfooditem.offer_price,
+                                                            eachfooditem.default_price,
+                                                            eachfooditem.discounted_price_rupees,
                                                             eachfooditem.description,
                                                             eachfooditem._id
                                                         )

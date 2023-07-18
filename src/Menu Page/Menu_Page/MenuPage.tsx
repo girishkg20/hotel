@@ -6,6 +6,7 @@ import Itemlisting from '../Item_Listing/ItemListing';
 import veg from './Source/veg.png';
 import reset from './Source/reset.png';
 import search from './Source/search.png';
+import fssai from './Source/fssai_logo.png';
 import { useContext, useEffect, useState } from 'react';
 import Menupagedata from '../Menu_Page_API/MenuPageData';
 import { useNavigate } from 'react-router-dom';
@@ -14,13 +15,19 @@ import { useNavigate } from 'react-router-dom';
 const Menupage = () => {
     
     const {menu} = useContext(Menupagedata);
-    const [Restaurantname, setRestaurantname] = useState<any> ("");
+    const [Restaurantname, setRestaurantname] = useState<any>();
+    const [fssainumber, setfssainumber] = useState<any>("");
+    const [area, setarea] = useState<any>();
+    const [address, setaddress] = useState<any>();
     const navigate = useNavigate();
     
     useEffect(() => {
 
         if (menu && menu.merchant && menu.merchant.name) {
           setRestaurantname(menu.merchant.name);
+          setfssainumber(menu.merchant.fssi_certificate);
+          setarea(menu.merchant.area_name);
+          setaddress(menu.merchant.full_address);
         } else {
           setRestaurantname("Loading...");
         }
@@ -116,10 +123,23 @@ const Menupage = () => {
 
         <Itemlisting/>
 
+        <div className='fssaicard'>
+            {fssainumber != "" &&
+                <div className='fssaiholder'>
+                    <img className='fssailogo' src={fssai} alt="FSSAI" />
+                    <p className='fssaino'>License No. {fssainumber}</p>
+                </div>
+            }
+            <p className='frestaurantname'>{Restaurantname}</p>
+            <p className='fareaname'>{area}</p>
+            <p className='faddress'>{address}</p>
+            <p className='fdisclaimer'>Disclaimer:</p>
+            <ul className='fnote'>
+                <li>Food image is for representational purposes only</li>
+                <li>All prices are set directly by the merchants</li>
+            </ul>
+        </div>
         
-
-
-
     </>);
 };
 export default Menupage;
