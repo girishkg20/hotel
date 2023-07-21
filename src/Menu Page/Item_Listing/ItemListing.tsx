@@ -8,12 +8,15 @@ import { useContext, useEffect, useState } from 'react';
 import Menupagedata from '../Menu_Page_API/MenuPageData';
 import React from 'react';
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 
 
 
 
 const Itemlisting = () => {
+
+    const filterclicked = useSelector((state:any) => state.VegFilterSlice.value);
 
     const { menu } = useContext(Menupagedata);
 
@@ -30,15 +33,21 @@ const Itemlisting = () => {
 
     useEffect(() => {
 
-        if (menu && menu.foodItemCategory) {
-            setMenu(menu.foodItemCategory)
+        if (menu && menu.foodItemCategory && menu.vegfoodItemCategory) {
+
+            if (filterclicked == true) {
+                setMenu(menu.vegfoodItemCategory)
+            } else {
+                setMenu(menu.foodItemCategory)
+            }
+            
             console.log(Menu);          ///////////Last Remove this log
 
         } else {
             console.log("Menu not set");
         }
 
-    }, [menu])
+    }, [menu, filterclicked])
 
 
     useEffect(() => {
@@ -47,7 +56,7 @@ const Itemlisting = () => {
             
             const showcatname = () => {
 
-                if (document.getElementById(eachcatagorykey) && document.getElementById(eachcatagorykey)!.style) {
+                if (document.getElementById(eachcatagorykey) && document.getElementById(eachcatagorykey)!.style && document.getElementById(Menu[eachcatagorykey].name) && document.getElementById(Menu[eachcatagorykey].name)!.style) {
 
                     if (window.scrollY > document.getElementById(Menu[eachcatagorykey].name)!.offsetTop - 90) {
                         document.getElementById(eachcatagorykey)!.style.visibility = 'visible'; 
@@ -103,116 +112,44 @@ const Itemlisting = () => {
                 <div><h2 className="menuheading">- Menu -</h2></div>
 
                 {Object.keys(Menu).map((eachcatagorykey) => (
-                    <div className="catagory" key={`catagory-${eachcatagorykey}`}>
+                    Menu[eachcatagorykey].count > 0 && (
+                        <div className="catagory" key={`catagory-${eachcatagorykey}`}>
 
-                        <h3 className="cat" id={Menu[eachcatagorykey].name}>{Menu[eachcatagorykey].name}</h3>
-                        <div className='catfixed' id={eachcatagorykey}>
-                            <h3 className='catname'>{Menu[eachcatagorykey].name}</h3>
-                        </div>
+                            <h3 className="cat" id={Menu[eachcatagorykey].name}>{Menu[eachcatagorykey].name}</h3>
+                            <div className='catfixed' id={eachcatagorykey}>
+                                <h3 className='catname'>{Menu[eachcatagorykey].name}</h3>
+                            </div>
 
-                        {
-                            Menu[eachcatagorykey].food_items &&
+                            {
+                                Menu[eachcatagorykey].food_items &&
 
-                            Menu[eachcatagorykey].food_items.map((eachfooditem: any) => (
-                                <div className="foodcard" key={`foodcard-${eachcatagorykey}-${eachfooditem.name}`}>
+                                Menu[eachcatagorykey].food_items.map((eachfooditem: any) => (
+                                    <div className="foodcard" key={`foodcard-${eachcatagorykey}-${eachfooditem.name}`}>
 
-                                    <div className="fooditemside">
-                                        <img className="vegstatus" src={
-                                            eachfooditem.veg_status == "veg" ? veg :
-                                            eachfooditem.veg_status == "egg" ? egg : non_veg
-                                        } alt="Veg Status" />
-                                        <p className="itemname">{eachfooditem.name}</p>
+                                        <div className="fooditemside">
+                                            <img className="vegstatus" src={
+                                                eachfooditem.veg_status == "veg" ? veg :
+                                                eachfooditem.veg_status == "egg" ? egg : non_veg
+                                            } alt="Veg Status" />
+                                            <p className="itemname">{eachfooditem.name}</p>
 
-                                        {
-                                            eachfooditem.price == 0 ?
-                                                <div className='pricebox'>
-                                                    <p className="itemprice">₹ {Math.round(eachfooditem.default_price)}</p>
-                                                    <p className="displayprice">₹ {Math.round(eachfooditem.default_price - eachfooditem.discounted_price_rupees)}</p>
-                                                </div>:
-                                            eachfooditem.hasOwnProperty('offer_price')?
-                                                <div className='pricebox'>
-                                                    <p className="itemprice">₹ {Math.round(eachfooditem.price)}</p>
-                                                    <p className="displayprice">₹ {Math.round(eachfooditem.offer_price)}</p>
-                                                </div>:
-                                                <div className='pricebox'>
-                                                    <p className="displayprice">₹ {Math.round(eachfooditem.price)}</p>
-                                                </div>
-                                        }
+                                            {
+                                                eachfooditem.price == 0 ?
+                                                    <div className='pricebox'>
+                                                        <p className="itemprice">₹ {Math.round(eachfooditem.default_price)}</p>
+                                                        <p className="displayprice">₹ {Math.round(eachfooditem.default_price - eachfooditem.discounted_price_rupees)}</p>
+                                                    </div>:
+                                                eachfooditem.hasOwnProperty('offer_price')?
+                                                    <div className='pricebox'>
+                                                        <p className="itemprice">₹ {Math.round(eachfooditem.price)}</p>
+                                                        <p className="displayprice">₹ {Math.round(eachfooditem.offer_price)}</p>
+                                                    </div>:
+                                                    <div className='pricebox'>
+                                                        <p className="displayprice">₹ {Math.round(eachfooditem.price)}</p>
+                                                    </div>
+                                            }
 
-                                        <p className="morebutton" onClick={() =>
-                                                generateData(
-                                                    eachfooditem.food_image,
-                                                    eachfooditem.name,
-                                                    eachfooditem.veg_status,
-                                                    eachfooditem.price,
-                                                    eachfooditem.offer_price,
-                                                    eachfooditem.default_price,
-                                                    eachfooditem.discounted_price_rupees,
-                                                    eachfooditem.description,
-                                                    eachfooditem._id
-                                                )
-                                            }>
-                                            More Details <img className="arrowright" src={right} alt="" />
-                                        </p>
-                                    </div>
-
-                                    <div className="foodimageside">
-                                        {eachfooditem.food_image && (
-                                            <img className="foodimage" loading='lazy' src={eachfooditem.food_image} alt="Food Image" onClick={() =>
-                                                generateData(
-                                                    eachfooditem.food_image,
-                                                    eachfooditem.name,
-                                                    eachfooditem.veg_status,
-                                                    eachfooditem.price,
-                                                    eachfooditem.offer_price,
-                                                    eachfooditem.default_price,
-                                                    eachfooditem.discounted_price_rupees,
-                                                    eachfooditem.description,
-                                                    eachfooditem._id
-                                                )
-                                            }/>
-                                        )}
-                                        <button className="addbutton">ADD</button>
-                                    </div>
-
-                                </div>
-                            ))
-                        }
-
-                        {
-                            Menu[eachcatagorykey].subcategories &&
-
-                            Object.keys(Menu[eachcatagorykey].subcategories).map((eachsubcategorieskey) => (
-                                <React.Fragment key={`subcat-${eachcatagorykey}-${eachsubcategorieskey}`}>
-                                    <h4 className="subcat">{Menu[eachcatagorykey].subcategories[eachsubcategorieskey].name}</h4>
-
-                                    {Menu[eachcatagorykey].subcategories[eachsubcategorieskey].food_items.map((eachfooditem: any) => (
-                                        <div className="foodcard" key={`foodcard-${eachcatagorykey}-${eachsubcategorieskey}-${eachfooditem.name}`}>
-
-                                            <div className="fooditemside">
-                                                <img className="vegstatus" src={
-                                                    eachfooditem.veg_status == "veg" ? veg :
-                                                    eachfooditem.veg_status == "egg" ? egg : non_veg
-                                                } alt="Veg Status"/>
-                                                <p className="itemname">{eachfooditem.name}</p>
-                                                
-                                                {
-                                                    eachfooditem.price == 0 ?
-                                                        <div className='pricebox'>
-                                                            <p className="itemprice">₹ {Math.round(eachfooditem.default_price)}</p>
-                                                            <p className="displayprice">₹ {Math.round(eachfooditem.default_price - eachfooditem.discounted_price_rupees)}</p>
-                                                        </div>:
-                                                    eachfooditem.hasOwnProperty('offer_price')?
-                                                        <div className='pricebox'>
-                                                            <p className="itemprice">₹ {Math.round(eachfooditem.price)}</p>
-                                                            <p className="displayprice">₹ {Math.round(eachfooditem.offer_price)}</p>
-                                                        </div>:
-                                                        <div className='pricebox'>
-                                                            <p className="displayprice">₹ {Math.round(eachfooditem.price)}</p>
-                                                        </div>
-                                                }
-
-                                                <p className="morebutton" onClick={() =>
+                                            <p className="morebutton" onClick={() =>
                                                     generateData(
                                                         eachfooditem.food_image,
                                                         eachfooditem.name,
@@ -225,13 +162,67 @@ const Itemlisting = () => {
                                                         eachfooditem._id
                                                     )
                                                 }>
-                                                    More Details <img className="arrowright" src={right} alt="" />
-                                                </p>
-                                            </div>
+                                                More Details <img className="arrowright" src={right} alt="" />
+                                            </p>
+                                        </div>
 
-                                            <div className="foodimageside">
-                                                {eachfooditem.food_image && (
-                                                    <img className="foodimage" loading='lazy' src={eachfooditem.food_image} alt="Food Image" onClick={() =>
+                                        <div className="foodimageside">
+                                            {eachfooditem.food_image && (
+                                                <img className="foodimage" loading='lazy' src={eachfooditem.food_image} alt="Food Image" onClick={() =>
+                                                    generateData(
+                                                        eachfooditem.food_image,
+                                                        eachfooditem.name,
+                                                        eachfooditem.veg_status,
+                                                        eachfooditem.price,
+                                                        eachfooditem.offer_price,
+                                                        eachfooditem.default_price,
+                                                        eachfooditem.discounted_price_rupees,
+                                                        eachfooditem.description,
+                                                        eachfooditem._id
+                                                    )
+                                                }/>
+                                            )}
+                                            <button className="addbutton">ADD</button>
+                                        </div>
+
+                                    </div>
+                                ))
+                            }
+
+                            {
+                                Menu[eachcatagorykey].subcategories &&
+
+                                Object.keys(Menu[eachcatagorykey].subcategories).map((eachsubcategorieskey) => (
+                                    <React.Fragment key={`subcat-${eachcatagorykey}-${eachsubcategorieskey}`}>
+                                        <h4 className="subcat">{Menu[eachcatagorykey].subcategories[eachsubcategorieskey].name}</h4>
+
+                                        {Menu[eachcatagorykey].subcategories[eachsubcategorieskey].food_items.map((eachfooditem: any) => (
+                                            <div className="foodcard" key={`foodcard-${eachcatagorykey}-${eachsubcategorieskey}-${eachfooditem.name}`}>
+
+                                                <div className="fooditemside">
+                                                    <img className="vegstatus" src={
+                                                        eachfooditem.veg_status == "veg" ? veg :
+                                                        eachfooditem.veg_status == "egg" ? egg : non_veg
+                                                    } alt="Veg Status"/>
+                                                    <p className="itemname">{eachfooditem.name}</p>
+                                                    
+                                                    {
+                                                        eachfooditem.price == 0 ?
+                                                            <div className='pricebox'>
+                                                                <p className="itemprice">₹ {Math.round(eachfooditem.default_price)}</p>
+                                                                <p className="displayprice">₹ {Math.round(eachfooditem.default_price - eachfooditem.discounted_price_rupees)}</p>
+                                                            </div>:
+                                                        eachfooditem.hasOwnProperty('offer_price')?
+                                                            <div className='pricebox'>
+                                                                <p className="itemprice">₹ {Math.round(eachfooditem.price)}</p>
+                                                                <p className="displayprice">₹ {Math.round(eachfooditem.offer_price)}</p>
+                                                            </div>:
+                                                            <div className='pricebox'>
+                                                                <p className="displayprice">₹ {Math.round(eachfooditem.price)}</p>
+                                                            </div>
+                                                    }
+
+                                                    <p className="morebutton" onClick={() =>
                                                         generateData(
                                                             eachfooditem.food_image,
                                                             eachfooditem.name,
@@ -243,17 +234,37 @@ const Itemlisting = () => {
                                                             eachfooditem.description,
                                                             eachfooditem._id
                                                         )
-                                                    }/>
-                                                )}
-                                                <button className="addbutton">ADD</button>
-                                            </div>
+                                                    }>
+                                                        More Details <img className="arrowright" src={right} alt="" />
+                                                    </p>
+                                                </div>
 
-                                        </div>
-                                    ))}
-                                </React.Fragment>
-                            ))
-                        }
-                    </div>
+                                                <div className="foodimageside">
+                                                    {eachfooditem.food_image && (
+                                                        <img className="foodimage" loading='lazy' src={eachfooditem.food_image} alt="Food Image" onClick={() =>
+                                                            generateData(
+                                                                eachfooditem.food_image,
+                                                                eachfooditem.name,
+                                                                eachfooditem.veg_status,
+                                                                eachfooditem.price,
+                                                                eachfooditem.offer_price,
+                                                                eachfooditem.default_price,
+                                                                eachfooditem.discounted_price_rupees,
+                                                                eachfooditem.description,
+                                                                eachfooditem._id
+                                                            )
+                                                        }/>
+                                                    )}
+                                                    <button className="addbutton">ADD</button>
+                                                </div>
+
+                                            </div>
+                                        ))}
+                                    </React.Fragment>
+                                ))
+                            }
+                        </div>
+                    )
                 ))}
             </div>
             <Outlet/>

@@ -10,9 +10,13 @@ import fssai from './Source/fssai_logo.png';
 import { useContext, useEffect, useState } from 'react';
 import Menupagedata from '../Menu_Page_API/MenuPageData';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { selectvegfilter } from '../../Redux/slice';
 
 
 const Menupage = () => {
+
+    const Dispatch = useDispatch();
     
     const {menu} = useContext(Menupagedata);
     const [Restaurantname, setRestaurantname] = useState<any>();
@@ -62,10 +66,12 @@ const Menupage = () => {
 
         if (vegbtn!.classList.contains("selected")){
             vegbtn!.classList.remove('selected')
-            restbtn!.style.display = "none"; 
+            restbtn!.style.display = "none";
+            Dispatch(selectvegfilter(false))
         }else{
             vegbtn!.classList.add('selected');
             restbtn!.style.display = "flex";
+            Dispatch(selectvegfilter(true))
         }
          
     }
@@ -95,8 +101,10 @@ const Menupage = () => {
     }
 
     const whenscroll = () => {
+        if (header && headertext && searchbtn) {
         fixheader();
         addsearchbutton();
+        }
     }
 
     return(<>

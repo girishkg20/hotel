@@ -5,7 +5,7 @@ import search from './Source/search.png';
 /////Redux
 import { useSelector } from 'react-redux';
 import {textEntered} from '../../Redux/reducer';
-import store, { RootState } from '../../Redux/store';
+import store from '../../Redux/store';
 import { useDispatch } from 'react-redux';
 /////Redux
 
@@ -25,16 +25,18 @@ import { useDispatch } from 'react-redux';
         // const entered = useSelector((state: RootState) => state.enteredText.value) ///redux
 
         function datacheck() {
-        let searchvalue = searchdata!.value;
-        ///////////////////////////////////////////redux
-        dispatch(textEntered(searchvalue))
-        ///////////////////////////////////////////redux
+            if (searchdata) {
+                let searchvalue = searchdata!.value;
+                ///////////////////////////////////////////redux
+                dispatch(textEntered(searchvalue))
+                ///////////////////////////////////////////redux
 
-        if (searchvalue.length == 0) {
-            resetbutton!.style.display = "none";
-        } else {
-            resetbutton!.style.display = "flex";
-        }
+                if (searchvalue.length == 0) {
+                    resetbutton!.style.display = "none";
+                } else {
+                    resetbutton!.style.display = "flex";
+                }
+            }
         };
         
         function boarderadd() {

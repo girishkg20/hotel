@@ -18,13 +18,16 @@ import search from './Source/search.png';
 
 
         function datacheck() {
-        let searchvalue = searchdata!.value;
+            if (searchdata) {
 
-        if (searchvalue.length == 0) {
-            resetbutton!.style.display = "none";
-        } else {
-            resetbutton!.style.display = "flex";
-        }
+                let searchvalue = searchdata!.value;
+                if (searchvalue.length == 0) {
+                    resetbutton!.style.display = "none";
+                } else {
+                    resetbutton!.style.display = "flex";
+                }
+
+            }
         };
         
         function boarderadd() {
