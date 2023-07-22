@@ -33,6 +33,7 @@ const Itemlisting = () => {
     const [avail, setavail] = useState<any>();
     const [availmsg, setavailmsg] = useState<any>();
     const [customisable, setcustomisable] = useState<any>();
+    const [addon, setaddon] = useState<any>();
 
     useEffect(() => {
 
@@ -95,6 +96,7 @@ const Itemlisting = () => {
             iavail: any,
             iavailmsg: any,
             icustomisable: any,
+            iaddon: any,
             itemid: any
             ) => {
         setimage(iimage)
@@ -108,6 +110,7 @@ const Itemlisting = () => {
         setavail(iavail)
         setavailmsg(iavailmsg)
         setcustomisable(icustomisable)
+        setaddon(iaddon)
 
         navigate(itemid)
     }
@@ -115,7 +118,7 @@ const Itemlisting = () => {
 
 
 
-    return (<Menupagedata.Provider value={{image, item_name, veg_status, price, dprice, defprice, dcprice, description, avail, availmsg, customisable}}>
+    return (<Menupagedata.Provider value={{image, item_name, veg_status, price, dprice, defprice, dcprice, description, avail, availmsg, customisable, addon}}>
         <>
             <div className="fullmenu">
                 <div><h2 className="menuheading">- Menu -</h2></div>
@@ -171,6 +174,7 @@ const Itemlisting = () => {
                                                         eachfooditem.availablity.availability,
                                                         eachfooditem.availablity.availability_message,
                                                         eachfooditem.customisation_steps.length,
+                                                        eachfooditem.addon_group.length,
                                                         eachfooditem._id
                                                     )
                                                 }>
@@ -193,6 +197,7 @@ const Itemlisting = () => {
                                                         eachfooditem.availablity.availability,
                                                         eachfooditem.availablity.availability_message,
                                                         eachfooditem.customisation_steps.length,
+                                                        eachfooditem.addon_group.length,
                                                         eachfooditem._id
                                                     )
                                                 }/>
@@ -201,7 +206,7 @@ const Itemlisting = () => {
                                                 ? <p className='notavailable'>{eachfooditem.availablity.availability_message}</p>
                                                 : <button className="addbutton">ADD</button>
                                             }
-                                            {eachfooditem.customisation_steps.length > 0 &&
+                                            {eachfooditem.customisation_steps.length || eachfooditem.addon_group.length > 0 &&
                                                 <p className='custotext'>Customisable</p>
                                             }
                                         </div>
@@ -257,6 +262,7 @@ const Itemlisting = () => {
                                                                 eachfooditem.availablity.availability,
                                                                 eachfooditem.availablity.availability_message,
                                                                 eachfooditem.customisation_steps.length,
+                                                                eachfooditem.addon_group.length,
                                                                 eachfooditem._id
                                                             )
                                                         }>
@@ -279,6 +285,7 @@ const Itemlisting = () => {
                                                                     eachfooditem.availablity.availability,
                                                                     eachfooditem.availablity.availability_message,
                                                                     eachfooditem.customisation_steps.length,
+                                                                    eachfooditem.addon_group.length,
                                                                     eachfooditem._id
                                                                 )
                                                             }/>
@@ -287,7 +294,7 @@ const Itemlisting = () => {
                                                             ? <p className='notavailable'>{eachfooditem.availablity.availability_message}</p>
                                                             : <button className="addbutton">ADD</button>
                                                         }
-                                                        {eachfooditem.customisation_steps.length > 0 &&
+                                                        {eachfooditem.customisation_steps.length || eachfooditem.addon_group.length > 0 &&
                                                             <p className='custotext'>Customisable</p>
                                                         }
                                                     </div>
