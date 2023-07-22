@@ -30,6 +30,9 @@ const Itemlisting = () => {
     const [defprice, setdefprice] = useState<any>();
     const [dcprice, setdcprice] = useState<any>();
     const [description, setdescription] = useState<any>();
+    const [avail, setavail] = useState<any>();
+    const [availmsg, setavailmsg] = useState<any>();
+    const [customisable, setcustomisable] = useState<any>();
 
     useEffect(() => {
 
@@ -89,6 +92,9 @@ const Itemlisting = () => {
             defaultp: any,
             discountp: any,
             idescription: any,
+            iavail: any,
+            iavailmsg: any,
+            icustomisable: any,
             itemid: any
             ) => {
         setimage(iimage)
@@ -99,6 +105,9 @@ const Itemlisting = () => {
         setdefprice(defaultp)
         setdcprice(discountp)
         setdescription(idescription)
+        setavail(iavail)
+        setavailmsg(iavailmsg)
+        setcustomisable(icustomisable)
 
         navigate(itemid)
     }
@@ -106,7 +115,7 @@ const Itemlisting = () => {
 
 
 
-    return (<Menupagedata.Provider value={{image, item_name, veg_status, price, dprice, defprice, dcprice, description}}>
+    return (<Menupagedata.Provider value={{image, item_name, veg_status, price, dprice, defprice, dcprice, description, avail, availmsg, customisable}}>
         <>
             <div className="fullmenu">
                 <div><h2 className="menuheading">- Menu -</h2></div>
@@ -159,6 +168,9 @@ const Itemlisting = () => {
                                                         eachfooditem.default_price,
                                                         eachfooditem.discounted_price_rupees,
                                                         eachfooditem.description,
+                                                        eachfooditem.availablity.availability,
+                                                        eachfooditem.availablity.availability_message,
+                                                        eachfooditem.customisation_steps.length,
                                                         eachfooditem._id
                                                     )
                                                 }>
@@ -168,7 +180,7 @@ const Itemlisting = () => {
 
                                         <div className="foodimageside">
                                             {eachfooditem.food_image && (
-                                                <img className="foodimage" loading='lazy' src={eachfooditem.food_image} alt="Food Image" onClick={() =>
+                                                <img className="foodimage" loading='lazy' style={eachfooditem.availablity.availability == false ? {filter: 'grayscale(80%)'}:{}} src={eachfooditem.food_image} alt="Food Image" onClick={() =>
                                                     generateData(
                                                         eachfooditem.food_image,
                                                         eachfooditem.name,
@@ -178,11 +190,20 @@ const Itemlisting = () => {
                                                         eachfooditem.default_price,
                                                         eachfooditem.discounted_price_rupees,
                                                         eachfooditem.description,
+                                                        eachfooditem.availablity.availability,
+                                                        eachfooditem.availablity.availability_message,
+                                                        eachfooditem.customisation_steps.length,
                                                         eachfooditem._id
                                                     )
                                                 }/>
                                             )}
-                                            <button className="addbutton">ADD</button>
+                                            {eachfooditem.availablity.availability == false
+                                                ? <p className='notavailable'>{eachfooditem.availablity.availability_message}</p>
+                                                : <button className="addbutton">ADD</button>
+                                            }
+                                            {eachfooditem.customisation_steps.length > 0 &&
+                                                <p className='custotext'>Customisable</p>
+                                            }
                                         </div>
 
                                     </div>
@@ -193,55 +214,37 @@ const Itemlisting = () => {
                                 Menu[eachcatagorykey].subcategories &&
 
                                 Object.keys(Menu[eachcatagorykey].subcategories).map((eachsubcategorieskey) => (
-                                    <React.Fragment key={`subcat-${eachcatagorykey}-${eachsubcategorieskey}`}>
-                                        <h4 className="subcat">{Menu[eachcatagorykey].subcategories[eachsubcategorieskey].name}</h4>
+                                    Menu[eachcatagorykey].subcategories[eachsubcategorieskey].food_items.length > 0 && (
+                                        <React.Fragment key={`subcat-${eachcatagorykey}-${eachsubcategorieskey}`}>
+                                            <h4 className="subcat">{Menu[eachcatagorykey].subcategories[eachsubcategorieskey].name}</h4>
 
-                                        {Menu[eachcatagorykey].subcategories[eachsubcategorieskey].food_items.map((eachfooditem: any) => (
-                                            <div className="foodcard" key={`foodcard-${eachcatagorykey}-${eachsubcategorieskey}-${eachfooditem.name}`}>
+                                            {Menu[eachcatagorykey].subcategories[eachsubcategorieskey].food_items.map((eachfooditem: any) => (
+                                                <div className="foodcard" key={`foodcard-${eachcatagorykey}-${eachsubcategorieskey}-${eachfooditem.name}`}>
 
-                                                <div className="fooditemside">
-                                                    <img className="vegstatus" src={
-                                                        eachfooditem.veg_status == "veg" ? veg :
-                                                        eachfooditem.veg_status == "egg" ? egg : non_veg
-                                                    } alt="Veg Status"/>
-                                                    <p className="itemname">{eachfooditem.name}</p>
-                                                    
-                                                    {
-                                                        eachfooditem.price == 0 ?
-                                                            <div className='pricebox'>
-                                                                <p className="itemprice">₹ {Math.round(eachfooditem.default_price)}</p>
-                                                                <p className="displayprice">₹ {Math.round(eachfooditem.default_price - eachfooditem.discounted_price_rupees)}</p>
-                                                            </div>:
-                                                        eachfooditem.hasOwnProperty('offer_price')?
-                                                            <div className='pricebox'>
-                                                                <p className="itemprice">₹ {Math.round(eachfooditem.price)}</p>
-                                                                <p className="displayprice">₹ {Math.round(eachfooditem.offer_price)}</p>
-                                                            </div>:
-                                                            <div className='pricebox'>
-                                                                <p className="displayprice">₹ {Math.round(eachfooditem.price)}</p>
-                                                            </div>
-                                                    }
+                                                    <div className="fooditemside">
+                                                        <img className="vegstatus" src={
+                                                            eachfooditem.veg_status == "veg" ? veg :
+                                                            eachfooditem.veg_status == "egg" ? egg : non_veg
+                                                        } alt="Veg Status"/>
+                                                        <p className="itemname">{eachfooditem.name}</p>
+                                                        
+                                                        {
+                                                            eachfooditem.price == 0 ?
+                                                                <div className='pricebox'>
+                                                                    <p className="itemprice">₹ {Math.round(eachfooditem.default_price)}</p>
+                                                                    <p className="displayprice">₹ {Math.round(eachfooditem.default_price - eachfooditem.discounted_price_rupees)}</p>
+                                                                </div>:
+                                                            eachfooditem.hasOwnProperty('offer_price')?
+                                                                <div className='pricebox'>
+                                                                    <p className="itemprice">₹ {Math.round(eachfooditem.price)}</p>
+                                                                    <p className="displayprice">₹ {Math.round(eachfooditem.offer_price)}</p>
+                                                                </div>:
+                                                                <div className='pricebox'>
+                                                                    <p className="displayprice">₹ {Math.round(eachfooditem.price)}</p>
+                                                                </div>
+                                                        }
 
-                                                    <p className="morebutton" onClick={() =>
-                                                        generateData(
-                                                            eachfooditem.food_image,
-                                                            eachfooditem.name,
-                                                            eachfooditem.veg_status,
-                                                            eachfooditem.price,
-                                                            eachfooditem.offer_price,
-                                                            eachfooditem.default_price,
-                                                            eachfooditem.discounted_price_rupees,
-                                                            eachfooditem.description,
-                                                            eachfooditem._id
-                                                        )
-                                                    }>
-                                                        More Details <img className="arrowright" src={right} alt="" />
-                                                    </p>
-                                                </div>
-
-                                                <div className="foodimageside">
-                                                    {eachfooditem.food_image && (
-                                                        <img className="foodimage" loading='lazy' src={eachfooditem.food_image} alt="Food Image" onClick={() =>
+                                                        <p className="morebutton" onClick={() =>
                                                             generateData(
                                                                 eachfooditem.food_image,
                                                                 eachfooditem.name,
@@ -251,16 +254,48 @@ const Itemlisting = () => {
                                                                 eachfooditem.default_price,
                                                                 eachfooditem.discounted_price_rupees,
                                                                 eachfooditem.description,
+                                                                eachfooditem.availablity.availability,
+                                                                eachfooditem.availablity.availability_message,
+                                                                eachfooditem.customisation_steps.length,
                                                                 eachfooditem._id
                                                             )
-                                                        }/>
-                                                    )}
-                                                    <button className="addbutton">ADD</button>
-                                                </div>
+                                                        }>
+                                                            More Details <img className="arrowright" src={right} alt="" />
+                                                        </p>
+                                                    </div>
 
-                                            </div>
-                                        ))}
-                                    </React.Fragment>
+                                                    <div className="foodimageside">
+                                                        {eachfooditem.food_image && (
+                                                            <img className="foodimage" loading='lazy' style={eachfooditem.availablity.availability == false ? {filter: 'grayscale(80%)'}:{}} src={eachfooditem.food_image} alt="Food Image" onClick={() =>
+                                                                generateData(
+                                                                    eachfooditem.food_image,
+                                                                    eachfooditem.name,
+                                                                    eachfooditem.veg_status,
+                                                                    eachfooditem.price,
+                                                                    eachfooditem.offer_price,
+                                                                    eachfooditem.default_price,
+                                                                    eachfooditem.discounted_price_rupees,
+                                                                    eachfooditem.description,
+                                                                    eachfooditem.availablity.availability,
+                                                                    eachfooditem.availablity.availability_message,
+                                                                    eachfooditem.customisation_steps.length,
+                                                                    eachfooditem._id
+                                                                )
+                                                            }/>
+                                                        )}
+                                                        {eachfooditem.availablity.availability == false
+                                                            ? <p className='notavailable'>{eachfooditem.availablity.availability_message}</p>
+                                                            : <button className="addbutton">ADD</button>
+                                                        }
+                                                        {eachfooditem.customisation_steps.length > 0 &&
+                                                            <p className='custotext'>Customisable</p>
+                                                        }
+                                                    </div>
+
+                                                </div>
+                                            ))}
+                                        </React.Fragment>
+                                    )
                                 ))
                             }
                         </div>

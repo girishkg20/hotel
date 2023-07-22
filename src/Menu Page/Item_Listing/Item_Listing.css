@@ -1,3 +1,14 @@
+@keyframes foodcardanimation {
+    0% {
+      opacity: 0;
+      transform: translateX(-100%);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+}
+
 .fullmenu {
     background-color: #F1F1F1;
     padding-bottom: 15px;
@@ -62,6 +73,7 @@
     align-items: center;
     justify-content: space-between;
     border-top: 1px solid #EBEBEB;
+    animation: foodcardanimation 0.3s ease;
 }
 
 .vegstatus {
@@ -143,6 +155,31 @@
     border: 1px solid #787878;
     background-color: white;
     box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.3);
+    z-index: 0;
+}
+
+.notavailable {
+    color: #787878;
+    font-weight: 600;
+    font-size: 14px;
+    text-align: center;
+    width: 120px;
+    height: 40px;
+    margin-bottom: 20px;
+    margin-right: -25px;
+    margin-top: -10px;
+    border-radius: 10px;
+    border: 1px solid #B2AEB9;
+    background-color: white;
+    padding: 5px;
+    z-index: 0;
+}
+
+.custotext {
+    font-size: 12px;
+    margin-bottom: 20px;
+    margin-right: -25px;
+    margin-top: -15px;
 }
 
 .foodimageside {

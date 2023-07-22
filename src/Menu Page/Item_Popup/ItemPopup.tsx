@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 
 const Itempopup = () => {
 
-    const {image, item_name, veg_status, price, dprice, defprice, dcprice, description} = useContext(Menupagedata);
+    const {image, item_name, veg_status, price, dprice, defprice, dcprice, description, avail, availmsg, customisable} = useContext(Menupagedata);
     const navigate = useNavigate()
 
     // console.log(image, item_name, veg_status, price, description);
@@ -59,7 +59,13 @@ const Itempopup = () => {
 
                 </div>
                 <div className="foodimageside">
-                    <button className="addbutton">ADD</button>
+                {avail == false
+                    ? <p className='notavailable'>{availmsg}</p>
+                    : <button className="addbutton">ADD</button>
+                }
+                {customisable > 0 &&
+                    <p className='custotext'>Customisable</p>
+                }
                 </div>
             </div>
             <p className="itemdescription">{description}</p>

@@ -35,14 +35,14 @@
     width: 100%;
     max-height: 100vw;
     object-fit: cover;
-    margin-bottom: -25px;
+    margin-bottom: -40px;
 }
 
 .popfoodcard {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 35px 15px 15px 15px;
+    padding: 50px 15px 15px 15px;
 }
 
 .itemdescription {
