@@ -63,7 +63,7 @@ const Itempopup = () => {
                     ? <p className='notavailable'>{availmsg}</p>
                     : <button className="addbutton">ADD</button>
                 }
-                {customisable || addon > 0 &&
+                {(customisable || addon) > 0 &&
                     <p className='custotext'>Customisable</p>
                 }
                 </div>

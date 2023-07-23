@@ -206,7 +206,7 @@ const Itemlisting = () => {
                                                 ? <p className='notavailable'>{eachfooditem.availablity.availability_message}</p>
                                                 : <button className="addbutton">ADD</button>
                                             }
-                                            {eachfooditem.customisation_steps.length || eachfooditem.addon_group.length > 0 &&
+                                            {(eachfooditem.customisation_steps.length || eachfooditem.addon_group.length) > 0 &&
                                                 <p className='custotext'>Customisable</p>
                                             }
                                         </div>
@@ -294,7 +294,7 @@ const Itemlisting = () => {
                                                             ? <p className='notavailable'>{eachfooditem.availablity.availability_message}</p>
                                                             : <button className="addbutton">ADD</button>
                                                         }
-                                                        {eachfooditem.customisation_steps.length || eachfooditem.addon_group.length > 0 &&
+                                                        {(eachfooditem.customisation_steps.length || eachfooditem.addon_group.length) > 0 &&
                                                             <p className='custotext'>Customisable</p>
                                                         }
                                                     </div>
