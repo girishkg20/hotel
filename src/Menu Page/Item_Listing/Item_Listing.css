@@ -9,6 +9,15 @@
     }
 }
 
+@keyframes rotationanimation {
+    0% {
+        rotate: 270deg;
+    }
+    100% {
+        rotate: 90deg;
+    }
+}
+
 .fullmenu {
     background-color: #F1F1F1;
     padding-bottom: 15px;
@@ -36,6 +45,35 @@
     font-size: 20px;
     font-weight: 800;
     text-transform: capitalize;
+    padding-bottom: 15px;
+    width: 100%;
+}
+
+.catheadcard {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.subcatheadcard {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #EBEBEB;
+    padding: 10px 5px 10px 0;
+}
+
+.catbutton {
+    height: 16px;
+    rotate: 270deg;
+}
+
+.catbuttonbox {
+    padding: 0 5px 8px 5px;
+}
+
+.subcatbuttonbox {
+    padding-top: 5px;
 }
 
 .catfixed {
@@ -45,6 +83,7 @@
     justify-content: center;
     visibility: hidden;
     z-index: 1;
+    margin-top: -27px;
 }
 
 .catname {
@@ -61,12 +100,11 @@
 
 .subcat {
     margin: 0;
-    padding: 10px 0 10px 0;
     font-size: 16px;
     font-weight: 800;
     color: #787878;
-    border-top: 1px solid #EBEBEB;
     text-transform: capitalize;
+    width: 100%;
 }
 
 .foodcard {

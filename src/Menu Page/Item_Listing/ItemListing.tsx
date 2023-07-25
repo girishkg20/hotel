@@ -83,6 +83,23 @@ const Itemlisting = () => {
 
     const navigate = useNavigate();
     const {itemid} = useParams();
+
+    const openclose = (fid:string, iid:string) => {
+        const foodcard = document.getElementById(fid);
+        const foodcardbtn = document.getElementById(iid);
+
+        if (foodcard!.style.display == 'none') {
+            foodcard!.style.display = ''
+            foodcardbtn!.style.rotate = '270deg'
+            foodcardbtn!.style.removeProperty('animation')
+        }
+        else{
+            foodcard!.style.display = 'none'
+            foodcardbtn!.style.rotate = '90deg'
+            foodcardbtn!.style.animation = 'rotationanimation 0.5s ease'
+        }
+    };
+
     
     const generateData = (
             iimage: any,
@@ -127,184 +144,197 @@ const Itemlisting = () => {
                     Menu[eachcatagorykey].count > 0 && (
                         <div className="catagory" key={`catagory-${eachcatagorykey}`}>
 
-                            <h3 className="cat" id={Menu[eachcatagorykey].name}>{Menu[eachcatagorykey].name}</h3>
-                            <div className='catfixed' id={eachcatagorykey}>
-                                <h3 className='catname'>{Menu[eachcatagorykey].name}</h3>
-                            </div>
-
-                            {
-                                Menu[eachcatagorykey].food_items &&
-
-                                Menu[eachcatagorykey].food_items.map((eachfooditem: any) => (
-                                    <div className="foodcard" key={`foodcard-${eachcatagorykey}-${eachfooditem.name}`}>
-
-                                        <div className="fooditemside">
-                                            <img className="vegstatus" src={
-                                                eachfooditem.veg_status == "veg" ? veg :
-                                                eachfooditem.veg_status == "egg" ? egg : non_veg
-                                            } alt="Veg Status" />
-                                            <p className="itemname">{eachfooditem.name}</p>
-
-                                            {
-                                                eachfooditem.price == 0 ?
-                                                    <div className='pricebox'>
-                                                        <p className="itemprice">₹ {Math.round(eachfooditem.default_price)}</p>
-                                                        <p className="displayprice">₹ {Math.round(eachfooditem.default_price - eachfooditem.discounted_price_rupees)}</p>
-                                                    </div>:
-                                                eachfooditem.hasOwnProperty('offer_price')?
-                                                    <div className='pricebox'>
-                                                        <p className="itemprice">₹ {Math.round(eachfooditem.price)}</p>
-                                                        <p className="displayprice">₹ {Math.round(eachfooditem.offer_price)}</p>
-                                                    </div>:
-                                                    <div className='pricebox'>
-                                                        <p className="displayprice">₹ {Math.round(eachfooditem.price)}</p>
-                                                    </div>
-                                            }
-
-                                            <p className="morebutton" onClick={() =>
-                                                    generateData(
-                                                        eachfooditem.food_image,
-                                                        eachfooditem.name,
-                                                        eachfooditem.veg_status,
-                                                        eachfooditem.price,
-                                                        eachfooditem.offer_price,
-                                                        eachfooditem.default_price,
-                                                        eachfooditem.discounted_price_rupees,
-                                                        eachfooditem.description,
-                                                        eachfooditem.availablity.availability,
-                                                        eachfooditem.availablity.availability_message,
-                                                        eachfooditem.customisation_steps.length,
-                                                        eachfooditem.addon_group.length,
-                                                        eachfooditem._id
-                                                    )
-                                                }>
-                                                More Details <img className="arrowright" src={right} alt="" />
-                                            </p>
-                                        </div>
-
-                                        <div className="foodimageside">
-                                            {eachfooditem.food_image && (
-                                                <img className="foodimage" loading='lazy' style={eachfooditem.availablity.availability == false ? {filter: 'grayscale(80%)'}:{}} src={eachfooditem.food_image} alt="Food Image" onClick={() =>
-                                                    generateData(
-                                                        eachfooditem.food_image,
-                                                        eachfooditem.name,
-                                                        eachfooditem.veg_status,
-                                                        eachfooditem.price,
-                                                        eachfooditem.offer_price,
-                                                        eachfooditem.default_price,
-                                                        eachfooditem.discounted_price_rupees,
-                                                        eachfooditem.description,
-                                                        eachfooditem.availablity.availability,
-                                                        eachfooditem.availablity.availability_message,
-                                                        eachfooditem.customisation_steps.length,
-                                                        eachfooditem.addon_group.length,
-                                                        eachfooditem._id
-                                                    )
-                                                }/>
-                                            )}
-                                            {eachfooditem.availablity.availability == false
-                                                ? <p className='notavailable'>{eachfooditem.availablity.availability_message}</p>
-                                                : <button className="addbutton">ADD</button>
-                                            }
-                                            {(eachfooditem.customisation_steps.length || eachfooditem.addon_group.length) > 0 &&
-                                                <p className='custotext'>Customisable</p>
-                                            }
-                                        </div>
-
-                                    </div>
-                                ))
+                            {Menu[eachcatagorykey].food_items.length > 0
+                                ?<div className='catheadcard' onClick={() => openclose(`allfooditems-${eachcatagorykey}`,`catbutton-${eachcatagorykey}`)}>
+                                    <h3 className="cat" id={Menu[eachcatagorykey].name}>{Menu[eachcatagorykey].name}</h3>
+                                    <div className='catbuttonbox'><img id={`catbutton-${eachcatagorykey}`} className="catbutton" src={right} alt=">"/></div>
+                                </div>
+                                :<h3 className="cat" id={Menu[eachcatagorykey].name}>{Menu[eachcatagorykey].name}</h3>
                             }
+                            <div id={`allfooditems-${eachcatagorykey}`}>
+                                <div className='catfixed' id={eachcatagorykey}>
+                                    <h3 className='catname'>{Menu[eachcatagorykey].name}</h3>
+                                </div>
 
-                            {
-                                Menu[eachcatagorykey].subcategories &&
+                                {
+                                    Menu[eachcatagorykey].food_items &&
 
-                                Object.keys(Menu[eachcatagorykey].subcategories).map((eachsubcategorieskey) => (
-                                    Menu[eachcatagorykey].subcategories[eachsubcategorieskey].food_items.length > 0 && (
-                                        <React.Fragment key={`subcat-${eachcatagorykey}-${eachsubcategorieskey}`}>
-                                            <h4 className="subcat">{Menu[eachcatagorykey].subcategories[eachsubcategorieskey].name}</h4>
+                                    Menu[eachcatagorykey].food_items.map((eachfooditem: any) => (
+                                        <div className="foodcard" key={`foodcard-${eachcatagorykey}-${eachfooditem.name}`}>
 
-                                            {Menu[eachcatagorykey].subcategories[eachsubcategorieskey].food_items.map((eachfooditem: any) => (
-                                                <div className="foodcard" key={`foodcard-${eachcatagorykey}-${eachsubcategorieskey}-${eachfooditem.name}`}>
+                                            <div className="fooditemside">
+                                                <img className="vegstatus" src={
+                                                    eachfooditem.veg_status == "veg" ? veg :
+                                                    eachfooditem.veg_status == "egg" ? egg : non_veg
+                                                } alt="Veg Status" />
+                                                <p className="itemname">{eachfooditem.name}</p>
 
-                                                    <div className="fooditemside">
-                                                        <img className="vegstatus" src={
-                                                            eachfooditem.veg_status == "veg" ? veg :
-                                                            eachfooditem.veg_status == "egg" ? egg : non_veg
-                                                        } alt="Veg Status"/>
-                                                        <p className="itemname">{eachfooditem.name}</p>
-                                                        
-                                                        {
-                                                            eachfooditem.price == 0 ?
-                                                                <div className='pricebox'>
-                                                                    <p className="itemprice">₹ {Math.round(eachfooditem.default_price)}</p>
-                                                                    <p className="displayprice">₹ {Math.round(eachfooditem.default_price - eachfooditem.discounted_price_rupees)}</p>
-                                                                </div>:
-                                                            eachfooditem.hasOwnProperty('offer_price')?
-                                                                <div className='pricebox'>
-                                                                    <p className="itemprice">₹ {Math.round(eachfooditem.price)}</p>
-                                                                    <p className="displayprice">₹ {Math.round(eachfooditem.offer_price)}</p>
-                                                                </div>:
-                                                                <div className='pricebox'>
-                                                                    <p className="displayprice">₹ {Math.round(eachfooditem.price)}</p>
-                                                                </div>
-                                                        }
+                                                {
+                                                    eachfooditem.price == 0 ?
+                                                        <div className='pricebox'>
+                                                            <p className="itemprice">₹ {Math.round(eachfooditem.default_price)}</p>
+                                                            <p className="displayprice">₹ {Math.round(eachfooditem.default_price - eachfooditem.discounted_price_rupees)}</p>
+                                                        </div>:
+                                                    eachfooditem.hasOwnProperty('offer_price')?
+                                                        <div className='pricebox'>
+                                                            <p className="itemprice">₹ {Math.round(eachfooditem.price)}</p>
+                                                            <p className="displayprice">₹ {Math.round(eachfooditem.offer_price)}</p>
+                                                        </div>:
+                                                        <div className='pricebox'>
+                                                            <p className="displayprice">₹ {Math.round(eachfooditem.price)}</p>
+                                                        </div>
+                                                }
 
-                                                        <p className="morebutton" onClick={() =>
-                                                            generateData(
-                                                                eachfooditem.food_image,
-                                                                eachfooditem.name,
-                                                                eachfooditem.veg_status,
-                                                                eachfooditem.price,
-                                                                eachfooditem.offer_price,
-                                                                eachfooditem.default_price,
-                                                                eachfooditem.discounted_price_rupees,
-                                                                eachfooditem.description,
-                                                                eachfooditem.availablity.availability,
-                                                                eachfooditem.availablity.availability_message,
-                                                                eachfooditem.customisation_steps.length,
-                                                                eachfooditem.addon_group.length,
-                                                                eachfooditem._id
-                                                            )
-                                                        }>
-                                                            More Details <img className="arrowright" src={right} alt="" />
-                                                        </p>
-                                                    </div>
+                                                <p className="morebutton" onClick={() =>
+                                                        generateData(
+                                                            eachfooditem.food_image,
+                                                            eachfooditem.name,
+                                                            eachfooditem.veg_status,
+                                                            eachfooditem.price,
+                                                            eachfooditem.offer_price,
+                                                            eachfooditem.default_price,
+                                                            eachfooditem.discounted_price_rupees,
+                                                            eachfooditem.description,
+                                                            eachfooditem.availablity.availability,
+                                                            eachfooditem.availablity.availability_message,
+                                                            eachfooditem.customisation_steps.length,
+                                                            eachfooditem.addon_group.length,
+                                                            eachfooditem._id
+                                                        )
+                                                    }>
+                                                    More Details <img className="arrowright" src={right} alt="" />
+                                                </p>
+                                            </div>
 
-                                                    <div className="foodimageside">
-                                                        {eachfooditem.food_image && (
-                                                            <img className="foodimage" loading='lazy' style={eachfooditem.availablity.availability == false ? {filter: 'grayscale(80%)'}:{}} src={eachfooditem.food_image} alt="Food Image" onClick={() =>
-                                                                generateData(
-                                                                    eachfooditem.food_image,
-                                                                    eachfooditem.name,
-                                                                    eachfooditem.veg_status,
-                                                                    eachfooditem.price,
-                                                                    eachfooditem.offer_price,
-                                                                    eachfooditem.default_price,
-                                                                    eachfooditem.discounted_price_rupees,
-                                                                    eachfooditem.description,
-                                                                    eachfooditem.availablity.availability,
-                                                                    eachfooditem.availablity.availability_message,
-                                                                    eachfooditem.customisation_steps.length,
-                                                                    eachfooditem.addon_group.length,
-                                                                    eachfooditem._id
-                                                                )
-                                                            }/>
-                                                        )}
-                                                        {eachfooditem.availablity.availability == false
-                                                            ? <p className='notavailable'>{eachfooditem.availablity.availability_message}</p>
-                                                            : <button className="addbutton">ADD</button>
-                                                        }
-                                                        {(eachfooditem.customisation_steps.length || eachfooditem.addon_group.length) > 0 &&
-                                                            <p className='custotext'>Customisable</p>
-                                                        }
-                                                    </div>
+                                            <div className="foodimageside">
+                                                {eachfooditem.food_image && (
+                                                    <img className="foodimage" loading='lazy' style={eachfooditem.availablity.availability == false ? {filter: 'grayscale(80%)'}:{}} src={eachfooditem.food_image} alt="Food Image" onClick={() =>
+                                                        generateData(
+                                                            eachfooditem.food_image,
+                                                            eachfooditem.name,
+                                                            eachfooditem.veg_status,
+                                                            eachfooditem.price,
+                                                            eachfooditem.offer_price,
+                                                            eachfooditem.default_price,
+                                                            eachfooditem.discounted_price_rupees,
+                                                            eachfooditem.description,
+                                                            eachfooditem.availablity.availability,
+                                                            eachfooditem.availablity.availability_message,
+                                                            eachfooditem.customisation_steps.length,
+                                                            eachfooditem.addon_group.length,
+                                                            eachfooditem._id
+                                                        )
+                                                    }/>
+                                                )}
+                                                {eachfooditem.availablity.availability == false
+                                                    ? <p className='notavailable'>{eachfooditem.availablity.availability_message}</p>
+                                                    : <button className="addbutton">ADD</button>
+                                                }
+                                                {(eachfooditem.customisation_steps.length || eachfooditem.addon_group.length) > 0 &&
+                                                    <p className='custotext'>Customisable</p>
+                                                }
+                                            </div>
 
+                                        </div>
+                                    ))
+                                }
+
+                                {
+                                    Menu[eachcatagorykey].subcategories &&
+
+                                    Object.keys(Menu[eachcatagorykey].subcategories).map((eachsubcategorieskey) => (
+                                        Menu[eachcatagorykey].subcategories[eachsubcategorieskey].food_items.length > 0 && (
+                                            <React.Fragment key={`subcat-${eachcatagorykey}-${eachsubcategorieskey}`}>
+
+                                                <div className='subcatheadcard' onClick={() => openclose(`allfooditems-${eachsubcategorieskey}`, `catbutton-${eachsubcategorieskey}`)}>
+                                                    <h4 className="subcat">{Menu[eachcatagorykey].subcategories[eachsubcategorieskey].name}</h4>
+                                                    <div className='subcatbuttonbox'><img id={`catbutton-${eachsubcategorieskey}`} className="catbutton" src={right} alt=">"/></div>
                                                 </div>
-                                            ))}
-                                        </React.Fragment>
-                                    )
-                                ))
-                            }
+                                                <div id={`allfooditems-${eachsubcategorieskey}`}>
+                                                    {Menu[eachcatagorykey].subcategories[eachsubcategorieskey].food_items.map((eachfooditem: any) => (
+                                                        <div className="foodcard" key={`foodcard-${eachcatagorykey}-${eachsubcategorieskey}-${eachfooditem.name}`}>
+
+                                                            <div className="fooditemside">
+                                                                <img className="vegstatus" src={
+                                                                    eachfooditem.veg_status == "veg" ? veg :
+                                                                    eachfooditem.veg_status == "egg" ? egg : non_veg
+                                                                } alt="Veg Status"/>
+                                                                <p className="itemname">{eachfooditem.name}</p>
+                                                                
+                                                                {
+                                                                    eachfooditem.price == 0 ?
+                                                                        <div className='pricebox'>
+                                                                            <p className="itemprice">₹ {Math.round(eachfooditem.default_price)}</p>
+                                                                            <p className="displayprice">₹ {Math.round(eachfooditem.default_price - eachfooditem.discounted_price_rupees)}</p>
+                                                                        </div>:
+                                                                    eachfooditem.hasOwnProperty('offer_price')?
+                                                                        <div className='pricebox'>
+                                                                            <p className="itemprice">₹ {Math.round(eachfooditem.price)}</p>
+                                                                            <p className="displayprice">₹ {Math.round(eachfooditem.offer_price)}</p>
+                                                                        </div>:
+                                                                        <div className='pricebox'>
+                                                                            <p className="displayprice">₹ {Math.round(eachfooditem.price)}</p>
+                                                                        </div>
+                                                                }
+
+                                                                <p className="morebutton" onClick={() =>
+                                                                    generateData(
+                                                                        eachfooditem.food_image,
+                                                                        eachfooditem.name,
+                                                                        eachfooditem.veg_status,
+                                                                        eachfooditem.price,
+                                                                        eachfooditem.offer_price,
+                                                                        eachfooditem.default_price,
+                                                                        eachfooditem.discounted_price_rupees,
+                                                                        eachfooditem.description,
+                                                                        eachfooditem.availablity.availability,
+                                                                        eachfooditem.availablity.availability_message,
+                                                                        eachfooditem.customisation_steps.length,
+                                                                        eachfooditem.addon_group.length,
+                                                                        eachfooditem._id
+                                                                    )
+                                                                }>
+                                                                    More Details <img className="arrowright" src={right} alt="" />
+                                                                </p>
+                                                            </div>
+
+                                                            <div className="foodimageside">
+                                                                {eachfooditem.food_image && (
+                                                                    <img className="foodimage" loading='lazy' style={eachfooditem.availablity.availability == false ? {filter: 'grayscale(80%)'}:{}} src={eachfooditem.food_image} alt="Food Image" onClick={() =>
+                                                                        generateData(
+                                                                            eachfooditem.food_image,
+                                                                            eachfooditem.name,
+                                                                            eachfooditem.veg_status,
+                                                                            eachfooditem.price,
+                                                                            eachfooditem.offer_price,
+                                                                            eachfooditem.default_price,
+                                                                            eachfooditem.discounted_price_rupees,
+                                                                            eachfooditem.description,
+                                                                            eachfooditem.availablity.availability,
+                                                                            eachfooditem.availablity.availability_message,
+                                                                            eachfooditem.customisation_steps.length,
+                                                                            eachfooditem.addon_group.length,
+                                                                            eachfooditem._id
+                                                                        )
+                                                                    }/>
+                                                                )}
+                                                                {eachfooditem.availablity.availability == false
+                                                                    ? <p className='notavailable'>{eachfooditem.availablity.availability_message}</p>
+                                                                    : <button className="addbutton">ADD</button>
+                                                                }
+                                                                {(eachfooditem.customisation_steps.length || eachfooditem.addon_group.length) > 0 &&
+                                                                    <p className='custotext'>Customisable</p>
+                                                                }
+                                                            </div>
+
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </React.Fragment>
+                                        )
+                                    ))
+                                }
+                            </div>
                         </div>
                     )
                 ))}
