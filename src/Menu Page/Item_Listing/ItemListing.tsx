@@ -112,6 +112,21 @@ const Itemlisting = () => {
             document.body.style.overflow = 'scroll'
         }
     };
+
+    const scrollto = (id:string) => {
+        const headerheight = document.getElementById('mpheader')!.offsetHeight;
+        const catdiv = document.getElementById(id);
+        const catdivtop = catdiv!.getBoundingClientRect().top + window.scrollY;
+        
+        if (catdivtop) {
+            window.scrollTo({
+                top: catdivtop! - 75 - headerheight,
+                behavior: 'smooth'
+            });
+        }
+
+        fabopenclose();
+    }
     
     const handlePopstate = () => {
         document.body.style.overflow = "scroll";
@@ -364,7 +379,9 @@ const Itemlisting = () => {
 
                         {Object.keys(Menu).map((eachcatagorykey) => (
                             Menu[eachcatagorykey].count > 0 && (
-                                <div className='fabcat'>{Menu[eachcatagorykey].name}</div>
+                                <div className='fabcat' onClick={()=>scrollto(Menu[eachcatagorykey].name)}>
+                                    {Menu[eachcatagorykey].name}
+                                </div>
                             )
                         ))}
                     </div>
