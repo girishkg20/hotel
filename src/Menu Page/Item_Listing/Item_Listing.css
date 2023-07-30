@@ -18,6 +18,17 @@
     }
 }
 
+@keyframes fabanimation {
+    0% {
+      opacity: 0;
+      transform: translateX(50%) translateY(50%) scale(0);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0) translateY(0) scale(1);
+    }
+}
+
 .fullmenu {
     background-color: #F1F1F1;
     padding-bottom: 15px;
@@ -227,3 +238,64 @@
     width: 170px;
 }
 
+.fabset {
+    display: none;
+}
+
+.menufab {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background: white;
+    width: 75%;
+    height: 50%;
+    overflow: hidden;
+    overflow-y: scroll;
+    border-radius: 25px;
+    z-index: 3;
+    animation: fabanimation 0.3s ease-out;
+}
+
+.fabheader {
+    position: sticky;
+    top: 0;
+    margin: 0;
+    padding: 15px;
+    border-bottom: 1px solid #EBEBEB;
+    background-color: white;
+    font-size: 20px;
+    font-weight: 800;
+    text-align: center;
+}
+
+.fabcat {
+    padding: 15px;
+    border-top: 1px solid #EBEBEB;
+    font-size: 16px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-transform: capitalize;
+}
+
+.fabbutton {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    width: 88px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #7427F5;
+    display: flex;
+    color: white;
+    font-size: 20px;
+    padding: 10px 20px;
+    border-radius: 25px;
+    box-shadow: 1px 2px 8px 1px rgba(0, 0, 0, 0.4);
+}
+
+.menulogo {
+    height: 30px;
+}

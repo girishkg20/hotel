@@ -61,10 +61,10 @@ const Itempopup = () => {
                 <div className="foodimageside">
                 {avail == false
                     ? <p className='notavailable'>{availmsg}</p>
-                    : <button className="addbutton">ADD</button>
-                }
-                {(customisable || addon) > 0 &&
-                    <p className='custotext'>Customisable</p>
+                    : <><button className="addbutton">ADD</button>
+                        {(customisable || addon) > 0 &&
+                        <p className='custotext'>Customisable</p>}
+                    </>
                 }
                 </div>
             </div>

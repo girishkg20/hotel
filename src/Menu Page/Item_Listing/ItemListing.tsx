@@ -2,7 +2,8 @@ import './Item_Listing.css';
 import veg from './Source/veg.png';
 import egg from './Source/egg.png';
 import non_veg from './Source/non-veg.png';
-import right from './Source/right.png'
+import right from './Source/right.png';
+import menulogo from './Source/menu.png';
 import { useContext, useEffect, useState } from 'react';
 
 import Menupagedata from '../Menu_Page_API/MenuPageData';
@@ -99,6 +100,24 @@ const Itemlisting = () => {
             foodcardbtn!.style.animation = 'rotationanimation 0.5s ease'
         }
     };
+
+    const fabopenclose = () => {
+        let fab = document.getElementById('fabset');
+
+        if (fab!.style.display != 'flex') {
+            fab!.style.display = 'flex'
+            document.body.style.overflow = "hidden"
+        }else{
+            fab!.style.display = 'none'
+            document.body.style.overflow = 'scroll'
+        }
+    };
+    
+    const handlePopstate = () => {
+        document.body.style.overflow = "scroll";
+        window.removeEventListener("popstate", handlePopstate);
+      };
+    window.addEventListener("popstate", handlePopstate);
 
     
     const generateData = (
@@ -228,10 +247,10 @@ const Itemlisting = () => {
                                                 )}
                                                 {eachfooditem.availablity.availability == false
                                                     ? <p className='notavailable'>{eachfooditem.availablity.availability_message}</p>
-                                                    : <button className="addbutton">ADD</button>
-                                                }
-                                                {(eachfooditem.customisation_steps.length || eachfooditem.addon_group.length) > 0 &&
-                                                    <p className='custotext'>Customisable</p>
+                                                    : <><button className="addbutton">ADD</button>
+                                                        {(eachfooditem.customisation_steps.length || eachfooditem.addon_group.length) > 0 &&
+                                                            (<p className='custotext'>Customisable</p>)}
+                                                    </>
                                                 }
                                             </div>
 
@@ -320,10 +339,10 @@ const Itemlisting = () => {
                                                                 )}
                                                                 {eachfooditem.availablity.availability == false
                                                                     ? <p className='notavailable'>{eachfooditem.availablity.availability_message}</p>
-                                                                    : <button className="addbutton">ADD</button>
-                                                                }
-                                                                {(eachfooditem.customisation_steps.length || eachfooditem.addon_group.length) > 0 &&
-                                                                    <p className='custotext'>Customisable</p>
+                                                                    : <><button className="addbutton">ADD</button>
+                                                                        {(eachfooditem.customisation_steps.length || eachfooditem.addon_group.length) > 0 &&
+                                                                        <p className='custotext'>Customisable</p>}
+                                                                    </>
                                                                 }
                                                             </div>
 
@@ -338,6 +357,23 @@ const Itemlisting = () => {
                         </div>
                     )
                 ))}
+                <div id='fabset' className='fabset'>
+                    <div className='popoverlay' onClick={() => fabopenclose()}></div>
+                    <div className='menufab'>
+                        <h3 className='fabheader'>- Menu -</h3>
+
+                        {Object.keys(Menu).map((eachcatagorykey) => (
+                            Menu[eachcatagorykey].count > 0 && (
+                                <div className='fabcat'>{Menu[eachcatagorykey].name}</div>
+                            )
+                        ))}
+                    </div>
+                </div>
+                <div className='fabbutton' onClick={() => fabopenclose()}>
+                    <img className='menulogo' src={menulogo} alt="Menu"/>
+                    <p>Menu</p>
+                </div>
+                
             </div>
             <Outlet/>
         </></Menupagedata.Provider>
