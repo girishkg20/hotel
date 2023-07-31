@@ -273,15 +273,22 @@
     border-top: 1px solid #EBEBEB;
     font-size: 16px;
     font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+}
+
+.fabcatname {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     text-transform: capitalize;
+    padding-right: 15px;
 }
 
 .catactive {
     color: #7427F5;
     font-weight: 800;
+    background-color: #F1F1F1;
 }
 
 .fabbutton {

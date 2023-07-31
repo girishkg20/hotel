@@ -191,14 +191,14 @@ const Itemlisting = () => {
 
                             {Menu[eachcatagorykey].food_items.length > 0
                                 ?<div className='catheadcard' onClick={() => openclose(`allfooditems-${eachcatagorykey}`,`catbutton-${eachcatagorykey}`)}>
-                                    <h3 className="cat" id={Menu[eachcatagorykey].name}>{Menu[eachcatagorykey].name}</h3>
+                                    <h3 className="cat" id={Menu[eachcatagorykey].name}>{`${Menu[eachcatagorykey].name} (${Menu[eachcatagorykey].count})`}</h3>
                                     <div className='catbuttonbox'><img id={`catbutton-${eachcatagorykey}`} className="catbutton" src={right} alt=">"/></div>
                                 </div>
-                                :<h3 className="cat" id={Menu[eachcatagorykey].name}>{Menu[eachcatagorykey].name}</h3>
+                                :<h3 className="cat" id={Menu[eachcatagorykey].name}>{`${Menu[eachcatagorykey].name} (${Menu[eachcatagorykey].count})`}</h3>
                             }
                             <div id={`allfooditems-${eachcatagorykey}`}>
                                 <div className='catfixed' id={eachcatagorykey}>
-                                    <h3 className='catname'>{Menu[eachcatagorykey].name}</h3>
+                                    <h3 className='catname'>{`${Menu[eachcatagorykey].name} (${Menu[eachcatagorykey].count})`}</h3>
                                 </div>
 
                                 {
@@ -292,7 +292,7 @@ const Itemlisting = () => {
                                             <React.Fragment key={`subcat-${eachcatagorykey}-${eachsubcategorieskey}`}>
 
                                                 <div className='subcatheadcard' onClick={() => openclose(`allfooditems-${eachsubcategorieskey}`, `catbutton-${eachsubcategorieskey}`)}>
-                                                    <h4 className="subcat">{Menu[eachcatagorykey].subcategories[eachsubcategorieskey].name}</h4>
+                                                    <h4 className="subcat">{`${Menu[eachcatagorykey].subcategories[eachsubcategorieskey].name} (${Menu[eachcatagorykey].subcategories[eachsubcategorieskey].food_items.length})`}</h4>
                                                     <div className='subcatbuttonbox'><img id={`catbutton-${eachsubcategorieskey}`} className="catbutton" src={right} alt=">"/></div>
                                                 </div>
                                                 <div id={`allfooditems-${eachsubcategorieskey}`}>
@@ -394,7 +394,8 @@ const Itemlisting = () => {
                                     scrollto(Menu[eachcatagorykey].name);
                                     activefab(`fab-${eachcatagorykey}`);
                                     }}>
-                                    {Menu[eachcatagorykey].name}
+                                    <div className='fabcatname'>{Menu[eachcatagorykey].name}</div>
+                                    <div>{Menu[eachcatagorykey].count}</div>
                                 </div>
                             )
                         ))}
