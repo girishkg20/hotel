@@ -248,7 +248,7 @@
     right: 25px;
     background: white;
     width: 75%;
-    height: 50%;
+    max-height: 50%;
     overflow: hidden;
     overflow-y: scroll;
     border-radius: 25px;
@@ -277,6 +277,11 @@
     overflow: hidden;
     text-overflow: ellipsis;
     text-transform: capitalize;
+}
+
+.catactive {
+    color: #7427F5;
+    font-weight: 800;
 }
 
 .fabbutton {

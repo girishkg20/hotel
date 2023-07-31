@@ -64,10 +64,14 @@ const Itemlisting = () => {
                 if (document.getElementById(eachcatagorykey) && document.getElementById(eachcatagorykey)!.style && document.getElementById(Menu[eachcatagorykey].name) && document.getElementById(Menu[eachcatagorykey].name)!.style) {
 
                     if (window.scrollY > document.getElementById(Menu[eachcatagorykey].name)!.offsetTop - 90) {
-                        document.getElementById(eachcatagorykey)!.style.visibility = 'visible'; 
+                        document.getElementById(eachcatagorykey)!.style.visibility = 'visible';
                     } else {
                         document.getElementById(eachcatagorykey)!.style.visibility = 'hidden';
                     };
+
+                    window.scrollY > document.getElementById(Menu[eachcatagorykey].name)!.offsetTop - 145 && (
+                        activefab(`fab-${eachcatagorykey}`)
+                    );
 
                 };
                 
@@ -120,13 +124,20 @@ const Itemlisting = () => {
         
         if (catdivtop) {
             window.scrollTo({
-                top: catdivtop! - 75 - headerheight,
+                top: catdivtop! - 80 - headerheight,
                 behavior: 'smooth'
             });
         }
 
         fabopenclose();
-    }
+    };
+
+    const activefab = (id: string) => {
+        const alreadyactivefab = document.querySelectorAll('.catactive');
+        alreadyactivefab.forEach((element:any) => {element.classList.remove('catactive')})
+
+        document.getElementById(id)!.classList.add('catactive');
+    };
     
     const handlePopstate = () => {
         document.body.style.overflow = "scroll";
@@ -379,7 +390,10 @@ const Itemlisting = () => {
 
                         {Object.keys(Menu).map((eachcatagorykey) => (
                             Menu[eachcatagorykey].count > 0 && (
-                                <div className='fabcat' onClick={()=>scrollto(Menu[eachcatagorykey].name)}>
+                                <div key={`fab-${eachcatagorykey}`} id={`fab-${eachcatagorykey}`} className='fabcat' onClick={() => {
+                                    scrollto(Menu[eachcatagorykey].name);
+                                    activefab(`fab-${eachcatagorykey}`);
+                                    }}>
                                     {Menu[eachcatagorykey].name}
                                 </div>
                             )
