@@ -23,6 +23,7 @@ const Menupage = () => {
     const [fssainumber, setfssainumber] = useState<any>("");
     const [area, setarea] = useState<any>();
     const [address, setaddress] = useState<any>();
+    const [restaurantimage, setrestaurantimage] = useState<any>();
     const navigate = useNavigate();
     
     useEffect(() => {
@@ -32,6 +33,7 @@ const Menupage = () => {
           setfssainumber(menu.merchant.fssi_certificate);
           setarea(menu.merchant.area_name);
           setaddress(menu.merchant.full_address);
+          setrestaurantimage(menu.merchant.original_cover_image);
         } else {
           setRestaurantname("Loading...");
         }
@@ -78,7 +80,7 @@ const Menupage = () => {
 
     const fixheader = () => {
 
-        if (window.scrollY > 35) {
+        if (window.scrollY > 55) {
             header!.classList.add('fixed')
             headertext!.style.display = "flex";
         }else{
@@ -116,7 +118,7 @@ const Menupage = () => {
             <img className='hsearchlogo' id='hsearchlogo' src={search} alt="search"/>
         </div>
 
-        <div className='menupagetop'><Merchantinfo/></div>
+        <div className='menupagetop' style={{backgroundImage: `url(${restaurantimage})`}}><Merchantinfo/></div>
                  
         <div id='msearchbar'><Menusearchbar/></div>
 

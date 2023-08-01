@@ -1,8 +1,9 @@
 .menupagetop {
-    background-color: #8d8d8d;
+    background-color: #EBEBEB;
     padding-bottom: 1px;
     border-radius: 0 0 33px 33px;
-    padding: 0 15px 15px 15px;
+    padding: 80px 15px 15px 15px;
+    background-size: cover;
 }
 
 .mpheader {
@@ -12,13 +13,16 @@
     justify-content: space-between;
     position: sticky;
     top: 0;
-    background-color: rgba(241, 241, 241, 0.90);
+    margin-top: -60px;
     z-index: 2;
 }
 
 .backbutton {
     height: 20px;
-    padding: 10px 5px 10px 5px;
+    width: 24px;
+    padding: 10px 8px 10px 8px;
+    background-color: #F6F6F6;
+    border-radius: 20px;
 }
 
 .headertext {
@@ -26,9 +30,6 @@
     font-weight: bold;
     margin: 0;
     padding: 5px;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
     text-transform: capitalize;
     display: none;
 }
@@ -98,6 +99,9 @@
 .backtitle {
     display: flex;
     align-items: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .fssaicard {
