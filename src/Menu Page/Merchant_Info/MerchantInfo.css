@@ -3,10 +3,11 @@
     flex-direction: column;
     padding: 15px;
     border-radius: 23px;
-    background-color: rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(200px);
+    background-color: rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(100px);
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
     color: white;
+    text-shadow: 0 0 1px black;
 }
 
 .infoheading {
@@ -53,12 +54,13 @@
 
 .place {
     display: flex;
-    margin: 10px 0 0 0;
+    padding: 10px 0 0 0;
     align-items: center;
     justify-content: space-between;
     font-size: 14px;
     font-weight: 700;
     text-transform: capitalize;
+    
 }
 
 .location {
@@ -68,5 +70,6 @@
 
 .distance {
     display: flex;
+    font-size: 14px;
     text-transform: lowercase;
 }
