@@ -33,7 +33,7 @@ const Menupage = () => {
           setfssainumber(menu.merchant.fssi_certificate);
           setarea(menu.merchant.area_name);
           setaddress(menu.merchant.full_address);
-          setrestaurantimage(menu.merchant.original_cover_image);
+          setrestaurantimage(menu.merchant.cover_image);
         } else {
           setRestaurantname("Loading...");
         }
