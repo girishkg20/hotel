@@ -32,7 +32,7 @@ const Restaurantslisting = () => {
                   <img className="discountimg" src={discountimg} />
                   <p>{eachRestaurant.discount_banner}</p>
                 </div>
-
+                
                 <p>{eachRestaurant.delivery_discount_banner}</p>
               </div>
             ) : null}
