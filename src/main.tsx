@@ -8,6 +8,7 @@ import Homepage from './Home Page/HomePage.js';
 import Profile from './Profile/Profile.js';
 import Menupage1 from './Menu Page/MenuPage1';
 import Itempopup from './Menu Page/Item_Popup/ItemPopup';
+import Loginpopup from './Login Page/Login_Popup/LoginPopup';
 
 import { Link } from 'react-router-dom';
 
@@ -25,10 +26,16 @@ const Router = createBrowserRouter([
     {
       path: "/:hotelid/:merchantid",
       element: <Menupage1/>,
-      children: [{
-        path: "/:hotelid/:merchantid/:itemid",
-        element: <Itempopup/>
-      }]
+      children: [
+        {
+          path: "/:hotelid/:merchantid/:itemid",
+          element: <Itempopup/>
+        },
+        {
+          path: "/:hotelid/:merchantid/login",
+          element: <Loginpopup/>
+        }
+      ]
     },
     {
       path: "*",

@@ -1,9 +1,10 @@
-import './Item_Listing.css';
+import './ItemListing.css';
 import veg from './Source/veg.png';
 import egg from './Source/egg.png';
 import non_veg from './Source/non-veg.png';
 import right from './Source/right.png';
 import menulogo from './Source/menu.png';
+import Loginpage from '../../Login Page/LoginPage';
 import { useContext, useEffect, useState } from 'react';
 
 import Menupagedata from '../Menu_Page_API/MenuPageData';
@@ -145,6 +146,24 @@ const Itemlisting = () => {
       };
     window.addEventListener("popstate", handlePopstate);
 
+    let itemaddedcount = 0;
+
+    const increaseitem = () => {
+        itemaddedcount++
+        console.log(itemaddedcount);
+        
+    }
+
+    const decreaseitem = () => {
+        itemaddedcount--
+        console.log(itemaddedcount);
+        
+    }
+
+    const checkAuth = () => {
+        navigate("login");
+    }
+
     
     const generateData = (
             iimage: any,
@@ -273,7 +292,13 @@ const Itemlisting = () => {
                                                 )}
                                                 {eachfooditem.availablity.availability == false
                                                     ? <p className='notavailable'>{eachfooditem.availablity.availability_message}</p>
-                                                    : <><button className="addbutton">ADD</button>
+                                                    : <>
+                                                        <button className="addbutton" onClick={() => checkAuth()}>ADD</button>
+                                                        {/* <button className="addedbutton">
+                                                            <p className='addsub' onClick={() => decreaseitem()}>-</p>
+                                                            <p>{itemaddedcount}</p>
+                                                            <p className='addsub' onClick={() => increaseitem()}>+</p>
+                                                        </button> */}
                                                         {(eachfooditem.customisation_steps.length || eachfooditem.addon_group.length) > 0 &&
                                                             (<p className='custotext'>Customisable</p>)}
                                                     </>

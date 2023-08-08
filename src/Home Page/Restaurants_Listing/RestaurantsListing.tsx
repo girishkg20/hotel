@@ -41,7 +41,7 @@ const Restaurantslisting = () => {
               <p className="restaurantname">{eachRestaurant.name}</p>
 
               {eachRestaurant.rating > 0 ? (
-                <p className="rating">
+                <p className="rlrating">
                   <span className="rlstar">⭐ &nbsp;</span>
                   {eachRestaurant.rating.toFixed(1)}
                 </p>
@@ -70,7 +70,7 @@ const Restaurantslisting = () => {
 
               <div className="distanceholder">
                 <img className="locationpin" src={locationpin} />
-                <p className="distance">{`${eachRestaurant.distance} km`}</p>
+                <p className="rldistance">{`${eachRestaurant.distance} km`}</p>
               </div>
             </div>
           </div>

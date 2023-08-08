@@ -51,7 +51,7 @@
     font-size: 14px;
 }
 
-.rating {
+.rlrating {
     display: flex;
     align-items: center;
 }
@@ -111,7 +111,7 @@
     padding: 0 5px 0 5px;
 }
 
-.distance {
+.rldistance {
     font-size: 12px;
     font-weight: 800;
     white-space: nowrap;
