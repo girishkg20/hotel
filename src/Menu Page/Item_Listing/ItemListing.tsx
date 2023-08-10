@@ -161,7 +161,10 @@ const Itemlisting = () => {
     }
 
     const checkAuth = () => {
-        navigate("login");
+        const currentURL = window.location.pathname;
+        const loginURL = currentURL.replace(currentURL.split("/")[2],'auth/login')
+        
+        navigate(loginURL);
     }
 
     

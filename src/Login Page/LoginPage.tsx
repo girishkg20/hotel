@@ -1,10 +1,10 @@
-import Loginpopup from "./Login_Popup/LoginPopup"
+import Mainlogin from "./Main Login/MainLogin";
 
 
 const Loginpage = () => {
 
     return(<>
-        <Loginpopup/>
+        <Mainlogin/>
     </>)
 }
 export default Loginpage;

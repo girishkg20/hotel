@@ -1,0 +1,94 @@
+.loginpopover {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 15px;
+    background-color: white;
+    border-radius: 25px 25px 0 0;
+    overflow: hidden;
+    overflow-y: scroll;
+    box-shadow: 0px -30px 25px white;
+    /* max-height: 90%; */
+    min-height: 30%;
+    animation: popoverAnimation 0.3s ease;
+}
+
+.loginwelmsg {
+    font-size: 24px;
+    font-weight: 700;
+    text-align: center;
+    padding-bottom: 30px;
+    color: #787878;
+}
+
+.numberboxholder {
+    height: 65px;
+}
+
+.numberboxbar {
+    display: flex;
+    /* margin: 10px 15px 15px 15px; */
+    padding: 8px;
+    border: 1px solid #B2AEB9;
+    border-radius: 25px;
+    box-shadow: 0px 4px 9px rgba(0, 0, 0, 0.14);
+    background-color: #ffffff;
+}
+
+.numberbox {
+    flex: 1;
+    margin-right: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #383838;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.resetlogo {
+    width: 20px;
+    filter: drop-shadow(0px 4px 9px rgba(0, 0, 0, 0.36));
+}
+
+.telnoprefixholder {
+    display: flex;
+    align-items: center;
+    margin-right: 15px;
+    font-size: 24px;
+    font-weight: 700;
+    /* width: 20px; */
+    /* padding: 5px; */
+    /* background-color: #7527F5; */
+    /* border-radius: 15px; */
+    /* box-shadow: 0px 4px 9px rgba(0, 0, 0, 0.14); */
+}
+
+.prefixdivider {
+    height: 20px;
+    padding-left: 15px;
+}
+
+.telrbtn {
+    display: none;
+    align-items: center;
+    padding: 0;
+    margin-right: 5px;
+    border: none;
+    background-color: transparent;
+}
+
+.getotpbutton {
+    width: 100%;
+    height: 50px;
+    background-color: #7427F5;
+    border: 0;
+    border-radius: 25px;
+    color: white;
+    font-size: 20px;
+    font-weight: 600;
+    box-shadow: 1px 3px 3px 1px rgba(0, 0, 0, 0.15);
+}
