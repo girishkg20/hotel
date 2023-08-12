@@ -6,11 +6,8 @@
     padding: 15px;
     background-color: white;
     border-radius: 25px 25px 0 0;
-    overflow: hidden;
-    overflow-y: scroll;
     box-shadow: 0px -30px 25px white;
-    /* max-height: 90%; */
-    min-height: 30%;
+    height: 265px;
     animation: popoverAnimation 0.3s ease;
 }
 
@@ -91,4 +88,11 @@
     font-size: 20px;
     font-weight: 600;
     box-shadow: 1px 3px 3px 1px rgba(0, 0, 0, 0.15);
+}
+
+.TandC {
+    font-size: 12px;
+    text-align: center;
+    padding: 15px 0;
+    font-weight: 600;
 }

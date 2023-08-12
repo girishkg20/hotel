@@ -44,7 +44,7 @@ const Phno = () => {
 
 
     return (<>
-        <div className="loginpopover">
+        <div className="loginpopover" id='loginpopover'>
 
             <p className='loginwelmsg'>Let's get you started</p>
             
@@ -62,6 +62,11 @@ const Phno = () => {
             </div>
 
             <button className='getotpbutton'>Get OTP</button>
+
+            <p className='TandC'>By proceeding, I accept the<br/>
+                <a href='https://tipplr.in/terms-conditions/' target="_blank"><b>Terms & Conditions</b></a> and
+                <a href='https://tipplr.in/privacy-policy/' target='_blank'><b> Privacy Policy</b></a>
+            </p>
 
         </div>
     </>);
