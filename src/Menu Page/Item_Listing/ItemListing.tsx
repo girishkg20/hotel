@@ -36,6 +36,7 @@ const Itemlisting = () => {
     const [availmsg, setavailmsg] = useState<any>();
     const [customisable, setcustomisable] = useState<any>();
     const [addon, setaddon] = useState<any>();
+    const [variant, setvariant] = useState<any>();
 
     useEffect(() => {
 
@@ -181,6 +182,7 @@ const Itemlisting = () => {
             iavailmsg: any,
             icustomisable: any,
             iaddon: any,
+            ivariant: any,
             itemid: any
             ) => {
         setimage(iimage)
@@ -195,6 +197,7 @@ const Itemlisting = () => {
         setavailmsg(iavailmsg)
         setcustomisable(icustomisable)
         setaddon(iaddon)
+        setvariant(ivariant)
 
         navigate(itemid)
     }
@@ -202,7 +205,7 @@ const Itemlisting = () => {
 
 
 
-    return (<Menupagedata.Provider value={{image, item_name, veg_status, price, dprice, defprice, dcprice, description, avail, availmsg, customisable, addon}}>
+    return (<Menupagedata.Provider value={{image, item_name, veg_status, price, dprice, defprice, dcprice, description, avail, availmsg, customisable, addon, variant}}>
         <>
             <div className="fullmenu">
                 <div><h2 className="menuheading">- Menu -</h2></div>
@@ -266,6 +269,7 @@ const Itemlisting = () => {
                                                             eachfooditem.availablity.availability_message,
                                                             eachfooditem.customisation_steps.length,
                                                             eachfooditem.addon_group.length,
+                                                            eachfooditem.variant_group.length,
                                                             eachfooditem._id
                                                         )
                                                     }>
@@ -289,6 +293,7 @@ const Itemlisting = () => {
                                                             eachfooditem.availablity.availability_message,
                                                             eachfooditem.customisation_steps.length,
                                                             eachfooditem.addon_group.length,
+                                                            eachfooditem.variant_group.length,
                                                             eachfooditem._id
                                                         )
                                                     }/>
@@ -302,7 +307,7 @@ const Itemlisting = () => {
                                                             <p>{itemaddedcount}</p>
                                                             <p className='addsub' onClick={() => increaseitem()}>+</p>
                                                         </button> */}
-                                                        {(eachfooditem.customisation_steps.length || eachfooditem.addon_group.length) > 0 &&
+                                                        {(eachfooditem.customisation_steps.length || eachfooditem.addon_group.length || eachfooditem.variant_group.length) > 0 &&
                                                             (<p className='custotext'>Customisable</p>)}
                                                     </>
                                                 }
@@ -364,6 +369,7 @@ const Itemlisting = () => {
                                                                         eachfooditem.availablity.availability_message,
                                                                         eachfooditem.customisation_steps.length,
                                                                         eachfooditem.addon_group.length,
+                                                                        eachfooditem.variant_group.length,
                                                                         eachfooditem._id
                                                                     )
                                                                 }>
@@ -387,6 +393,7 @@ const Itemlisting = () => {
                                                                             eachfooditem.availablity.availability_message,
                                                                             eachfooditem.customisation_steps.length,
                                                                             eachfooditem.addon_group.length,
+                                                                            eachfooditem.variant_group.length,
                                                                             eachfooditem._id
                                                                         )
                                                                     }/>
@@ -394,7 +401,7 @@ const Itemlisting = () => {
                                                                 {eachfooditem.availablity.availability == false
                                                                     ? <p className='notavailable'>{eachfooditem.availablity.availability_message}</p>
                                                                     : <><button className="addbutton">ADD</button>
-                                                                        {(eachfooditem.customisation_steps.length || eachfooditem.addon_group.length) > 0 &&
+                                                                        {(eachfooditem.customisation_steps.length || eachfooditem.addon_group.length || eachfooditem.variant_group.length) > 0 &&
                                                                         <p className='custotext'>Customisable</p>}
                                                                     </>
                                                                 }

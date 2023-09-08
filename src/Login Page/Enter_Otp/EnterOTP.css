@@ -1,0 +1,107 @@
+.otppopover {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 15px 30px;
+    background-color: white;
+    border-radius: 25px 25px 0 0;
+    box-shadow: 0px -30px 25px white;
+    /* height: 300px; */
+    animation: popoverAnimation 0.3s ease;
+}
+
+.otpboxholder {
+    display: flex;
+    justify-content: center;
+}
+
+.otpbox {
+    width: 50px;
+    height: 50px;
+    margin: 0 8px;
+    text-align: center;
+    font-size: 22px;
+    font-weight: 800;
+    border: 1px solid #B2AEB9;
+    border-radius: 8px;
+}
+
+.otperror {
+    color: #D44222;
+    font-size: 12px;
+    text-align: center;
+    padding-top: 8px;
+    /* display: none; */
+}
+
+.otpmsgbox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px 0;
+}
+
+.otpmsg {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.phedit {
+    padding: 0 0 0 10px;
+    border: none;
+    background-color: transparent;
+    font-size: 14px;
+    font-weight: 600;
+    color: #7427F5;
+    text-decoration: underline;
+}
+
+.otpnrmsg {
+    color: #787878;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.otptimer {
+    text-align: center;
+    padding: 5px;
+    color: #42A606;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.resendotpbox {
+    display: flex;
+    justify-content: center
+}
+
+.resendotpbtn {
+    padding: 5px;
+    border: none;
+    background-color: transparent;
+    font-size: 14px;
+    font-weight: 600;
+    color: #7427F5;
+    text-decoration: underline;
+}
+
+.otpcontbutton {
+    width: 100%;
+    height: 50px;
+    padding: 0;
+    margin: 15px 0;
+    background-color: #7427F5;
+    border: 0;
+    border-radius: 25px;
+    color: white;
+    font-size: 20px;
+    font-weight: 600;
+    box-shadow: 1px 3px 3px 1px rgba(0, 0, 0, 0.15);
+}
+
+.otpcontbutton:disabled {
+    background-color: #9B9B98;
+    box-shadow: none;
+}

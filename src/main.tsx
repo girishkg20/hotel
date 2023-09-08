@@ -10,6 +10,7 @@ import Menupage1 from './Menu Page/MenuPage1';
 import Itempopup from './Menu Page/Item_Popup/ItemPopup';
 import Loginpage from './Login Page/LoginPage';
 import Phno from './Login Page/Enter_Ph_No/PhNo';
+import Enterotp from './Login Page/Enter_Otp/EnterOTP';
 
 import { Link } from 'react-router-dom';
 
@@ -41,6 +42,10 @@ const Router = createBrowserRouter([
         {
           path: "/:hotelid/auth/login",
           element: <Phno/>
+        },
+        {
+          path: "/:hotelid/auth/otp",
+          element: <Enterotp/>
         }
       ]
     },
