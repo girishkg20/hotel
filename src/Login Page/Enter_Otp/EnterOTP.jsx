@@ -97,9 +97,13 @@ const Enterotp = () => {
             setinvalidotperror(null)
         }
     }
-    // if (otp.length >= 4) {setinvalidotperror(null)}
 
-    // box.oninput = () => {otp.length >= 4 ? setinvalidotperror(null) : setinvalidotperror("")}
+    useEffect(() => {
+       if (otp.length >= 4) {
+            setinvalidotperror(null)
+        };
+        console.log(otp);
+    },[otp.length])
 
     //collect all OTP numbers
     const authOTP = () => {
