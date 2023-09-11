@@ -98,12 +98,12 @@ const Enterotp = () => {
         }
     }
 
-    useEffect(() => {
-       if (otp.length >= 4) {
-            setinvalidotperror(null)
-        };
-        console.log(otp);
-    },[otp.length])
+    // useEffect(() => {
+    //    if (otp.length >= 4) {
+    //         setinvalidotperror(null)
+    //     };
+    //     console.log(otp);
+    // },[otp.length])
 
     //collect all OTP numbers
     const authOTP = () => {
