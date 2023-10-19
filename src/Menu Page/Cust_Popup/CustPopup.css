@@ -1,0 +1,220 @@
+@keyframes popoverAnimation {
+    0% {
+      opacity: 0;
+      transform: translateY(100%);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+}
+
+@keyframes btnAnimation {
+    0% {
+        opacity: 0;
+        transform: scale(1.5);
+    }
+    50% {
+        opacity: 0.12;
+        transform: scale(2);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(1.5);
+    }
+}
+
+.custpopoverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 3;
+}
+
+.custpopover {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 4;
+    background-color: #F6F6F6;
+    border-radius: 25px 25px 0 0;
+    overflow: hidden;
+    overflow-y: scroll;
+    max-height: 90%;
+    animation: popoverAnimation 0.3s ease;
+}
+
+.shortimage {
+    height: 70px;
+    width: 70px;
+    border-radius: 17.5px;
+    margin-right: 15px;
+    object-fit: cover;
+}
+
+.custclosebutton {
+    position: fixed;
+    right: 10px;
+    margin-top: 10px;
+    width: 20px;
+    z-index: 1;
+}
+
+.custheader {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    background-color: white;
+    box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.08);
+    position: sticky;
+    top: 0;
+    border-radius: 0 0 25px 25px;
+}
+
+.custvegstatus {
+    width: 15px;
+}
+
+.custitemname {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 800;
+    text-transform: capitalize;
+}
+
+.addonscard {
+    background-color: white;
+    margin: 15px;
+    padding: 15px;
+    border-radius: 23px;
+    box-shadow: 0px 4px 11px 0px rgba(0, 0, 0, 0.08);
+}
+
+.addontitle {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 800;
+    text-transform: capitalize;
+}
+
+.custdescription {
+    font-size: 12px;
+    font-weight: 500;
+    color: #787878;
+    padding-top: 3px;
+}
+
+.addonstitleholder {
+    padding-bottom: 10px;
+    margin-bottom: -15px;
+    border-bottom: 1px solid #EBEBEB;
+}
+
+.addonnameprice {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1;
+}
+
+.addonname {
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: capitalize;
+}
+
+.addonprice {
+    font-size: 14px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.addonitem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 25px 0 0 0;
+}
+
+
+/* ///////////CheckBOX\\\\\\\\\\\\ */
+
+.addoncheck {
+    display: none;
+}
+   
+.checkmark {
+    height: 18px;
+    width: 18px;
+    outline: 1.5px solid #787878;
+    outline-offset: -1.5px;
+    border-radius: 5px;
+    margin-left: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.addoncheck:checked ~ .checkmark {
+    background-color: #7427F5;
+    outline: 0;
+}
+
+.tickmark {
+    display: none;
+}
+   
+.addoncheck:checked ~ .checkmark .tickmark {
+    display: block;
+}
+
+.checkboxbg {
+    margin-left: -18px;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    background-color: rgba(116, 39, 245, 1);
+    opacity: 0;
+}
+
+.addoncheck:checked ~ .checkboxbg {
+    animation: btnAnimation 0.3s ease-in;
+}
+
+/* ///////////CheckBOX\\\\\\\\\\\\ */
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.popfoodcard {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 50px 15px 15px 15px;
+}
+
+.itemdescription {
+    padding: 0 15px 35px 15px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #787878;
+}

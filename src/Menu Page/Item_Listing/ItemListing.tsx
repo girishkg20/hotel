@@ -4,13 +4,14 @@ import egg from './Source/egg.png';
 import non_veg from './Source/non-veg.png';
 import right from './Source/right.png';
 import menulogo from './Source/menu.png';
-import Loginpage from '../../Login Page/LoginPage';
+// import Loginpage from '../../Login Page/LoginPage';
 import { useContext, useEffect, useState } from 'react';
 
 import Menupagedata from '../Menu_Page_API/MenuPageData';
 import React from 'react';
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { addItem, removeItem } from '../CartSlice';
 
 
 
@@ -21,22 +22,13 @@ const Itemlisting = () => {
     const filterclicked = useSelector((state:any) => state.VegFilterSlice.value);
 
     const { menu } = useContext(Menupagedata);
+    const Dispatch = useDispatch();
 
     const [Menu, setMenu] = useState<any>([{}]);
+    const [Usercart, setUsercart] = useState<any>({});
 
-    const [image, setimage] = useState<any>();
-    const [item_name, setitem_name] = useState<any>();
-    const [veg_status, setveg_status] = useState<any>();
-    const [price, setprice] = useState<any>();
-    const [dprice, setdprice] = useState<any>();
-    const [defprice, setdefprice] = useState<any>();
-    const [dcprice, setdcprice] = useState<any>();
-    const [description, setdescription] = useState<any>();
-    const [avail, setavail] = useState<any>();
-    const [availmsg, setavailmsg] = useState<any>();
-    const [customisable, setcustomisable] = useState<any>();
-    const [addon, setaddon] = useState<any>();
-    const [variant, setvariant] = useState<any>();
+    const [fooditemdata, setfooditemdata] = useState<any>();
+    
 
     useEffect(() => {
 
@@ -161,51 +153,129 @@ const Itemlisting = () => {
         
     }
 
-    const checkAuth = () => {
-        const currentURL = window.location.pathname;
-        const loginURL = currentURL.replace(currentURL.split("/")[2],'auth/login')
-        
-        navigate(loginURL);
-    }
+    const userdata = useSelector((state:any) => state.perReducers.auth.value)
+    const actualpayload = useSelector((state:any) => state.perReducers.addItem.value)
+    const loggedin = userdata.token;
+
+    const checkAuth = (fooditem: any) => {
+
+        if(loggedin) {
+
+            const Fooditem = {
+                "_id": fooditem._id,
+                "name": fooditem.name,
+                "price": fooditem.price,
+                "discounted_price_rupees": fooditem.discounted_price_rupees,
+                "delivery_discount_rupees": fooditem.delivery_discount_rupees,
+                "tipplr_commission_rupees": fooditem.tipplr_commission_rupees,
+                "round_of_price": fooditem.round_of_price,
+                "is_tipplr_mini": fooditem.tipplr_mini,
+                "customisation_steps": [],
+                "original_customisation_steps": fooditem.customisation_steps,
+                "variant_group": [],
+                "original_variant_group": fooditem.variant_group,
+                "addon_group": [],
+                "original_addon_group": fooditem.addon_group,
+                "quantity": 1,
+                "original_food_item": fooditem,
+                "packing_charges": fooditem.packing_charges,
+                "item_gst": fooditem.item_gst
+            }
+
+            const cartdata = {
+                "merchant_id": fooditem.merchant_id,
+                "food_items" : [Fooditem],
+                "extra_charges" : menu.extra_charges,
+                "is_club": 0
+            }
+            const payload = {"cart_data" : cartdata}
+
+            if(actualpayload.hasOwnProperty("cart_data")) {
+                const existingitem = actualpayload.cart_data.food_items.findIndex((eachitems:any) => eachitems._id === fooditem._id)
+                
+                if (existingitem >= 0) {
+                    
+                    const duplicatepayload = {...actualpayload, 
+                        cart_data: {...actualpayload.cart_data,
+                            food_items: [...actualpayload.cart_data.food_items.slice(0, existingitem),
+                                {...actualpayload.cart_data.food_items[existingitem],
+                                    quantity: actualpayload.cart_data.food_items[existingitem].quantity + 1
+                                },
+                                ...actualpayload.cart_data.food_items.slice(existingitem + 1),
+                            ],
+                        },
+                    };
+                    
+                    Dispatch(addItem(duplicatepayload));
+                    
+                }else{
+                    const duplicatepayload = {...actualpayload,
+                        cart_data: {...actualpayload.cart_data,
+                            food_items: [...actualpayload.cart_data.food_items, Fooditem]
+                        }
+                    };
+
+                    Dispatch(addItem(duplicatepayload));
+                };
+
+            }else{
+                Dispatch(addItem(payload));
+            };
+
+        }else{
+            const currentURL = window.location.pathname.split("/");
+            const loginURL = `${currentURL[0]}/${currentURL[1]}/auth/login`;
+            
+            navigate(loginURL);
+        };
+    };
+    
+
+
+
+    useEffect(()=>{
+        if(actualpayload.hasOwnProperty("cart_data")) {
+            
+            const url = Usercart._id
+            ? `https://prod-server.tipplr.in/app/user/food-order/cart/${Usercart._id}`
+            : "https://prod-server.tipplr.in/app/user/food-order/cart";
+
+            fetch(url, {
+                method: Usercart._id ? 'PUT' : 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': loggedin
+                },
+                body: JSON.stringify(actualpayload)
+            })
+            .then(response => response.json())
+            .then(data => {
+                const createdcart = data.response.data;
+                const addedfooditems = data.response.data.food_items;
+                setUsercart(createdcart);
+                console.log(addedfooditems);
+                
+            })
+        }
+    },[actualpayload])
+
+
 
     
-    const generateData = (
-            iimage: any,
-            iname: any,
-            vstate: any,
-            iprice: any,
-            diprice: any,
-            defaultp: any,
-            discountp: any,
-            idescription: any,
-            iavail: any,
-            iavailmsg: any,
-            icustomisable: any,
-            iaddon: any,
-            ivariant: any,
-            itemid: any
-            ) => {
-        setimage(iimage)
-        setitem_name(iname)
-        setveg_status(vstate)
-        setprice(iprice)
-        setdprice(diprice)
-        setdefprice(defaultp)
-        setdcprice(discountp)
-        setdescription(idescription)
-        setavail(iavail)
-        setavailmsg(iavailmsg)
-        setcustomisable(icustomisable)
-        setaddon(iaddon)
-        setvariant(ivariant)
+    const generateData = (fooditem:any) => {
+        setfooditemdata(fooditem);
+        navigate(fooditem._id);
+    };
 
-        navigate(itemid)
-    }
+    const openCust = (fooditem:any) => {
+        setfooditemdata(fooditem);
+        navigate(`${fooditem._id}/customization`);
+    };
     
 
 
-
-    return (<Menupagedata.Provider value={{image, item_name, veg_status, price, dprice, defprice, dcprice, description, avail, availmsg, customisable, addon, variant}}>
+    
+    return (<Menupagedata.Provider value={{fooditemdata}}>
         <>
             <div className="fullmenu">
                 <div><h2 className="menuheading">- Menu -</h2></div>
@@ -255,60 +325,28 @@ const Itemlisting = () => {
                                                         </div>
                                                 }
 
-                                                <p className="morebutton" onClick={() =>
-                                                        generateData(
-                                                            eachfooditem.food_image,
-                                                            eachfooditem.name,
-                                                            eachfooditem.veg_status,
-                                                            eachfooditem.price,
-                                                            eachfooditem.offer_price,
-                                                            eachfooditem.default_price,
-                                                            eachfooditem.discounted_price_rupees,
-                                                            eachfooditem.description,
-                                                            eachfooditem.availablity.availability,
-                                                            eachfooditem.availablity.availability_message,
-                                                            eachfooditem.customisation_steps.length,
-                                                            eachfooditem.addon_group.length,
-                                                            eachfooditem.variant_group.length,
-                                                            eachfooditem._id
-                                                        )
-                                                    }>
+                                                <p className="morebutton" onClick={ () => generateData(eachfooditem) }>
                                                     More Details <img className="arrowright" src={right} alt="" />
                                                 </p>
                                             </div>
 
                                             <div className="foodimageside">
                                                 {eachfooditem.food_image && (
-                                                    <img className="foodimage" loading='lazy' style={eachfooditem.availablity.availability == false ? {filter: 'grayscale(80%)'}:{}} src={eachfooditem.food_image} alt="Food Image" onClick={() =>
-                                                        generateData(
-                                                            eachfooditem.food_image,
-                                                            eachfooditem.name,
-                                                            eachfooditem.veg_status,
-                                                            eachfooditem.price,
-                                                            eachfooditem.offer_price,
-                                                            eachfooditem.default_price,
-                                                            eachfooditem.discounted_price_rupees,
-                                                            eachfooditem.description,
-                                                            eachfooditem.availablity.availability,
-                                                            eachfooditem.availablity.availability_message,
-                                                            eachfooditem.customisation_steps.length,
-                                                            eachfooditem.addon_group.length,
-                                                            eachfooditem.variant_group.length,
-                                                            eachfooditem._id
-                                                        )
-                                                    }/>
+                                                    <img className="foodimage" loading='lazy' style={eachfooditem.availablity.availability == false ? {filter: 'grayscale(80%)'}:{}} src={eachfooditem.food_image} alt="Food Image" onClick={() => generateData(eachfooditem)}/>
                                                 )}
                                                 {eachfooditem.availablity.availability == false
                                                     ? <p className='notavailable'>{eachfooditem.availablity.availability_message}</p>
                                                     : <>
-                                                        <button className="addbutton" onClick={() => checkAuth()}>ADD</button>
+                                                        {(eachfooditem.customisation_steps.length || eachfooditem.addon_group.length || eachfooditem.variant_group.length) > 0
+                                                        ? <><button className="addbutton" onClick={() => openCust(eachfooditem)}>ADD</button>
+                                                            <p className='custotext'>Customisable</p></>
+                                                        : <button className="addbutton" onClick={() => checkAuth(eachfooditem)}>ADD</button>}
+
                                                         {/* <button className="addedbutton">
                                                             <p className='addsub' onClick={() => decreaseitem()}>-</p>
                                                             <p>{itemaddedcount}</p>
                                                             <p className='addsub' onClick={() => increaseitem()}>+</p>
                                                         </button> */}
-                                                        {(eachfooditem.customisation_steps.length || eachfooditem.addon_group.length || eachfooditem.variant_group.length) > 0 &&
-                                                            (<p className='custotext'>Customisable</p>)}
                                                     </>
                                                 }
                                             </div>
@@ -355,54 +393,22 @@ const Itemlisting = () => {
                                                                         </div>
                                                                 }
 
-                                                                <p className="morebutton" onClick={() =>
-                                                                    generateData(
-                                                                        eachfooditem.food_image,
-                                                                        eachfooditem.name,
-                                                                        eachfooditem.veg_status,
-                                                                        eachfooditem.price,
-                                                                        eachfooditem.offer_price,
-                                                                        eachfooditem.default_price,
-                                                                        eachfooditem.discounted_price_rupees,
-                                                                        eachfooditem.description,
-                                                                        eachfooditem.availablity.availability,
-                                                                        eachfooditem.availablity.availability_message,
-                                                                        eachfooditem.customisation_steps.length,
-                                                                        eachfooditem.addon_group.length,
-                                                                        eachfooditem.variant_group.length,
-                                                                        eachfooditem._id
-                                                                    )
-                                                                }>
+                                                                <p className="morebutton" onClick={() => generateData(eachfooditem)}>
                                                                     More Details <img className="arrowright" src={right} alt="" />
                                                                 </p>
                                                             </div>
 
                                                             <div className="foodimageside">
                                                                 {eachfooditem.food_image && (
-                                                                    <img className="foodimage" loading='lazy' style={eachfooditem.availablity.availability == false ? {filter: 'grayscale(80%)'}:{}} src={eachfooditem.food_image} alt="Food Image" onClick={() =>
-                                                                        generateData(
-                                                                            eachfooditem.food_image,
-                                                                            eachfooditem.name,
-                                                                            eachfooditem.veg_status,
-                                                                            eachfooditem.price,
-                                                                            eachfooditem.offer_price,
-                                                                            eachfooditem.default_price,
-                                                                            eachfooditem.discounted_price_rupees,
-                                                                            eachfooditem.description,
-                                                                            eachfooditem.availablity.availability,
-                                                                            eachfooditem.availablity.availability_message,
-                                                                            eachfooditem.customisation_steps.length,
-                                                                            eachfooditem.addon_group.length,
-                                                                            eachfooditem.variant_group.length,
-                                                                            eachfooditem._id
-                                                                        )
-                                                                    }/>
+                                                                    <img className="foodimage" loading='lazy' style={eachfooditem.availablity.availability == false ? {filter: 'grayscale(80%)'}:{}} src={eachfooditem.food_image} alt="Food Image" onClick={() => generateData(eachfooditem)}/>     
                                                                 )}
                                                                 {eachfooditem.availablity.availability == false
                                                                     ? <p className='notavailable'>{eachfooditem.availablity.availability_message}</p>
-                                                                    : <><button className="addbutton">ADD</button>
-                                                                        {(eachfooditem.customisation_steps.length || eachfooditem.addon_group.length || eachfooditem.variant_group.length) > 0 &&
-                                                                        <p className='custotext'>Customisable</p>}
+                                                                    : <>
+                                                                        {(eachfooditem.customisation_steps.length || eachfooditem.addon_group.length || eachfooditem.variant_group.length) > 0
+                                                                        ? <><button className="addbutton" onClick={() => openCust(eachfooditem)}>ADD</button>
+                                                                            <p className='custotext'>Customisable</p></>
+                                                                        : <button className="addbutton" onClick={() => checkAuth(eachfooditem)}>ADD</button>}
                                                                     </>
                                                                 }
                                                             </div>

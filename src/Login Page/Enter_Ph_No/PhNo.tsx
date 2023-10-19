@@ -1,12 +1,17 @@
 import './PhNo.css'
 import reset from "./Source/reset.png"
 import prefixdivider from "./Source/right.png"
+import { mobileNumber } from './PhNoSlice';
 
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+
+
 
 const Phno = () => {
     const navigate = useNavigate();
+    const Dispatch = useDispatch();
 
     const [resetbutton, setresetbutton] = useState<HTMLButtonElement | null>();
     const [enterednumber, setenterednumber] = useState<HTMLInputElement | null>();
@@ -30,6 +35,7 @@ const Phno = () => {
             if (enteredvalue.length == 10) {
                 setOTPbuttonstate(false);
                 setinvalidphnoerr(null);
+                Dispatch(mobileNumber(enteredvalue));
             } else {
                 setOTPbuttonstate(true);
             }
@@ -73,8 +79,8 @@ const Phno = () => {
         
         navigate(newurl)
 
-        const url = "https://prod-server.tipplr.in/hotel/login";
-        const payload = {"phone_number": enterednumber?.value}
+        // const url = "https://prod-server.tipplr.in/hotel/login";
+        // const payload = {"phone_number": enterednumber?.value}
 
         // fetch(url, {
         //     method: 'POST',

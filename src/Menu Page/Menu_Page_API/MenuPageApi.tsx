@@ -1,11 +1,15 @@
 import { useContext, useEffect, useState } from "react";
 import Menupagedata from "./MenuPageData";
-import Homepagedata from "../../Home Page/Home_Page_API/HomePageData";
+// import Homepagedata from "../../Home Page/Home_Page_API/HomePageData";
 import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 
 
 const Menupageapi = ({ children }: any) => {
-    const {Useraddress} = useContext(Homepagedata);
+
+    const Useraddress = useSelector((state:any) => state.perReducers.saveaddress.value);
+    
     const [menu, setMenu] = useState<any>([]);
     const [Actualdistance, setActualdistance] = useState<any>([]);
     
@@ -15,16 +19,17 @@ const Menupageapi = ({ children }: any) => {
     const DD = FullDate.getDate();
     const FormatedDate = `${YYYY}/${MM}/${DD}`;
 
-    const {merchantid} = useParams()
+    const {merchantid} = useParams();
     let CurrentDate = FormatedDate;
 
     let MenuURL = `https://prod-server.tipplr.in/hotel/explore/restaurants/${merchantid}/restaurant-details?date=${CurrentDate}`;
 
     useEffect(() => {
-        if (Useraddress.location_lat) {
+        // if (Useraddress.location_lat) {
             fetch(MenuURL)
                 .then((response) => response.json())
                 .then((data) => {
+                    window.scrollTo(0,0);
                     setMenu(data.response);
 
                     const UseraddressURL = "https://prod-server.tipplr.in/hotel/delivery-quotes/merchant";
@@ -52,7 +57,7 @@ const Menupageapi = ({ children }: any) => {
 
                 })
                 .catch((error) => console.log(error));
-        }
+        // }
 
     }, [Useraddress.location_lat]);
 

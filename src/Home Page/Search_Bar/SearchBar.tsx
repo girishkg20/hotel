@@ -5,7 +5,7 @@ import search from './Source/search.png';
 /////Redux
 import { useSelector } from 'react-redux';
 import {textEntered} from '../../Redux/reducer';
-import store from '../../Redux/store';
+import {store} from '../../Redux/store';
 import { useDispatch } from 'react-redux';
 /////Redux
 

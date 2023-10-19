@@ -2,7 +2,7 @@ import ReactDOM from 'react-dom/client';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { AliveScope } from 'react-activation'
 import { Provider } from 'react-redux';
-import store from './Redux/store';
+import { store, persistor } from './Redux/store';
 import './index.css';
 import Homepage from './Home Page/HomePage.js';
 import Profile from './Profile/Profile.js';
@@ -11,8 +11,11 @@ import Itempopup from './Menu Page/Item_Popup/ItemPopup';
 import Loginpage from './Login Page/LoginPage';
 import Phno from './Login Page/Enter_Ph_No/PhNo';
 import Enterotp from './Login Page/Enter_Otp/EnterOTP';
+import Custpopup from './Menu Page/Cust_Popup/CustPopup';
 
 import { Link } from 'react-router-dom';
+import { PersistGate } from 'redux-persist/integration/react';
+
 
 
 const Router = createBrowserRouter([
@@ -32,6 +35,10 @@ const Router = createBrowserRouter([
         {
           path: "/:hotelid/:merchantid/:itemid",
           element: <Itempopup/>
+        },
+        {
+          path: "/:hotelid/:merchantid/:itemid/customization",
+          element: <Custpopup/>
         }
       ]
     },
@@ -66,11 +73,13 @@ const Router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   // <React.StrictMode>
   <Provider store={store}>
-    <AliveScope>
-    
-      <RouterProvider router={Router}/>
+    <PersistGate persistor={persistor} >
+      <AliveScope>
       
-    </AliveScope>
+        <RouterProvider router={Router}/>
+        
+      </AliveScope>
+    </PersistGate>
   </Provider>
   // </React.StrictMode>,
 );

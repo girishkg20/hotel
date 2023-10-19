@@ -1,16 +1,25 @@
 import { useEffect, useState } from 'react';
 import './EnterOTP.css';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { auth } from './AuthSlice';
+
 
 const Enterotp = () => {
 
-    const [timer, settimer] = useState(30);
+    const [timer, settimer] = useState<any>(30);
     const [otp, setotp] = useState('');
-    const [invalidotperror, setinvalidotperror] = useState(null);
+    const [token, settoken] = useState();
+    const [invalidotperror, setinvalidotperror] = useState<any>();
+    const [resendotp, setresendotp] = useState<boolean>(false);
+
     const navigate = useNavigate();
+    const Dispatch = useDispatch();
+    const MobileNumber = useSelector((state: any) => state.mobileNumber.value)
 
     let starttime = 29;
-    let startinterval;
+    let startinterval: any;
     const starttimer = () => {
 
         if (starttime >= 0){
@@ -29,17 +38,17 @@ const Enterotp = () => {
         return () => {
             clearInterval(startinterval);
         };
-    },[]);
+    },[resendotp === true]);
 
 
 
 ///////////////////OTP BOXES
     
-    const otpBoxes = document.querySelectorAll('.otpbox');
+    const otpBoxes: NodeListOf<HTMLInputElement> = document.querySelectorAll('.otpbox');
 
     otpBoxes.forEach((box, index) => {
         //handle input
-        box.addEventListener('input', (e) => {
+        box.addEventListener('input', (e:any) => {
             e.target.value = e.target.value.replace(/\D/g, '');
             const value = e.target.value;
 
@@ -51,17 +60,18 @@ const Enterotp = () => {
         });
 
         //handle backspace
-        box.addEventListener('keydown', (e) => {
-            setotp(otpBoxes[0].value + otpBoxes[1].value + otpBoxes[2].value + otpBoxes[3].value)
-
+        box.addEventListener('keydown', (e:any) => {
+            
             if (e.key === 'Backspace' && index > 0 && !box.value) {
                 otpBoxes[index - 1].value = '';
                 otpBoxes[index - 1].focus();
+                setotp(otpBoxes[0].value + otpBoxes[1].value + otpBoxes[2].value + otpBoxes[3].value)
             }
+
         });
 
         // Handle pasting
-        box.addEventListener('paste', (e) => {
+        box.addEventListener('paste', (e:any) => {
             e.preventDefault();
             const pastedData = e.clipboardData.getData('text').replace(/\D/g, '').trim();
             for (let i = 0; i < otpBoxes.length; i++) {
@@ -84,9 +94,16 @@ const Enterotp = () => {
         });
 
         //handle select
-        box.addEventListener('focus', (e) => {
+        box.addEventListener('focus', (e:any) => {
             otpBoxes[index].select();
         });
+
+        //handle errormessage
+        box.oninput = () => {
+            if (otp.length >= 4) {
+                setinvalidotperror(null)
+            };
+        }
 
     });
 
@@ -97,25 +114,64 @@ const Enterotp = () => {
             setinvalidotperror(null)
         }
     }
-
-    // useEffect(() => {
-    //    if (otp.length >= 4) {
-    //         setinvalidotperror(null)
-    //     };
-    //     console.log(otp);
-    // },[otp.length])
-
-    //collect all OTP numbers
-    const authOTP = () => {
-        
-        console.log(otp);
-    }
     
 ////////////////////////OTP BOXES
 
+    const getOTP = () => {
+        const url = "https://prod-server.tipplr.in/hotel/login";
+        const payload = {"phone_number": MobileNumber}
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        })
+        .then(response => response.json())
+        .then(data => settoken(data.response.token))
+    }
+
+    useEffect(() => {
+        getOTP();
+    },[]);
+
+    const resendOTP = () => {
+        getOTP();
+        settimer(30);
+        setresendotp(true);
+    };
+
+/////////////////////////////////////// Verify User //////////////////////
+
+    const verifyUser = () => {
+        const url = "https://prod-server.tipplr.in/hotel/verify";
+        const payload = {
+            "token": token,
+            "otp": otp
+        }
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        })
+        .then(response => response.json())
+        .then(data => {
+
+            if (data.status.code != 200) {
+                setinvalidotperror("OTP entered is incorrect")
+            }else{
+                Dispatch(auth(data.response.data))
+                navigate(-2);
+            }
+
+        })
+    }
 
 
-    
 
     return(<>
         <div className="otppopover">
@@ -130,7 +186,7 @@ const Enterotp = () => {
             <p className='otperror'>{invalidotperror}</p> {/*OTP entered is incorrect*/}
 
             <div className='otpmsgbox'>
-                <p className='otpmsg'>OTP has been sent to <strong>9999999999</strong></p>
+                <p className='otpmsg'>OTP has been sent to <strong>{MobileNumber}</strong></p>
                 <button className='phedit' onClick={() => navigate(-1)}>Edit</button>
             </div>
 
@@ -140,11 +196,11 @@ const Enterotp = () => {
             }
             {timer <= 0 ?
                 <div className='resendotpbox'>
-                    <button className='resendotpbtn'>Resend OTP</button>
+                    <button id='resendotpbtn' className='resendotpbtn' onClick={resendOTP}>Resend OTP</button>
                 </div> : null
             }
 
-            <button className='otpcontbutton' disabled={otp.length < 4 ? true : false} onClick={authOTP} onTouchStart={otpError}>Continue</button>
+            <button className='otpcontbutton' disabled={otp.length < 4 ? true : false} onClick={verifyUser} onTouchStart={otpError}>Continue</button>
         </div>
     </>)
 }

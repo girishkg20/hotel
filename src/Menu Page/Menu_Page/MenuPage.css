@@ -1,9 +1,9 @@
 .menupagetop {
     background-color: #C4C4C4;
-    padding-bottom: 1px;
     border-radius: 0 0 33px 33px;
     padding: 80px 15px 15px 15px;
     background-size: cover;
+    background-position: center;
 }
 
 .mpheader {

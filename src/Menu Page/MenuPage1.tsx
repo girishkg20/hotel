@@ -8,12 +8,12 @@ import Menupageapi from "./Menu_Page_API/MenuPageApi";
 const Menupage1 = () => {
 
     return(<>
-    <Homepageapi>
+    {/* <Homepageapi> */}
     <Menupageapi>
         <Menupage/>
 
     </Menupageapi>
-    </Homepageapi>
+    {/* </Homepageapi> */}
     </>)
 }
 export default Menupage1;

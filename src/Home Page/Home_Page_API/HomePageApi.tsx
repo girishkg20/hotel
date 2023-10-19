@@ -1,9 +1,13 @@
 import { ReactNode, useEffect, useState } from "react";
 import Homepagedata from './HomePageData.jsx';
 import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { saveaddress } from "./UserAddressSlice.js";
 
 
 const Homepageapi = ({ children }: { children: React.ReactNode }) => {
+
+  const Dispatch = useDispatch();
 
   // window.scrollTo(0,0);
 
@@ -22,6 +26,8 @@ const Homepageapi = ({ children }: { children: React.ReactNode }) => {
         window.scrollTo(0,0);
         setUseraddress(data.response.address);
         setHotelname(data.response.data.name);
+
+        Dispatch(saveaddress(data.response.address));
         
         let limit = 100;
         let skip = 0;

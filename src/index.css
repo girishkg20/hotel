@@ -7,6 +7,10 @@
     display: none;
 }
 
+::-webkit-scrollbar {
+    display: none;
+}
+
 input, button {
     font-family: inherit;
     color: inherit;
