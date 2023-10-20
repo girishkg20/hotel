@@ -67,7 +67,7 @@ const Custpopup = () => {
                             
                             <input className="addoncheck" type="checkbox"/>
                             <div className="checkmark">
-                                <img className="tickmark" width="10px" height="10px" src={tick} alt="✔"/>
+                                <img className="tickmark" src={tick} alt="✔"/>
                             </div>
                             <div className="checkboxbg"></div>
                         </label>
@@ -99,10 +99,7 @@ const Custpopup = () => {
                                 <p className="addonprice">{`+₹ ${eachvariants.price}`}</p>
                             </div>
                             
-                            <input className="addoncheck" type="checkbox"/>
-                            <div className="checkmark">
-                                <img className="tickmark" width="10px" height="10px" src={tick} alt="✔"/>
-                            </div>
+                            <input className="varientcheck" type="radio" name="varients"/>
                             <div className="checkboxbg"></div>
                         </label>
                     </>))}
@@ -114,36 +111,63 @@ const Custpopup = () => {
 
 
             {fooditemdata.customisation_steps.length > 0 && (<>
-                {fooditemdata.customisation_steps.map((eachaddon:any)=>(<div className="addonscard">
-                    <div className="addonstitleholder">
-                        <h3 className="addontitle">{eachaddon.step_name}
-                            {/* <span>{` (0/${eachaddon.item_maximum_count})`}</span> */}
-                        </h3>
-                        {/* <p className="custdescription">
-                            {(eachaddon.item_required_count > 0)
-                            ? `Select atleast ${eachaddon.item_required_count} options`
-                            : "Customize as you wish (Optional)"}
-                        </p> */}
-                    </div>
-                    {eachaddon.add_ons.map((eachaddons:any)=>(<>
-                        <label className="addonitem">
-                            <div className="addonnameprice">
-                                <p className="addonname">{eachaddons.item_name}</p>
-                                <p className="addonprice">{`HAS ${eachaddons.item_options.length}`}</p>
+                {fooditemdata.customisation_steps.map((eachcustomisation:any)=>(<>
+
+                    <h3 className="custstepname">{eachcustomisation.step_name}</h3>
+
+                    {eachcustomisation.add_ons.map((eachaddon:any) => (<>
+                        <div className="addonscard">
+                            <div className="addonstitleholder">
+                                <h3 className="addontitle">{eachaddon.item_name}
+                                    <span>{` (0/${eachaddon.item_options.length})`}</span>
+                                </h3>
+                                <p className="custdescription">
+                                    {(eachaddon.item_required_count > 0)
+                                    ? `Select atleast ${eachaddon.item_required_count} options`
+                                    : "Customize as you wish (Optional)"}
+                                </p>
                             </div>
-                            
-                            <input className="addoncheck" type="checkbox"/>
-                            <div className="checkmark">
-                                <img className="tickmark" width="10px" height="10px" src={tick} alt="✔"/>
-                            </div>
-                            <div className="checkboxbg"></div>
-                        </label>
+                            {eachaddon.item_options.map((eachoptions:any)=>(<>
+                                <label className="addonitem">
+                                    {eachaddon.item_type == "singleselect"
+                                        ? <>
+                                            <div className="addonnameprice">
+                                                <p className="addonname">{eachoptions.option_name}</p>
+                                                <p className="addonprice">{`+₹ ${eachoptions.price}`}</p>
+                                            </div>
+                                            
+                                            <input className="varientcheck" type="radio" name="varients"/>
+                                            <div className="checkboxbg"></div>
+                                        </>
+                                        : <>
+                                            <div className="addonnameprice">
+                                                <p className="addonname">{eachoptions.option_name}</p>
+                                                <p className="addonprice">{`+₹ ${eachoptions.price}`}</p>
+                                            </div>
+                                            
+                                            <input className="addoncheck" type="checkbox"/>
+                                            <div className="checkmark">
+                                                <img className="tickmark" width="10px" height="10px" src={tick} alt="✔"/>
+                                            </div>
+                                            <div className="checkboxbg"></div>
+                                        </>
+                                    }
+                                </label>
+                            </>))}
+                        </div>
                     </>))}
-                </div>))}
+
+                </>))}
             </>)}
 
 
 
+
+            <div className="custfooter">
+                <button className="additembtn">
+                    <p>Add Item</p>
+                </button>
+            </div>
 
 
 
