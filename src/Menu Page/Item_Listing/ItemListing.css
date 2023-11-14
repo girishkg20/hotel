@@ -29,6 +29,17 @@
     }
 }
 
+@keyframes popupanimation {
+    0% {
+      opacity: 0;
+      transform: translateX(-50%) translateY(50%) scale(0);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(-50%) translateY(-50%) scale(1);
+    }
+}
+
 .fullmenu {
     background-color: #F6F6F6;
     padding-bottom: 15px;

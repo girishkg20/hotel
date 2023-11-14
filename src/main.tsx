@@ -12,6 +12,7 @@ import Loginpage from './Login Page/LoginPage';
 import Phno from './Login Page/Enter_Ph_No/PhNo';
 import Enterotp from './Login Page/Enter_Otp/EnterOTP';
 import Custpopup from './Menu Page/Cust_Popup/CustPopup';
+import Clearcartpopup from './Menu Page/Clear_Cart_Popup/ClearCartPopup';
 
 import { Link } from 'react-router-dom';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -39,6 +40,10 @@ const Router = createBrowserRouter([
         {
           path: "/:hotelid/:merchantid/:itemid/customization",
           element: <Custpopup/>
+        },
+        {
+          path: "/:hotelid/:merchantid/:itemid/clearcart",
+          element: <Clearcartpopup/>
         }
       ]
     },

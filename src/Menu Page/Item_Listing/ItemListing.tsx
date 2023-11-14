@@ -11,7 +11,8 @@ import Menupagedata from '../Menu_Page_API/MenuPageData';
 import React from 'react';
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { addItem, removeItem } from '../CartSlice';
+import { addItem } from '../CartSlice';
+import { cartId, clearCartId } from '../CartidSlice';
 
 
 
@@ -25,7 +26,7 @@ const Itemlisting = () => {
     const Dispatch = useDispatch();
 
     const [Menu, setMenu] = useState<any>([{}]);
-    const [Usercart, setUsercart] = useState<any>({});
+    // const [Usercart, setUsercart] = useState<any>({});
 
     const [fooditemdata, setfooditemdata] = useState<any>();
     
@@ -153,8 +154,10 @@ const Itemlisting = () => {
         
     }
 
-    const userdata = useSelector((state:any) => state.perReducers.auth.value)
-    const actualpayload = useSelector((state:any) => state.perReducers.addItem.value)
+    const userdata = useSelector((state:any) => state.perReducers.auth.value);
+    const actualpayload = useSelector((state:any) => state.perReducers.addItem.value);
+    const Usercart = useSelector((state:any) => state.perReducers.cartId.value);
+    
     const loggedin = userdata.token;
 
     const checkAuth = (fooditem: any) => {
@@ -165,6 +168,7 @@ const Itemlisting = () => {
                 "_id": fooditem._id,
                 "name": fooditem.name,
                 "price": fooditem.price,
+                "food_image": fooditem.food_image,
                 "discounted_price_rupees": fooditem.discounted_price_rupees,
                 "delivery_discount_rupees": fooditem.delivery_discount_rupees,
                 "tipplr_commission_rupees": fooditem.tipplr_commission_rupees,
@@ -190,38 +194,49 @@ const Itemlisting = () => {
             }
             const payload = {"cart_data" : cartdata}
 
-            if(actualpayload.hasOwnProperty("cart_data")) {
-                const existingitem = actualpayload.cart_data.food_items.findIndex((eachitems:any) => eachitems._id === fooditem._id)
-                
-                if (existingitem >= 0) {
-                    
-                    const duplicatepayload = {...actualpayload, 
-                        cart_data: {...actualpayload.cart_data,
-                            food_items: [...actualpayload.cart_data.food_items.slice(0, existingitem),
-                                {...actualpayload.cart_data.food_items[existingitem],
-                                    quantity: actualpayload.cart_data.food_items[existingitem].quantity + 1
-                                },
-                                ...actualpayload.cart_data.food_items.slice(existingitem + 1),
-                            ],
-                        },
-                    };
-                    
-                    Dispatch(addItem(duplicatepayload));
-                    
-                }else{
-                    const duplicatepayload = {...actualpayload,
-                        cart_data: {...actualpayload.cart_data,
-                            food_items: [...actualpayload.cart_data.food_items, Fooditem]
-                        }
-                    };
-
-                    Dispatch(addItem(duplicatepayload));
-                };
-
+            if(actualpayload.hasOwnProperty("cart_data") && (actualpayload.cart_data.merchant_id != fooditem.merchant_id)) {
+                navigate(`${fooditem._id}/clearcart`);
             }else{
-                Dispatch(addItem(payload));
-            };
 
+                if((fooditem.customisation_steps.length || fooditem.addon_group.length || fooditem.variant_group.length) > 0) {
+                    
+                    setfooditemdata(payload);
+                    navigate(`${fooditem._id}/customization`);
+
+                }else{
+                    if(actualpayload.hasOwnProperty("cart_data")) {
+                        const existingitem = actualpayload.cart_data.food_items.findIndex((eachitems:any) => eachitems._id === fooditem._id)
+                        
+                        if (existingitem >= 0) {
+                            
+                            const duplicatepayload = {...actualpayload, 
+                                cart_data: {...actualpayload.cart_data,
+                                    food_items: [...actualpayload.cart_data.food_items.slice(0, existingitem),
+                                        {...actualpayload.cart_data.food_items[existingitem],
+                                            quantity: actualpayload.cart_data.food_items[existingitem].quantity + 1
+                                        },
+                                        ...actualpayload.cart_data.food_items.slice(existingitem + 1),
+                                    ],
+                                },
+                            };
+                            
+                            Dispatch(addItem(duplicatepayload));
+                            
+                        }else{
+                            const duplicatepayload = {...actualpayload,
+                                cart_data: {...actualpayload.cart_data,
+                                    food_items: [...actualpayload.cart_data.food_items, Fooditem]
+                                }
+                            };
+
+                            Dispatch(addItem(duplicatepayload));
+                        };
+
+                    }else{
+                        Dispatch(addItem(payload));
+                    };
+                };
+            };
         }else{
             const currentURL = window.location.pathname.split("/");
             const loginURL = `${currentURL[0]}/${currentURL[1]}/auth/login`;
@@ -234,7 +249,7 @@ const Itemlisting = () => {
 
 
     useEffect(()=>{
-        if(actualpayload.hasOwnProperty("cart_data")) {
+        if(actualpayload.hasOwnProperty("cart_data") && actualpayload.cart_data.food_items.length > 0) {
             
             const url = Usercart._id
             ? `https://prod-server.tipplr.in/app/user/food-order/cart/${Usercart._id}`
@@ -251,26 +266,59 @@ const Itemlisting = () => {
             .then(response => response.json())
             .then(data => {
                 const createdcart = data.response.data;
-                const addedfooditems = data.response.data.food_items;
-                setUsercart(createdcart);
-                console.log(addedfooditems);
+                const addedfooditems = data.response.data.food_items; //Remove
+                Dispatch(cartId(createdcart));
+                console.log(addedfooditems); //Remove
                 
             })
+
+        }else{
+            if(Usercart._id) {
+                const url = `https://prod-server.tipplr.in/app/user/food-order/cart/${Usercart._id}`
+                fetch(url, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': loggedin
+                    }
+                })
+                .then(response => response.json())
+                .then(() => Dispatch(clearCartId()))
+            }
         }
     },[actualpayload])
-
-
-
     
     const generateData = (fooditem:any) => {
         setfooditemdata(fooditem);
         navigate(fooditem._id);
     };
 
-    const openCust = (fooditem:any) => {
-        setfooditemdata(fooditem);
-        navigate(`${fooditem._id}/customization`);
-    };
+    
+    // let quantity = 0;
+    useEffect(()=>{
+        if(Usercart.food_items && Usercart.food_items.length > 0) {
+
+            const cartfooditems:object[] = [];
+            Usercart.food_items.forEach((fooditem:any) => {
+                cartfooditems.push({[fooditem._id]: fooditem.quantity});
+            });
+
+            const combinedfooditems = cartfooditems.reduce((initial:any, fooditem:any) => {
+                Object.entries(fooditem).forEach(([key, value])=>{
+                    initial[key] = (initial[key] || 0) + value
+                });
+                return initial;
+            }, {})
+
+            Object.entries(combinedfooditems).forEach(([key, value]) => {
+                let qntbtn = document.getElementById(key) as HTMLParagraphElement;
+                if (qntbtn) {
+                    qntbtn.innerHTML = `${value}`;
+                };
+            });
+            
+        };
+    },[Usercart.food_items, Menu])
     
 
 
@@ -336,17 +384,19 @@ const Itemlisting = () => {
                                                 )}
                                                 {eachfooditem.availablity.availability == false
                                                     ? <p className='notavailable'>{eachfooditem.availablity.availability_message}</p>
+                                                    : (Usercart.food_items && Usercart.food_items.some((fooditem:any)=>(fooditem._id == eachfooditem._id)))
+                                                    ? <>
+                                                        <button className="addedbutton">
+                                                            <p className='addsub' onClick={() => decreaseitem()}>-</p>
+                                                            <p id={eachfooditem._id}>0</p>
+                                                            <p className='addsub' onClick={() => checkAuth(eachfooditem)}>+</p>
+                                                        </button>
+                                                    </>
                                                     : <>
                                                         {(eachfooditem.customisation_steps.length || eachfooditem.addon_group.length || eachfooditem.variant_group.length) > 0
-                                                        ? <><button className="addbutton" onClick={() => openCust(eachfooditem)}>ADD</button>
+                                                        ? <><button className="addbutton" onClick={() => checkAuth(eachfooditem)}>ADD</button>
                                                             <p className='custotext'>Customisable</p></>
                                                         : <button className="addbutton" onClick={() => checkAuth(eachfooditem)}>ADD</button>}
-
-                                                        {/* <button className="addedbutton">
-                                                            <p className='addsub' onClick={() => decreaseitem()}>-</p>
-                                                            <p>{itemaddedcount}</p>
-                                                            <p className='addsub' onClick={() => increaseitem()}>+</p>
-                                                        </button> */}
                                                     </>
                                                 }
                                             </div>
@@ -406,7 +456,7 @@ const Itemlisting = () => {
                                                                     ? <p className='notavailable'>{eachfooditem.availablity.availability_message}</p>
                                                                     : <>
                                                                         {(eachfooditem.customisation_steps.length || eachfooditem.addon_group.length || eachfooditem.variant_group.length) > 0
-                                                                        ? <><button className="addbutton" onClick={() => openCust(eachfooditem)}>ADD</button>
+                                                                        ? <><button className="addbutton" onClick={() => checkAuth(eachfooditem)}>ADD</button>
                                                                             <p className='custotext'>Customisable</p></>
                                                                         : <button className="addbutton" onClick={() => checkAuth(eachfooditem)}>ADD</button>}
                                                                     </>

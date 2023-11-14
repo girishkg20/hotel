@@ -11,6 +11,7 @@ import UserAddressSlice from "../Home Page/Home_Page_API/UserAddressSlice";
 import Phnoslice from "../Login Page/Enter_Ph_No/PhNoSlice";
 import AuthSlice from "../Login Page/Enter_Otp/AuthSlice";
 import CartSlice from "../Menu Page/CartSlice";
+import CartidSlice from "../Menu Page/CartidSlice";
 
 
 
@@ -24,7 +25,7 @@ const perReducers = combineReducers({
     saveaddress: UserAddressSlice,
     auth: AuthSlice,
     addItem: CartSlice,
-    removeItem: CartSlice
+    cartId: CartidSlice
 })
 
 

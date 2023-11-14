@@ -1,0 +1,59 @@
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 15px;
+    width: 75%;
+    border-radius: 23px;
+    z-index: 4;
+    animation: popupanimation 0.3s ease-in-out;
+}
+
+.popupheading {
+    margin: 15px 0 0 0;
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.clrcartclosebutton {
+    position: fixed;
+    right: 15px;
+    width: 25px;
+}
+
+.popupdescription {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 15px 0 30px 0;
+}
+
+.twobuttons {
+    display: flex;
+    gap: 15px;
+}
+
+.nobutton {
+    width: 50%;
+    border: none;
+    background-color: rgba(116, 39, 245, 0.25);
+    color: #7427F5;
+    font-size: 16px;
+    font-weight: 800;
+    padding: 10px;
+    border-radius: 12px;
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.34);
+}
+
+.resetbutton {
+    width: 50%;
+    border: none;
+    background-color: #7427F5;
+    color: white;
+    font-size: 16px;
+    font-weight: 800;
+    padding: 10px;
+    border-radius: 12px;
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.34);
+}
