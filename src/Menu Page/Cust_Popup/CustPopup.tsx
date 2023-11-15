@@ -178,12 +178,15 @@ const Custpopup = () => {
                     cart_data: {...actualpayload.cart_data,
                         food_items: [...actualpayload.cart_data.food_items.slice(0, existingitem),
                             {...actualpayload.cart_data.food_items[existingitem],
-                                quantity: actualpayload.cart_data.food_items[existingitem].quantity + 1
+                                quantity: actualpayload.cart_data.food_items[existingitem].quantity + Fooditem.quantity
                             },
                             ...actualpayload.cart_data.food_items.slice(existingitem + 1),
                         ],
                     },
                 };
+
+                const removeditem = duplicatepayload.cart_data.food_items.findIndex((eachitems:any) => eachitems.quantity < 1)
+                removeditem >= 0 && duplicatepayload.cart_data.food_items.splice(removeditem, 1);
                 
                 Dispatch(addItem(duplicatepayload));
                 

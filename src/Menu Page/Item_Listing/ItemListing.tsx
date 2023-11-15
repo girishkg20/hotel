@@ -26,8 +26,6 @@ const Itemlisting = () => {
     const Dispatch = useDispatch();
 
     const [Menu, setMenu] = useState<any>([{}]);
-    // const [Usercart, setUsercart] = useState<any>({});
-
     const [fooditemdata, setfooditemdata] = useState<any>();
     
 
@@ -180,7 +178,7 @@ const Itemlisting = () => {
                 "original_variant_group": fooditem.variant_group,
                 "addon_group": [],
                 "original_addon_group": fooditem.addon_group,
-                "quantity": 1,
+                "quantity": fooditem.quantity || 1,
                 "original_food_item": fooditem,
                 "packing_charges": fooditem.packing_charges,
                 "item_gst": fooditem.item_gst
@@ -198,7 +196,7 @@ const Itemlisting = () => {
                 navigate(`${fooditem._id}/clearcart`);
             }else{
 
-                if((fooditem.customisation_steps.length || fooditem.addon_group.length || fooditem.variant_group.length) > 0) {
+                if( (fooditem.quantity != -1) && ((fooditem.customisation_steps.length || fooditem.addon_group.length || fooditem.variant_group.length) > 0) ) {
                     
                     setfooditemdata(payload);
                     navigate(`${fooditem._id}/customization`);
@@ -213,13 +211,16 @@ const Itemlisting = () => {
                                 cart_data: {...actualpayload.cart_data,
                                     food_items: [...actualpayload.cart_data.food_items.slice(0, existingitem),
                                         {...actualpayload.cart_data.food_items[existingitem],
-                                            quantity: actualpayload.cart_data.food_items[existingitem].quantity + 1
+                                            quantity: actualpayload.cart_data.food_items[existingitem].quantity + Fooditem.quantity
                                         },
                                         ...actualpayload.cart_data.food_items.slice(existingitem + 1),
                                     ],
                                 },
                             };
-                            
+
+                            const removeditem = duplicatepayload.cart_data.food_items.findIndex((eachitems:any) => eachitems.quantity < 1)
+                            removeditem >= 0 && duplicatepayload.cart_data.food_items.splice(removeditem, 1);
+
                             Dispatch(addItem(duplicatepayload));
                             
                         }else{
@@ -244,9 +245,6 @@ const Itemlisting = () => {
             navigate(loginURL);
         };
     };
-    
-
-
 
     useEffect(()=>{
         if(actualpayload.hasOwnProperty("cart_data") && actualpayload.cart_data.food_items.length > 0) {
@@ -293,8 +291,6 @@ const Itemlisting = () => {
         navigate(fooditem._id);
     };
 
-    
-    // let quantity = 0;
     useEffect(()=>{
         if(Usercart.food_items && Usercart.food_items.length > 0) {
 
@@ -387,7 +383,7 @@ const Itemlisting = () => {
                                                     : (Usercart.food_items && Usercart.food_items.some((fooditem:any)=>(fooditem._id == eachfooditem._id)))
                                                     ? <>
                                                         <button className="addedbutton">
-                                                            <p className='addsub' onClick={() => decreaseitem()}>-</p>
+                                                            <p className='addsub' onClick={() => {checkAuth({...eachfooditem, quantity:-1})}}>-</p>
                                                             <p id={eachfooditem._id}>0</p>
                                                             <p className='addsub' onClick={() => checkAuth(eachfooditem)}>+</p>
                                                         </button>
@@ -454,6 +450,14 @@ const Itemlisting = () => {
                                                                 )}
                                                                 {eachfooditem.availablity.availability == false
                                                                     ? <p className='notavailable'>{eachfooditem.availablity.availability_message}</p>
+                                                                    : (Usercart.food_items && Usercart.food_items.some((fooditem:any)=>(fooditem._id == eachfooditem._id)))
+                                                                    ? <>
+                                                                        <button className="addedbutton">
+                                                                            <p className='addsub' onClick={() => {checkAuth({...eachfooditem, quantity:-1})}}>-</p>
+                                                                            <p id={eachfooditem._id}>0</p>
+                                                                            <p className='addsub' onClick={() => checkAuth(eachfooditem)}>+</p>
+                                                                        </button>
+                                                                    </>
                                                                     : <>
                                                                         {(eachfooditem.customisation_steps.length || eachfooditem.addon_group.length || eachfooditem.variant_group.length) > 0
                                                                         ? <><button className="addbutton" onClick={() => checkAuth(eachfooditem)}>ADD</button>
