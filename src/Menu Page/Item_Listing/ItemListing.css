@@ -331,8 +331,19 @@
     background-color: #F6F6F6;
 }
 
-.fabbutton {
+.floatingfooter {
     position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+}
+
+.fabholder {
+   position: relative;
+}
+
+.fabbutton {
+    position: absolute;
     bottom: 25px;
     right: 25px;
     width: 70px;
@@ -351,4 +362,49 @@
 
 .menulogo {
     height: 25px;
+}
+
+.itemstotalholder {
+    display: flex;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.totalitemscount {
+    color: white;
+    padding-right: 10px;
+    border-right: 3px solid white;
+}
+
+.totalscratchprice {
+    color: #EBEBEB;
+    padding-left: 10px;
+    text-decoration: line-through;
+}
+
+.totalitemsprice {
+    color: white;
+    padding-left: 10px;
+}
+
+.totalcardmessage {
+    color: white;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.viewcartbtn {
+    background-color: white;
+    border: none;
+    border-radius: 10px;
+}
+
+.totalcard {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    margin: 0 15px 15px 15px;
+    background-color: #7427F5;
+    border-radius: 16px;
 }

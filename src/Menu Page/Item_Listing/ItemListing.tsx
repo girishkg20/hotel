@@ -11,7 +11,7 @@ import Menupagedata from '../Menu_Page_API/MenuPageData';
 import React from 'react';
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { addItem } from '../CartSlice';
+import { addItem, clearItem } from '../CartSlice';
 import { cartId, clearCartId } from '../CartidSlice';
 
 
@@ -27,6 +27,7 @@ const Itemlisting = () => {
 
     const [Menu, setMenu] = useState<any>([{}]);
     const [fooditemdata, setfooditemdata] = useState<any>();
+    const [totalitems, settotalitems] = useState<number>(0);
     
 
     useEffect(() => {
@@ -137,20 +138,6 @@ const Itemlisting = () => {
         window.removeEventListener("popstate", handlePopstate);
       };
     window.addEventListener("popstate", handlePopstate);
-
-    let itemaddedcount = 0;
-
-    const increaseitem = () => {
-        itemaddedcount++
-        console.log(itemaddedcount);
-        
-    }
-
-    const decreaseitem = () => {
-        itemaddedcount--
-        console.log(itemaddedcount);
-        
-    }
 
     const userdata = useSelector((state:any) => state.perReducers.auth.value);
     const actualpayload = useSelector((state:any) => state.perReducers.addItem.value);
@@ -281,7 +268,10 @@ const Itemlisting = () => {
                     }
                 })
                 .then(response => response.json())
-                .then(() => Dispatch(clearCartId()))
+                .then(() => {
+                    Dispatch(clearCartId());
+                    Dispatch(clearItem());
+                })
             }
         }
     },[actualpayload])
@@ -295,9 +285,12 @@ const Itemlisting = () => {
         if(Usercart.food_items && Usercart.food_items.length > 0) {
 
             const cartfooditems:object[] = [];
+            let allitemcount = 0;
             Usercart.food_items.forEach((fooditem:any) => {
+                allitemcount += fooditem.quantity;
                 cartfooditems.push({[fooditem._id]: fooditem.quantity});
             });
+            settotalitems(allitemcount);
 
             const combinedfooditems = cartfooditems.reduce((initial:any, fooditem:any) => {
                 Object.entries(fooditem).forEach(([key, value])=>{
@@ -496,9 +489,29 @@ const Itemlisting = () => {
                         ))}
                     </div>
                 </div>
-                <div className='fabbutton' onClick={() => fabopenclose()}>
-                    <img className='menulogo' src={menulogo} alt="Menu"/>
-                    <p>Menu</p>
+
+                <div className='floatingfooter'>
+                    <div className='fabholder'>
+                        <div className='fabbutton' onClick={() => fabopenclose()}>
+                            <img className='menulogo' src={menulogo} alt="Menu"/>
+                            <p>Menu</p>
+                        </div>
+                    </div>
+                    {Usercart.food_items && 
+                        <div className='totalcard'>
+                            <div>
+                                <div className='itemstotalholder'>
+                                    <p className='totalitemscount'>{totalitems}{totalitems > 1 ? " Items" : " Item"}</p>
+                                    {Usercart.total_item_level_discount_price > 0 &&
+                                        <p className='totalscratchprice'>₹ {Usercart.total_item_total}</p>
+                                    }
+                                    <p className='totalitemsprice'>₹ {Usercart.total_item_total - Usercart.total_item_level_discount_price}</p>
+                                </div>
+                                <p className='totalcardmessage'>Additional charges may apply</p>
+                            </div>
+                            <button className='viewcartbtn'>View Cart</button>
+                        </div>
+                    }
                 </div>
                 
             </div>
