@@ -502,6 +502,7 @@ const Itemlisting = () => {
                             <div>
                                 <div className='itemstotalholder'>
                                     <p className='totalitemscount'>{totalitems}{totalitems > 1 ? " Items" : " Item"}</p>
+                                    <p className='totalitemsdivider'>|</p>
                                     {Usercart.total_item_level_discount_price > 0 &&
                                         <p className='totalscratchprice'>₹ {Usercart.total_item_total}</p>
                                     }
@@ -509,7 +510,7 @@ const Itemlisting = () => {
                                 </div>
                                 <p className='totalcardmessage'>Additional charges may apply</p>
                             </div>
-                            <button className='viewcartbtn'>View Cart</button>
+                            <button className='viewcartbtn'>View Cart<img src={right} alt=">"/></button>
                         </div>
                     }
                 </div>

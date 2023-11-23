@@ -366,45 +366,67 @@
 
 .itemstotalholder {
     display: flex;
-    font-size: 16px;
-    font-weight: 600;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 800;
+    height: 22px;
 }
 
 .totalitemscount {
     color: white;
-    padding-right: 10px;
-    border-right: 3px solid white;
+    padding-right: 5px;
+}
+
+.totalitemsdivider {
+    color: white;
+    font-size: 20px;
+    font-weight: 600;
 }
 
 .totalscratchprice {
     color: #EBEBEB;
-    padding-left: 10px;
+    padding-left: 5px;
     text-decoration: line-through;
+    font-weight: 400;
 }
 
 .totalitemsprice {
     color: white;
-    padding-left: 10px;
+    padding-left: 8px;
 }
 
 .totalcardmessage {
     color: white;
-    font-size: 12px;
-    font-weight: 500;
+    font-size: 9.5px;
+    font-weight: 400;
+    letter-spacing: 0.2px;
 }
 
 .viewcartbtn {
     background-color: white;
     border: none;
-    border-radius: 10px;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 14px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.34);
+}
+
+.viewcartbtn > img {
+    width: 8px;
+    padding-left: 8px;
+    margin-right: -2px;
 }
 
 .totalcard {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px;
-    margin: 0 15px 15px 15px;
+    padding: 12px 15px;
+    margin: -10px 15px 15px 15px;
     background-color: #7427F5;
-    border-radius: 16px;
+    border-radius: 15px;
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.34);
 }
