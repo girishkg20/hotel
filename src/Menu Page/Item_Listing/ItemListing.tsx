@@ -143,6 +143,7 @@ const Itemlisting = () => {
     const actualpayload = useSelector((state:any) => state.perReducers.addItem.value);
     const Usercart = useSelector((state:any) => state.perReducers.cartId.value);
     
+    
     const loggedin = userdata.token;
 
     const checkAuth = (fooditem: any) => {
@@ -183,10 +184,28 @@ const Itemlisting = () => {
                 navigate(`${fooditem._id}/clearcart`);
             }else{
 
-                if( (fooditem.quantity != -1) && ((fooditem.customisation_steps.length || fooditem.addon_group.length || fooditem.variant_group.length) > 0) ) {
+                let existingitem = 0;
+                if(actualpayload.hasOwnProperty("cart_data")) {
+                    existingitem = actualpayload.cart_data.food_items.filter((eachitems:any) => eachitems._id === fooditem._id).length
+                };
+
+                if( ((fooditem.quantity == -1) && (existingitem != 1) || (fooditem.quantity != -1)) && ((fooditem.customisation_steps.length || fooditem.addon_group.length || fooditem.variant_group.length) > 0) ) {
+
+                    if(actualpayload.hasOwnProperty("cart_data")) {
+                        
+                        if(existingitem > 0) {
+                            setfooditemdata(payload);
+                            navigate(`${fooditem._id}/customize`);
+                        }else{
+                            setfooditemdata(payload);
+                            navigate(`${fooditem._id}/customization`);
+                        }
+
+                    }else{
+                        setfooditemdata(payload);
+                        navigate(`${fooditem._id}/customization`);
+                    }
                     
-                    setfooditemdata(payload);
-                    navigate(`${fooditem._id}/customization`);
 
                 }else{
                     if(actualpayload.hasOwnProperty("cart_data")) {
@@ -504,9 +523,9 @@ const Itemlisting = () => {
                                     <p className='totalitemscount'>{totalitems}{totalitems > 1 ? " Items" : " Item"}</p>
                                     <p className='totalitemsdivider'>|</p>
                                     {Usercart.total_item_level_discount_price > 0 &&
-                                        <p className='totalscratchprice'>₹ {Usercart.total_item_total}</p>
+                                        <p className='totalscratchprice'>₹ {Usercart.total_item_total.toFixed(2)}</p>
                                     }
-                                    <p className='totalitemsprice'>₹ {Usercart.total_item_total - Usercart.total_item_level_discount_price}</p>
+                                    <p className='totalitemsprice'>₹ {(Usercart.total_item_total - Usercart.delivery_discount).toFixed(2)}</p>
                                 </div>
                                 <p className='totalcardmessage'>Additional charges may apply</p>
                             </div>

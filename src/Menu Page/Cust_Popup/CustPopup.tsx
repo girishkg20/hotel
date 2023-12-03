@@ -19,9 +19,16 @@ const Custpopup = () => {
     const {fooditemdata} = useContext(Menupagedata);
     const fooditem = fooditemdata?.cart_data.food_items[0].original_food_item;
 
-    const Fooditem = fooditemdata?.cart_data.food_items[0];
-    const payload = fooditemdata;
+    const Fooditem = {...fooditemdata?.cart_data.food_items[0]};
+    console.log(fooditem);
+    
 
+    const payload = {...fooditemdata,
+        cart_data: {...fooditemdata.cart_data,
+            food_items: [Fooditem],
+        }
+    };
+    
     const navigate = useNavigate();
     const Dispatch = useDispatch();
 
@@ -40,8 +47,6 @@ const Custpopup = () => {
         };
         window.addEventListener("popstate", handlePopstate);
     }
-    console.log(fooditemdata);
-    // console.log(varient);
 
     
     useEffect(() => {
@@ -112,7 +117,7 @@ const Custpopup = () => {
 
         }else{
             varient.push(selectedvarient);
-            fooditemdata.cart_data.food_items[0].variant_group = varient;
+            Fooditem.variant_group = varient;
             pushtocart();
             navigate(-1);
         }
@@ -154,7 +159,7 @@ const Custpopup = () => {
             })
 
             varient.push(...selectedaddons);
-            fooditemdata.cart_data.food_items[0].variant_group = varient;
+            Fooditem.variant_group = varient;
             pushtocart();
             navigate(-1);
         }
@@ -257,7 +262,7 @@ const Custpopup = () => {
                     <div className="addonscard">
                         <div className="addonstitleholder">
                             <h3 className="addontitle">{eachaddon.title}
-                                <span>{` (0/${eachaddon.item_maximum_count})`}</span>
+                                {/* <span>{` (0/${eachaddon.item_maximum_count})`}</span> */}
                             </h3>
                             <p className="custdescription">
                                 {(eachaddon.item_required_count > 0)
@@ -299,9 +304,9 @@ const Custpopup = () => {
                 {fooditem.addon_group.map((eachaddon:any, index:number)=>(<div className="addonscard" id="cardcheck" key={`${eachaddon.title}_${index}`} data-value1={eachaddon.item_required_count}>
                     <div className="addonstitleholder">
                         <h3 className="addontitle">{eachaddon.title}
-                            {eachaddon.item_maximum_count > 0 &&
+                            {/* {eachaddon.item_maximum_count > 0 &&
                                 <span>{` (0/${eachaddon.item_maximum_count})`}</span>
-                            }
+                            } */}
                         </h3>
                         <p className="custdescription">
                             {(eachaddon.item_required_count > 0)
@@ -341,7 +346,7 @@ const Custpopup = () => {
 
 
             {fooditem.customisation_steps.length > 0 && (<>
-                {fooditem.customisation_steps.map((eachcustomisation:any, index:number)=>(<React.Fragment key={`${eachcustomisation.step_name}_${index}`}>
+                {fooditem.customisation_steps.map((eachcustomisation:any, index:number)=>(<div id="AddonStepsCard" key={`${eachcustomisation.step_name}_${index}`}>
 
                     <h3 className="custstepname">{eachcustomisation.step_name}</h3>
 
@@ -349,9 +354,9 @@ const Custpopup = () => {
                         <div className="addonscard" key={`${eachaddon.item_name}_${index}`}>
                             <div className="addonstitleholder">
                                 <h3 className="addontitle">{eachaddon.item_name}
-                                    {eachaddon.item_maximum_count > 0 &&
+                                    {/* {eachaddon.item_maximum_count > 0 &&
                                         <span>{` (0/${eachaddon.item_maximum_count})`}</span>
-                                    }
+                                    } */}
                                 </h3>
                                 <p className="custdescription">
                                     {(eachaddon.item_required_count > 0)
@@ -392,7 +397,7 @@ const Custpopup = () => {
                         </div>
                     ))}
 
-                </React.Fragment>))}
+                </div>))}
 
                 <div className="custfooter">
                     {totalcards == activecard + 1

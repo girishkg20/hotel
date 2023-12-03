@@ -13,6 +13,7 @@ import Phno from './Login Page/Enter_Ph_No/PhNo';
 import Enterotp from './Login Page/Enter_Otp/EnterOTP';
 import Custpopup from './Menu Page/Cust_Popup/CustPopup';
 import Clearcartpopup from './Menu Page/Clear_Cart_Popup/ClearCartPopup';
+import Custrepeatpopup from './Menu Page/Cust_Repeat_Popup/CustRepeatPopup';
 
 import { Link } from 'react-router-dom';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -36,6 +37,10 @@ const Router = createBrowserRouter([
         {
           path: "/:hotelid/:merchantid/:itemid",
           element: <Itempopup/>
+        },
+        {
+          path: "/:hotelid/:merchantid/:itemid/customize",
+          element: <Custrepeatpopup/>
         },
         {
           path: "/:hotelid/:merchantid/:itemid/customization",
