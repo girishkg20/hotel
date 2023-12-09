@@ -4,7 +4,6 @@ import egg from './Source/egg.png';
 import non_veg from './Source/non-veg.png';
 import right from './Source/right.png';
 import menulogo from './Source/menu.png';
-// import Loginpage from '../../Login Page/LoginPage';
 import { useContext, useEffect, useState } from 'react';
 
 import Menupagedata from '../Menu_Page_API/MenuPageData';
@@ -13,9 +12,6 @@ import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { addItem, clearItem } from '../CartSlice';
 import { cartId, clearCartId } from '../CartidSlice';
-
-
-
 
 
 const Itemlisting = () => {
@@ -39,8 +35,6 @@ const Itemlisting = () => {
             } else {
                 setMenu(menu.foodItemCategory)
             }
-            
-            console.log(Menu);          ///////////Last Remove this log
 
         } else {
             console.log("Menu not set");
@@ -81,7 +75,7 @@ const Itemlisting = () => {
     },[Menu]);
 
     const navigate = useNavigate();
-    const {itemid} = useParams();
+    // const {itemid} = useParams();
 
     const openclose = (fid:string, iid:string) => {
         const foodcard = document.getElementById(fid);
@@ -142,7 +136,6 @@ const Itemlisting = () => {
     const userdata = useSelector((state:any) => state.perReducers.auth.value);
     const actualpayload = useSelector((state:any) => state.perReducers.addItem.value);
     const Usercart = useSelector((state:any) => state.perReducers.cartId.value);
-    
     
     const loggedin = userdata.token;
 
@@ -206,7 +199,6 @@ const Itemlisting = () => {
                         navigate(`${fooditem._id}/customization`);
                     }
                     
-
                 }else{
                     if(actualpayload.hasOwnProperty("cart_data")) {
                         const existingitem = actualpayload.cart_data.food_items.findIndex((eachitems:any) => eachitems._id === fooditem._id)
@@ -270,10 +262,7 @@ const Itemlisting = () => {
             .then(response => response.json())
             .then(data => {
                 const createdcart = data.response.data;
-                const addedfooditems = data.response.data.food_items; //Remove
                 Dispatch(cartId(createdcart));
-                console.log(addedfooditems); //Remove
-                
             })
 
         }else{
@@ -330,7 +319,6 @@ const Itemlisting = () => {
     
 
 
-    
     return (<Menupagedata.Provider value={{fooditemdata}}>
         <>
             <div className="fullmenu">
@@ -522,10 +510,13 @@ const Itemlisting = () => {
                                 <div className='itemstotalholder'>
                                     <p className='totalitemscount'>{totalitems}{totalitems > 1 ? " Items" : " Item"}</p>
                                     <p className='totalitemsdivider'>|</p>
-                                    {Usercart.total_item_level_discount_price > 0 &&
-                                        <p className='totalscratchprice'>₹ {Usercart.total_item_total.toFixed(2)}</p>
+                                    {Usercart.total_item_level_discount_price > 0
+                                        ? <>
+                                            <p className='totalscratchprice'>₹ {Usercart.total_item_total.toFixed(2)}</p>
+                                            <p className='totalitemsprice'>₹ {(Usercart.total_item_total - Usercart.delivery_discount).toFixed(2)}</p>
+                                        </>
+                                        : <p className='totalitemsprice'>₹ {(Usercart.total_item_total).toFixed(2)}</p>
                                     }
-                                    <p className='totalitemsprice'>₹ {(Usercart.total_item_total - Usercart.delivery_discount).toFixed(2)}</p>
                                 </div>
                                 <p className='totalcardmessage'>Additional charges may apply</p>
                             </div>

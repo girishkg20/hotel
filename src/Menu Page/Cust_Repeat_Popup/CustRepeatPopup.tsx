@@ -11,8 +11,6 @@ import close from "./Source/close.png";
 
 import Menupagedata from '../Menu_Page_API/MenuPageData';
 import { addItem } from '../CartSlice';
-import { cartId } from '../CartidSlice';
-
 
 
 const Custrepeatpopup = () => {
@@ -23,12 +21,10 @@ const Custrepeatpopup = () => {
     const Dispatch = useDispatch();
 
     const {fooditemdata} = useContext(Menupagedata);
-    const Fooditem = {...fooditemdata?.cart_data.food_items[0]};
+    const Fooditem = fooditemdata && {...fooditemdata.cart_data.food_items[0]};
     
-
     const actualpayload = useSelector((state:any) => state.perReducers.addItem.value);
     const cartitems = useSelector((state:any) => state.perReducers.cartId.value.food_items);
-    console.log("cartitems", cartitems); //remove
 
     if(fooditemdata && actualpayload){
         document.body.style.overflow = "hidden";
@@ -40,26 +36,15 @@ const Custrepeatpopup = () => {
         window.addEventListener("popstate", handlePopstate);
     }
 
-
-
-    useEffect(()=>{
+    useEffect( () => {
         if(cartitems && Fooditem) {
             const filtered = cartitems.filter((eachfooditem:any) => eachfooditem._id === Fooditem._id);
             setfiltereditems(filtered);
         };
+        if(!cartitems) {
+            document.body.style.overflow = "scroll"; 
+        }
     },[cartitems])
-
-
-
-
-    // useEffect(()=>{
-    //     if(actualpayload.hasOwnProperty("cart_data") && Fooditem) {
-    //         const filtered = actualpayload.cart_data.food_items.filter((eachfooditem:any) => eachfooditem._id === Fooditem._id);
-    //         setfiltereditems(filtered)
-    //         console.log(filtereditems);
-            
-    //     };
-    // },[actualpayload])
 
     const newcustomization = () => {
         const URL = window.location.pathname.replace('customize', 'customization');
@@ -94,10 +79,7 @@ const Custrepeatpopup = () => {
     };
 
 
-
-
-
-    return(<>{actualpayload.hasOwnProperty("cart_data") && Fooditem && Fooditem.original_food_item &&<>
+    return(<>{actualpayload.hasOwnProperty("cart_data") && Fooditem && Fooditem.original_food_item && <>
         <div className='custpopoverlay' onClick={() => navigate(-1)}></div>
 
         <div className="custpopover">
@@ -126,14 +108,22 @@ const Custrepeatpopup = () => {
                                 
                             <p className="critemname">{
                                 eachfooditem.variant_group[0]
-                                ? eachfooditem.variant_group.map((eachvarient:any)=>(eachvarient.title)).join(" + ")
+                                ? eachfooditem.variant_group.map((eachvarient:any)=>(eachvarient.varient_title)).join(" + ")
+                                : eachfooditem.customisation_steps[0]
+                                ? eachfooditem.customisation_steps.map((eachoption:any)=>(eachoption.option_name)).join(" + ")
                                 : <span style={{textTransform:"none"}}>It's plain and simple, No extras added</span>
+                                
                             }</p>
 
                             <div className='craddbtnholder'>
                                 <div className='pricebox'>
-                                    <p className="critemprice">₹ {eachfooditem.total}</p>
-                                    <p className="crdisplayprice">₹ {Math.round(eachfooditem.total - eachfooditem.delivery_discount)}</p>
+                                    {eachfooditem.total_item_level_discount_price > 0
+                                        ? <>
+                                            <p className="critemprice">₹ {Math.round(eachfooditem.total)}</p>
+                                            <p className="crdisplayprice">₹ {Math.round(eachfooditem.total - eachfooditem.delivery_discount)}</p>
+                                        </>
+                                        : <p className="crdisplayprice">₹ {Math.round(eachfooditem.total)}</p>
+                                    }
                                 </div>
                                 <button className="craddedbutton">
                                     <p className='craddsub' onClick={() => pushtocart({...eachfooditem, quantity:-1})}>-</p>
@@ -149,7 +139,7 @@ const Custrepeatpopup = () => {
             </div>
 
             <div className="crcustfooter">
-                <button className="cradditembtn" onClick={() => newcustomization()}>
+                <button className="cradditembtn" onClick={newcustomization}>
                     <p>+ Add new customization</p>
                 </button>
             </div>

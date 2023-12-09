@@ -10,6 +10,7 @@ import egg from "./Source/egg.png";
 import non_veg from "./Source/non-veg.png";
 import close from "./Source/close.png";
 import tick from "./Source/tick.png";
+import back from "./Source/back.png";
 
 import Menupagedata from "../Menu_Page_API/MenuPageData";
 import { addItem } from "../CartSlice";
@@ -18,11 +19,7 @@ import { addItem } from "../CartSlice";
 const Custpopup = () => {
     const {fooditemdata} = useContext(Menupagedata);
     const fooditem = fooditemdata?.cart_data.food_items[0].original_food_item;
-
     const Fooditem = {...fooditemdata?.cart_data.food_items[0]};
-    console.log(fooditem);
-    
-
     const payload = {...fooditemdata,
         cart_data: {...fooditemdata.cart_data,
             food_items: [Fooditem],
@@ -130,7 +127,7 @@ const Custpopup = () => {
         const addoncards = document.querySelectorAll('#cardcheck');
         let notselected = 0;
 
-        addoncards.forEach((eachcard:any)=>{
+        addoncards.forEach( (eachcard:any) => {
             const requiredcount = eachcard.dataset.value1;
             let selectedcount = 0;
 
@@ -165,6 +162,57 @@ const Custpopup = () => {
         }
 
     };
+
+    ///////////////////////////// Our Customization
+
+    let selectedcustomizations:any[] = [];
+    const custsubmit = (id:any) => {
+
+        const stepcard = document.getElementById(id);
+        const addoncards = stepcard!.querySelectorAll('#cardcheck');
+        let notselected = 0;
+
+        addoncards.forEach((eachcard:any)=>{
+            const requiredcount = eachcard.dataset.value1;
+            let selectedcount = 0;
+
+            const checkboxes = eachcard.querySelectorAll('[id="custselection"]');
+
+            checkboxes.forEach((eachcheckbox:any) => {
+                eachcheckbox.checked && (selectedcount++);
+            });
+
+            selectedcount < requiredcount && (
+                notselected++,
+                eachcard.style.outline = '1px solid #D44222',
+                eachcard.classList.add('shake'),
+                setTimeout(() => {
+                    eachcard.classList.remove('shake')
+                    eachcard.style.removeProperty('outline')
+                }, 800)
+            );
+        });
+
+        if(notselected == 0) {
+            if(totalcards == activecard + 1) {
+                const checkboxes = document.querySelectorAll('[id="custselection"]');
+
+                checkboxes.forEach((checkbox:any)=>{
+                    checkbox.checked && (selectedcustomizations.push(JSON.parse(checkbox.value)));
+                })
+
+                varient.push(...selectedcustomizations);
+                Fooditem.customisation_steps = varient;
+                pushtocart();
+                navigate(-1);
+            }else{
+                setactivecard(activecard + 1);
+            }
+        };
+
+    }
+
+    ///////////////////////////// Our Customization
 
     const actualpayload = useSelector((state:any) => state.perReducers.addItem.value)
     const pushtocart = () => {
@@ -213,20 +261,6 @@ const Custpopup = () => {
 
 
 
-
-
-
-
-    useEffect(()=>{
-        console.log(varient);
-    },[varient.length])
-
-    useEffect(()=>{
-        console.log('pushed', varient);
-    },[varient])
-
-    
-
     return(<>{ fooditemdata ? <>
         <div className='custpopoverlay' onClick={() => navigate(-1)}></div>
 
@@ -246,31 +280,32 @@ const Custpopup = () => {
                 </div>
             </div>
 
-
-
-            {activecard > 0 &&
-                <div className="precardbtn" onClick={preStep}>
+            {activecard > 0 && varient.length > 0
+                ?<div className="precardbtn" onClick={preStep}>
                     <p className="selecteditem">{varient[varient.length - 1].title}</p>
                     <p className="changeselecteditem">Change</p>
                 </div>
-            }
 
+                :activecard > 0 &&
+                <div className="prebackbtn" onClick={() => setactivecard(activecard - 1)}>
+                    <img className="backicon" src={back} alt="<" />
+                    <p className="backselecteditem">Back</p>
+                </div>
+            }
 
 
             {fooditem.variant_group.length > 0 && (<>
                 {fooditem.variant_group.map((eachaddon:any, index:number) => (<div id="AddonStepsCard" key={`${eachaddon.title}_${index}`}>
                     <div className="addonscard">
                         <div className="addonstitleholder">
-                            <h3 className="addontitle">{eachaddon.title}
-                                {/* <span>{` (0/${eachaddon.item_maximum_count})`}</span> */}
-                            </h3>
+                            <h3 className="addontitle">{eachaddon.title}</h3>
                             <p className="custdescription">
                                 {(eachaddon.item_required_count > 0)
                                 ? `Select atleast ${eachaddon.item_required_count} option`
                                 : "Customize as you wish (Optional)"}
                             </p>
                         </div>
-                        {eachaddon.variants.map((eachvariants:any, subindex:number)=>(
+                        {eachaddon.variants.map((eachvariants:any) => (
                             <label className="addonitem" key={eachvariants.option_code}>
                                 <div className="addonnameprice">
                                     <p className="addonname">{eachvariants.title}</p>
@@ -298,16 +333,10 @@ const Custpopup = () => {
             </>)}
 
 
-
-
             {fooditem.addon_group.length > 0 && (<div id="AddonStepsCard">
                 {fooditem.addon_group.map((eachaddon:any, index:number)=>(<div className="addonscard" id="cardcheck" key={`${eachaddon.title}_${index}`} data-value1={eachaddon.item_required_count}>
                     <div className="addonstitleholder">
-                        <h3 className="addontitle">{eachaddon.title}
-                            {/* {eachaddon.item_maximum_count > 0 &&
-                                <span>{` (0/${eachaddon.item_maximum_count})`}</span>
-                            } */}
-                        </h3>
+                        <h3 className="addontitle">{eachaddon.title}</h3>
                         <p className="custdescription">
                             {(eachaddon.item_required_count > 0)
                             ? `Select atleast ${eachaddon.item_required_count} options`
@@ -331,88 +360,79 @@ const Custpopup = () => {
                 </div>))}
 
                 <div className="custfooter">
-                    {totalcards == activecard + 1
-                        ?<button className="additembtn" onClick={() => submitAddons('alladdons')}>
-                            <p>Add Item </p>
-                        </button>
-                        :<button className="additembtn" onClick={() => nextStep('dummy_element')}>
-                            <p>{`Step ( ${activecard + 1}/${totalcards} ) - Continue`}</p>
-                        </button>
-                    }
+                    <button className="additembtn" onClick={() => submitAddons('alladdons')}>
+                        <p>Add Item </p>
+                    </button>
                 </div>
 
             </div>)}
 
 
-
             {fooditem.customisation_steps.length > 0 && (<>
                 {fooditem.customisation_steps.map((eachcustomisation:any, index:number)=>(<div id="AddonStepsCard" key={`${eachcustomisation.step_name}_${index}`}>
+                    <div id={`${eachcustomisation.step_name}_${index}`}>
+                        <h3 className="custstepname">{eachcustomisation.step_name}</h3>
 
-                    <h3 className="custstepname">{eachcustomisation.step_name}</h3>
-
-                    {eachcustomisation.add_ons.map((eachaddon:any, index:number) => (
-                        <div className="addonscard" key={`${eachaddon.item_name}_${index}`}>
-                            <div className="addonstitleholder">
-                                <h3 className="addontitle">{eachaddon.item_name}
-                                    {/* {eachaddon.item_maximum_count > 0 &&
-                                        <span>{` (0/${eachaddon.item_maximum_count})`}</span>
-                                    } */}
-                                </h3>
-                                <p className="custdescription">
-                                    {(eachaddon.item_required_count > 0)
-                                    ? `Select atleast ${eachaddon.item_required_count} options`
-                                    : (eachaddon.item_type == "singleselect")
-                                        ? "Select atleast 1 option"
-                                        : "Customize as you wish (Optional)"
-                                    }
-                                </p>
+                        {eachcustomisation.add_ons.map((eachaddon:any, childindex:number) => (<React.Fragment key={`${eachaddon.item_name}_${childindex}`}>
+                            <div className="addonscard" id="cardcheck" data-value1={eachaddon.item_required_count}>
+                                <div className="addonstitleholder">
+                                    <h3 className="addontitle">{eachaddon.item_name}</h3>
+                                    <p className="custdescription">
+                                        {(eachaddon.item_required_count > 0)
+                                        ? `Select atleast ${eachaddon.item_required_count} options`
+                                        : (eachaddon.item_type == "singleselect")
+                                            ? "Select atleast 1 option"
+                                            : "Customize as you wish (Optional)"
+                                        }
+                                    </p>
+                                </div>
+                                {eachaddon.item_options.map((eachoptions:any, nestedindex:number)=>(
+                                    <label className="addonitem" key={eachoptions.option_code}>
+                                        {eachaddon.item_type == "singleselect"
+                                            ? <>
+                                                <div className="addonnameprice">
+                                                    <p className="addonname">{eachoptions.option_name}</p>
+                                                    <p className="addonprice">{`₹ ${eachoptions.price + fooditem.price}`}</p>
+                                                </div>
+                                                
+                                                <input className="varientcheck" type="radio" id="custselection" defaultChecked={nestedindex === 0} value={JSON.stringify(eachoptions)} name={`${eachaddon.item_name}_${index}`}/>
+                                                <div className="checkboxbg"></div>
+                                            </>
+                                            : <>
+                                                <div className="addonnameprice">
+                                                    <p className="addonname">{eachoptions.option_name}</p>
+                                                    <p className="addonprice">{`+₹ ${eachoptions.price}`}</p>
+                                                </div>
+                                                
+                                                <input className="addoncheck" type="checkbox" id="custselection" value={JSON.stringify(eachoptions)} name="alladdons"/>
+                                                <div className="checkmark">
+                                                    <img className="tickmark" width="10px" height="10px" src={tick} alt="✔"/>
+                                                </div>
+                                                <div className="checkboxbg"></div>
+                                            </>
+                                        }
+                                    </label>
+                                ))}
                             </div>
-                            {eachaddon.item_options.map((eachoptions:any)=>(
-                                <label className="addonitem" key={eachoptions.option_code}>
-                                    {eachaddon.item_type == "singleselect"
-                                        ? <>
-                                            <div className="addonnameprice">
-                                                <p className="addonname">{eachoptions.option_name}</p>
-                                                <p className="addonprice">{`₹ ${eachoptions.price + fooditem.price}`}</p>
-                                            </div>
-                                            
-                                            <input className="varientcheck" type="radio" name={`${eachaddon.item_name}_${index}`}/>
-                                            <div className="checkboxbg"></div>
-                                        </>
-                                        : <>
-                                            <div className="addonnameprice">
-                                                <p className="addonname">{eachoptions.option_name}</p>
-                                                <p className="addonprice">{`+₹ ${eachoptions.price}`}</p>
-                                            </div>
-                                            
-                                            <input className="addoncheck" type="checkbox"/>
-                                            <div className="checkmark">
-                                                <img className="tickmark" width="10px" height="10px" src={tick} alt="✔"/>
-                                            </div>
-                                            <div className="checkboxbg"></div>
-                                        </>
-                                    }
-                                </label>
-                            ))}
+
+                        </React.Fragment>))}
+
+
+                        <div className="custfooter">
+                            {totalcards == activecard + 1
+                                ?<button className="additembtn" onClick={()=>custsubmit(`${eachcustomisation.step_name}_${index}`)}>
+                                    <p>Add Item</p>
+                                </button>
+                                :<button className="additembtn" onClick={()=>custsubmit(`${eachcustomisation.step_name}_${index}`)}>
+                                    <p>{`Step ( ${activecard + 1}/${totalcards} ) - Continue`}</p>
+                                </button>
+                            }
                         </div>
-                    ))}
+                    </div>
 
                 </div>))}
 
-                <div className="custfooter">
-                    {totalcards == activecard + 1
-                        ?<button className="additembtn">
-                            <p>Add Item</p>
-                        </button>
-                        :<button className="additembtn" onClick={() => nextStep('`${eachaddon.title}_${index}`')}>
-                            <p>{`Step ( ${activecard + 1}/${totalcards} ) - Continue`}</p>
-                        </button>
-                    }
-                </div>
-
             </>)}
-
-
 
         </div>
     </>:null}</>)

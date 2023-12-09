@@ -327,31 +327,27 @@
     padding-left: 15px;
     font-size: 16px;
     font-weight: 800;
-    text-transform: capitalize;
     color: #7427F5;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-.popfoodcard {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 50px 15px 15px 15px;
+.backicon {
+    height: 16px;
 }
 
-.itemdescription {
-    padding: 0 15px 35px 15px;
-    font-size: 13px;
-    font-weight: 500;
-    color: #787878;
+.prebackbtn {
+    margin: 15px;
+    padding: 5px 10px;
+    border: 2px solid #7427F5;
+    border-radius: 23px;
+    background-color: white;
+    display: flex;
+    width: fit-content;
+    align-items: center;
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.34);
+}
+
+.backselecteditem {
+    padding-left: 8px;
+    font-size: 16px;
+    font-weight: 800;
 }

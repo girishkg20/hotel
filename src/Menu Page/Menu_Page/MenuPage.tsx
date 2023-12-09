@@ -34,6 +34,7 @@ const Menupage = () => {
           setarea(menu.merchant.area_name);
           setaddress(menu.merchant.full_address);
           setrestaurantimage(menu.merchant.cover_image);
+          Dispatch(selectvegfilter(false));
         } else {
           setRestaurantname("Loading...");
         }
