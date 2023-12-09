@@ -78,6 +78,10 @@ const Custrepeatpopup = () => {
 
     };
 
+    const navigateback = () => {
+        navigate(-1)
+    };
+
 
     return(<>{actualpayload.hasOwnProperty("cart_data") && Fooditem && Fooditem.original_food_item && <>
         <div className='custpopoverlay' onClick={() => navigate(-1)}></div>
@@ -103,21 +107,20 @@ const Custrepeatpopup = () => {
                 <p className='crheading'>All Your Customizations</p>
 
                 {
-                    filtereditems.length > 0 && filtereditems.map((eachfooditem:any, index:number) => (
+                    filtereditems.length > 0 ? filtereditems.map((eachfooditem:any, index:number) => (
                         <div className="crfoodcard" key={`foodcard_${index}`}>
                                 
                             <p className="critemname">{
                                 eachfooditem.variant_group[0]
-                                ? eachfooditem.variant_group.map((eachvarient:any)=>(eachvarient.varient_title)).join(" + ")
+                                ? eachfooditem.variant_group.map((eachvarient:any)=>(eachvarient.title)).join(" + ")
                                 : eachfooditem.customisation_steps[0]
                                 ? eachfooditem.customisation_steps.map((eachoption:any)=>(eachoption.option_name)).join(" + ")
                                 : <span style={{textTransform:"none"}}>It's plain and simple, No extras added</span>
-                                
                             }</p>
 
                             <div className='craddbtnholder'>
                                 <div className='pricebox'>
-                                    {eachfooditem.total_item_level_discount_price > 0
+                                    {eachfooditem.delivery_discount > 0
                                         ? <>
                                             <p className="critemprice">₹ {Math.round(eachfooditem.total)}</p>
                                             <p className="crdisplayprice">₹ {Math.round(eachfooditem.total - eachfooditem.delivery_discount)}</p>
@@ -133,7 +136,7 @@ const Custrepeatpopup = () => {
                             </div>
 
                         </div>
-                    ))
+                    )) : (() => {navigate(-1); return null;})()  
                 }
                 
             </div>
