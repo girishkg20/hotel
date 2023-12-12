@@ -21,30 +21,36 @@ const Custrepeatpopup = () => {
     const Dispatch = useDispatch();
 
     const {fooditemdata} = useContext(Menupagedata);
-    const Fooditem = fooditemdata && {...fooditemdata.cart_data.food_items[0]};
+    const Fooditem = fooditemdata && fooditemdata.cart_data && fooditemdata.cart_data.food_items && {...fooditemdata.cart_data.food_items[0]};
     
     const actualpayload = useSelector((state:any) => state.perReducers.addItem.value);
     const cartitems = useSelector((state:any) => state.perReducers.cartId.value.food_items);
 
-    if(fooditemdata && actualpayload){
-        document.body.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
 
-        const handlePopstate = () => {
-            document.body.style.overflow = "scroll";
-            window.removeEventListener("popstate", handlePopstate);
-        };
-        window.addEventListener("popstate", handlePopstate);
-    }
+    // if(fooditemdata && actualpayload){
+    //     document.body.style.overflow = "hidden";
+
+    //     const handlePopstate = () => {
+    //         document.body.style.overflow = "scroll";
+    //         window.removeEventListener("popstate", handlePopstate);
+    //         console.log("RE",document.body.style.overflow);
+    //     };
+    //     window.addEventListener("popstate", handlePopstate);
+    // }
 
     useEffect( () => {
+
         if(cartitems && Fooditem) {
             const filtered = cartitems.filter((eachfooditem:any) => eachfooditem._id === Fooditem._id);
-            setfiltereditems(filtered);
-        };
-        if(!cartitems) {
-            document.body.style.overflow = "scroll"; 
+            filtered.length > 0 ? setfiltereditems(filtered) : navigate(-1);
         }
-    },[cartitems])
+
+        if(!cartitems || !Fooditem) {
+            navigate(-1);
+        }
+
+    },[cartitems]);
 
     const newcustomization = () => {
         const URL = window.location.pathname.replace('customize', 'customization');
@@ -78,9 +84,6 @@ const Custrepeatpopup = () => {
 
     };
 
-    const navigateback = () => {
-        navigate(-1)
-    };
 
 
     return(<>{actualpayload.hasOwnProperty("cart_data") && Fooditem && Fooditem.original_food_item && <>
@@ -107,7 +110,7 @@ const Custrepeatpopup = () => {
                 <p className='crheading'>All Your Customizations</p>
 
                 {
-                    filtereditems.length > 0 ? filtereditems.map((eachfooditem:any, index:number) => (
+                    filtereditems.length > 0 && filtereditems.map((eachfooditem:any, index:number) => (
                         <div className="crfoodcard" key={`foodcard_${index}`}>
                                 
                             <p className="critemname">{
@@ -136,7 +139,7 @@ const Custrepeatpopup = () => {
                             </div>
 
                         </div>
-                    )) : (() => {navigate(-1); return null;})()  
+                    )) 
                 }
                 
             </div>

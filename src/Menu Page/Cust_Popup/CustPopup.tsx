@@ -21,7 +21,7 @@ const Custpopup = () => {
     const fooditem = fooditemdata?.cart_data.food_items[0].original_food_item;
     const Fooditem = {...fooditemdata?.cart_data.food_items[0]};
     const payload = {...fooditemdata,
-        cart_data: {...fooditemdata.cart_data,
+        cart_data: {...fooditemdata?.cart_data,
             food_items: [Fooditem],
         }
     };
@@ -33,19 +33,24 @@ const Custpopup = () => {
     const [activecard, setactivecard] = useState(0);
     const [varient, setvarient] = useState<any>([]);
     
+    document.body.style.overflow = "hidden"
 
+    useEffect(() => {
+        if(!fooditemdata) {
+            navigate(-1)
+        }
+    },[fooditemdata])
 
-    if(fooditemdata){
-        document.body.style.overflow = "hidden"
+    // if(fooditemdata){
+    //     document.body.style.overflow = "hidden"
 
-        const handlePopstate = () => {
-            document.body.style.overflow = "scroll";
-            window.removeEventListener("popstate", handlePopstate);
-        };
-        window.addEventListener("popstate", handlePopstate);
-    }
+    //     const handlePopstate = () => {
+    //         document.body.style.overflow = "scroll";
+    //         window.removeEventListener("popstate", handlePopstate);
+    //     };
+    //     window.addEventListener("popstate", handlePopstate);
+    // }
 
-    
     useEffect(() => {
         const AllSteps = document.querySelectorAll("#AddonStepsCard");
         settotalcards(AllSteps.length);
@@ -285,7 +290,6 @@ const Custpopup = () => {
                     <p className="selecteditem">{varient[varient.length - 1].title}</p>
                     <p className="changeselecteditem">Change</p>
                 </div>
-
                 :activecard > 0 &&
                 <div className="prebackbtn" onClick={() => setactivecard(activecard - 1)}>
                     <img className="backicon" src={back} alt="<" />
@@ -309,7 +313,7 @@ const Custpopup = () => {
                             <label className="addonitem" key={eachvariants.option_code}>
                                 <div className="addonnameprice">
                                     <p className="addonname">{eachvariants.title}</p>
-                                    <p className="addonprice">{`₹ ${eachvariants.price + fooditem.price}`}</p>
+                                    <p className="addonprice">{`₹ ${Math.round(eachvariants.price + fooditem.price)}`}</p>
                                 </div>
                                 
                                 <input className="varientcheck" type="radio" value={JSON.stringify({...eachvariants, varient_title: eachaddon.title})} name={`${eachaddon.title}_${index}`}/>
@@ -347,7 +351,7 @@ const Custpopup = () => {
                         <label className="addonitem" key={eachaddons.option_code}>
                             <div className="addonnameprice">
                                 <p className="addonname">{eachaddons.title}</p>
-                                {eachaddons.price > 0 && <p className="addonprice">{`+₹ ${eachaddons.price}`}</p>}
+                                {eachaddons.price > 0 && <p className="addonprice">{`+₹ ${Math.round(eachaddons.price)}`}</p>}
                             </div>
                             
                             <input className="addoncheck" type="checkbox" value={JSON.stringify({...eachaddons, varient_title: eachaddon.title})} name={'alladdons'}/>
@@ -392,7 +396,7 @@ const Custpopup = () => {
                                             ? <>
                                                 <div className="addonnameprice">
                                                     <p className="addonname">{eachoptions.option_name}</p>
-                                                    <p className="addonprice">{`₹ ${eachoptions.price + fooditem.price}`}</p>
+                                                    <p className="addonprice">{`₹ ${Math.round(eachoptions.price + fooditem.price)}`}</p>
                                                 </div>
                                                 
                                                 <input className="varientcheck" type="radio" id="custselection" defaultChecked={nestedindex === 0} value={JSON.stringify(eachoptions)} name={`${eachaddon.item_name}_${index}`}/>
@@ -401,7 +405,7 @@ const Custpopup = () => {
                                             : <>
                                                 <div className="addonnameprice">
                                                     <p className="addonname">{eachoptions.option_name}</p>
-                                                    <p className="addonprice">{`+₹ ${eachoptions.price}`}</p>
+                                                    <p className="addonprice">{`+₹ ${Math.round(eachoptions.price)}`}</p>
                                                 </div>
                                                 
                                                 <input className="addoncheck" type="checkbox" id="custselection" value={JSON.stringify(eachoptions)} name="alladdons"/>

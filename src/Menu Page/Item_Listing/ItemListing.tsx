@@ -23,6 +23,7 @@ const Itemlisting = () => {
 
     const [Menu, setMenu] = useState<any>([{}]);
     const [fooditemdata, setfooditemdata] = useState<any>();
+    const [viewfooditem, setviewfooditem] = useState<any>();
     const [totalitems, settotalitems] = useState<number>(0);
     
 
@@ -285,7 +286,7 @@ const Itemlisting = () => {
     },[actualpayload])
     
     const generateData = (fooditem:any) => {
-        setfooditemdata(fooditem);
+        setviewfooditem(fooditem);
         navigate(fooditem._id);
     };
 
@@ -319,7 +320,7 @@ const Itemlisting = () => {
     
 
 
-    return (<Menupagedata.Provider value={{fooditemdata}}>
+    return (<Menupagedata.Provider value={{viewfooditem, fooditemdata, setfooditemdata, menu}}>
         <>
             <div className="fullmenu">
                 <div><h2 className="menuheading">- Menu -</h2></div>
@@ -387,12 +388,15 @@ const Itemlisting = () => {
                                                             <p id={eachfooditem._id}>0</p>
                                                             <p className='addsub' onClick={() => checkAuth(eachfooditem)}>+</p>
                                                         </button>
+                                                        {(eachfooditem.customisation_steps.length || eachfooditem.addon_group.length || eachfooditem.variant_group.length) > 0
+                                                            ? <p className='custotext'>Customisable</p> : null
+                                                        }
                                                     </>
                                                     : <>
+                                                        <button className="addbutton" onClick={() => checkAuth(eachfooditem)}>ADD</button>
                                                         {(eachfooditem.customisation_steps.length || eachfooditem.addon_group.length || eachfooditem.variant_group.length) > 0
-                                                        ? <><button className="addbutton" onClick={() => checkAuth(eachfooditem)}>ADD</button>
-                                                            <p className='custotext'>Customisable</p></>
-                                                        : <button className="addbutton" onClick={() => checkAuth(eachfooditem)}>ADD</button>}
+                                                            ? <p className='custotext'>Customisable</p> : null
+                                                        }
                                                     </>
                                                 }
                                             </div>
@@ -457,12 +461,15 @@ const Itemlisting = () => {
                                                                             <p id={eachfooditem._id}>0</p>
                                                                             <p className='addsub' onClick={() => checkAuth(eachfooditem)}>+</p>
                                                                         </button>
+                                                                        {(eachfooditem.customisation_steps.length || eachfooditem.addon_group.length || eachfooditem.variant_group.length) > 0
+                                                                            ? <p className='custotext'>Customisable</p> : null
+                                                                        }
                                                                     </>
                                                                     : <>
+                                                                        <button className="addbutton" onClick={() => checkAuth(eachfooditem)}>ADD</button>
                                                                         {(eachfooditem.customisation_steps.length || eachfooditem.addon_group.length || eachfooditem.variant_group.length) > 0
-                                                                        ? <><button className="addbutton" onClick={() => checkAuth(eachfooditem)}>ADD</button>
-                                                                            <p className='custotext'>Customisable</p></>
-                                                                        : <button className="addbutton" onClick={() => checkAuth(eachfooditem)}>ADD</button>}
+                                                                            ? <p className='custotext'>Customisable</p> : null
+                                                                        }
                                                                     </>
                                                                 }
                                                             </div>
