@@ -9,18 +9,9 @@ const Clearcartpopup = () => {
 
     const navigate = useNavigate();
     const Dispatch = useDispatch();
+    document.body.style.overflow = "hidden";
 
     const actualpayload = useSelector((state:any) => state.perReducers.addItem.value);
-    
-    if(actualpayload) {
-        document.body.style.overflow = "hidden"
-
-        const handlePopstate = () => {
-            document.body.style.overflow = "scroll";
-            window.removeEventListener("popstate", handlePopstate);
-        };
-        window.addEventListener("popstate", handlePopstate);
-    };
 
     const clearCart = () => {
         Dispatch(clearItem());

@@ -20,6 +20,8 @@ const Itemlisting = () => {
 
     const { menu } = useContext(Menupagedata);
     const Dispatch = useDispatch();
+    const navigate = useNavigate();
+    document.body.style.overflow = "scroll";
 
     const [Menu, setMenu] = useState<any>([{}]);
     const [fooditemdata, setfooditemdata] = useState<any>();
@@ -75,8 +77,6 @@ const Itemlisting = () => {
 
     },[Menu]);
 
-    const navigate = useNavigate();
-    // const {itemid} = useParams();
 
     const openclose = (fid:string, iid:string) => {
         const foodcard = document.getElementById(fid);
@@ -128,11 +128,11 @@ const Itemlisting = () => {
         document.getElementById(id)!.classList.add('catactive');
     };
     
-    const handlePopstate = () => {
-        document.body.style.overflow = "scroll";
-        window.removeEventListener("popstate", handlePopstate);
-      };
-    window.addEventListener("popstate", handlePopstate);
+    // const handlePopstate = () => {
+    //     document.body.style.overflow = "scroll";
+    //     window.removeEventListener("popstate", handlePopstate);
+    //   };
+    // window.addEventListener("popstate", handlePopstate);
 
     const userdata = useSelector((state:any) => state.perReducers.auth.value);
     const actualpayload = useSelector((state:any) => state.perReducers.addItem.value);
