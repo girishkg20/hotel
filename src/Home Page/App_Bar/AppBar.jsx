@@ -4,25 +4,14 @@ import "./AppBar.css";
 import profilelogo from "./Source/account.png";
 import Searchbar from "../Search_Bar/SearchBar.tsx";
 import Homepagedata from '../Home_Page_API/HomePageData.jsx';
-// import {savetextentered} from '../Search_Bar/SearchBar.tsx';
-// import { RootState } from '../../Redux/store';
-import printpage from '../HomePage';
-import { useSelector } from 'react-redux';
+
 
 const Appbar = () => {
   window.onscroll = function () {
     Headfix();
   };
-/////////////////////////////Redux
 
-const entered = useSelector((state) => state.enteredText.value)
-const savetextentered = () => {
-        console.log(entered);
-}
-
-
-//////////////////////////////Redux
-  const {Hotelname, Cuisines, Data} = useContext(Homepagedata);
+  const {Hotelname} = useContext(Homepagedata);
   const [head, sethead] = useState();
   const [position, setposition] = useState();
 
@@ -49,7 +38,7 @@ const savetextentered = () => {
         <div className="appbar">
 
           <h3 className="hotelname" id="hotelname">{Hotelname}</h3>
-          <Link id="profilelogo" to="profile" onClick={savetextentered}>
+          <Link id="profilelogo" to="profile">
             <img className="profile" id="profilebtn" src={profilelogo} alt="Profile"/>
           </Link>
 

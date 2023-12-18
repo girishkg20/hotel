@@ -8,7 +8,7 @@ import { useContext, useEffect, useState } from 'react';
 
 import Menupagedata from '../Menu_Page_API/MenuPageData';
 import React from 'react';
-import { Outlet, useNavigate, useParams } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { addItem, clearItem } from '../CartSlice';
 import { cartId, clearCartId } from '../CartidSlice';
@@ -527,7 +527,7 @@ const Itemlisting = () => {
                                 </div>
                                 <p className='totalcardmessage'>Additional charges may apply</p>
                             </div>
-                            <button className='viewcartbtn'>View Cart<img src={right} alt=">"/></button>
+                            <button className='viewcartbtn'onClick={() => navigate("cart")}>View Cart<img src={right} alt=">"/></button>
                         </div>
                     }
                 </div>

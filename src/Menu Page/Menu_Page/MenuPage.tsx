@@ -11,7 +11,9 @@ import { useContext, useEffect, useState } from 'react';
 import Menupagedata from '../Menu_Page_API/MenuPageData';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { selectvegfilter } from '../../Redux/slice';
+import { selectvegfilter } from '../VegfilterSlice';
+import restaurantclosed from './Source/restaurant_closed.png';
+import Uniloader from '../../Universal Loader/UniLoader';
 
 
 const Menupage = () => {
@@ -24,6 +26,7 @@ const Menupage = () => {
     const [area, setarea] = useState<any>();
     const [address, setaddress] = useState<any>();
     const [restaurantimage, setrestaurantimage] = useState<any>();
+    const [loading, setloading] = useState<boolean>(true);
     const navigate = useNavigate();
     
     useEffect(() => {
@@ -35,6 +38,7 @@ const Menupage = () => {
           setaddress(menu.merchant.full_address);
           setrestaurantimage(menu.merchant.cover_image);
           Dispatch(selectvegfilter(false));
+          setloading(false);
         } else {
           setRestaurantname("Loading...");
         }
@@ -62,7 +66,7 @@ const Menupage = () => {
             window.removeEventListener('scroll', whenscroll);
         };
 
-    },[header]);
+    },[header, loading]);
 
 
     const select = () => {
@@ -105,10 +109,27 @@ const Menupage = () => {
 
     const whenscroll = () => {
         if (header && headertext && searchbtn) {
-        fixheader();
-        addsearchbutton();
+            fixheader();
+            addsearchbutton();
         }
     }
+
+    if(loading) {
+        return (<Uniloader/>);
+    };
+
+    if((menu.merchant.open_status || menu.merchant.status) < 1) {
+        return(<>
+            <div className="nrholder">
+              <img src={restaurantclosed} alt="!" width={192}/>
+              <h6 className="nrmessage">Sorry, this restaurant is currently closed. Please try again later :&#40;</h6>
+              <div className='rcbtnholder'>
+                <button className='getotpbutton' onClick={() => navigate(-1)}>Back to Restaurants</button>
+              </div>
+            </div>
+        </>)
+    };
+    
 
     return(<>
         <div className='mpheader' id='mpheader'>

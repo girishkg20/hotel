@@ -17,7 +17,7 @@ const Homepageapi = ({ children }: { children: React.ReactNode }) => {
   const [Useraddress, setUseraddress] = useState([]);
   const [Hotelname, setHotelname] = useState('Loading...');
   const [Cuisines, setCuisines] = useState([]);
-  const [Data, setData] = useState([]);
+  const [Data, setData] = useState<[]>();
 
   useEffect(() => {
     fetch(mainurl)

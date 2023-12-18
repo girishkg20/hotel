@@ -1,0 +1,47 @@
+.cartpage {
+    background-color: #F6F6F6;
+}
+
+.cartheader {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    /* background-color: white; */
+    position: sticky;
+    top: 0;
+}
+
+.cheadertext {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+    padding-left: 10px;
+    text-transform: capitalize;
+}
+
+.tsavingsholder {
+    background-color: rgba(124, 194, 78, 0.5);
+    background-color: rgba(66, 166, 6, 0.2);
+    color: #42A606;
+
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    margin: 15px;
+    border: 1px solid #42A606;
+    border-radius: 12px;
+}
+
+.tsavingsicon {
+    height: 24px;
+    /* filter: saturate(100%) hue-rotate(80deg); */
+    white-space: nowrap;
+    color: transparent;
+    text-shadow: 0 0 0 #42A606;
+}
+
+.tsavingstext {
+    font-size: 18px;
+    font-weight: 800;
+    padding-left: 10px;
+}

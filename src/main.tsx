@@ -4,7 +4,7 @@ import { AliveScope } from 'react-activation'
 import { Provider } from 'react-redux';
 import { store, persistor } from './Redux/store';
 import './index.css';
-import Homepage from './Home Page/HomePage.js';
+import Homepage1 from './Home Page/HomePage1';
 import Profile from './Profile/Profile.js';
 import Menupage1 from './Menu Page/MenuPage1';
 import Itempopup from './Menu Page/Item_Popup/ItemPopup';
@@ -14,16 +14,18 @@ import Enterotp from './Login Page/Enter_Otp/EnterOTP';
 import Custpopup from './Menu Page/Cust_Popup/CustPopup';
 import Clearcartpopup from './Menu Page/Clear_Cart_Popup/ClearCartPopup';
 import Custrepeatpopup from './Menu Page/Cust_Repeat_Popup/CustRepeatPopup';
+import Cartpage1 from './Cart Page/CartPage1';
 
 import { Link } from 'react-router-dom';
 import { PersistGate } from 'redux-persist/integration/react';
 
 
 
+
 const Router = createBrowserRouter([
     {
       path: "/:hotelid",
-      element: <Homepage/>,
+      element: <Homepage1/>,
       errorElement: <div><h1>Wrong URL! Channa</h1></div>,
     },
     {
@@ -65,6 +67,10 @@ const Router = createBrowserRouter([
           element: <Enterotp/>
         }
       ]
+    },
+    {
+      path: "/:hotelid/:merchantid/cart",
+      element: <Cartpage1/>
     },
 
 

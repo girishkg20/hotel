@@ -18,7 +18,7 @@ const Restaurantslisting = () => {
       <h5 className="restaurantheading">Restaurants Around You</h5>
 
       <div className="restaurantholder" id="restaurantscontainer">
-        {Data.map((eachRestaurant: any) => (
+        {Data && Data.map((eachRestaurant: any) => (
           <div key={eachRestaurant._id} className="restaurantcard" onClick={()=>navigate(eachRestaurant._id)}>
             <img
               className="restaurantimg"

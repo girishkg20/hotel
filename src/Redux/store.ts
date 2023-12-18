@@ -3,10 +3,7 @@ import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import thunk from 'redux-thunk';
 
-
-import SliceReducer from "./slice";
-import ReducerReducer from './reducer';
-import AdditemReducer from '../Menu Page/AdditemSlice'
+import VegfilterSlice from "../Menu Page/VegfilterSlice";
 import UserAddressSlice from "../Home Page/Home_Page_API/UserAddressSlice";
 import Phnoslice from "../Login Page/Enter_Ph_No/PhNoSlice";
 import AuthSlice from "../Login Page/Enter_Otp/AuthSlice";
@@ -33,9 +30,7 @@ const persistedReducer = persistReducer(PersistConfig, perReducers)
 
 export const store = configureStore({
     reducer: {
-        VegFilterSlice: SliceReducer,
-        enteredText: ReducerReducer,
-        AddRemoveItems: AdditemReducer,
+        VegFilterSlice: VegfilterSlice,
         mobileNumber: Phnoslice,
         
         perReducers: persistedReducer,
