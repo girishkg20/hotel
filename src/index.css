@@ -24,3 +24,7 @@ p {
 body {
     scroll-behavior: smooth;
 }
+
+strong {
+    font-weight: 800;
+}

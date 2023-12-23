@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import KeepAlive from 'react-activation';
 
 import Homepageapi from './Home_Page_API/HomePageApi.jsx';

@@ -82,10 +82,14 @@ const Itemlisting = () => {
         const foodcard = document.getElementById(fid);
         const foodcardbtn = document.getElementById(iid);
 
+        setTimeout(() => {
+            foodcardbtn!.style.removeProperty('animation');
+        }, 500);
+
         if (foodcard!.style.display == 'none') {
             foodcard!.style.display = ''
             foodcardbtn!.style.rotate = '270deg'
-            foodcardbtn!.style.removeProperty('animation')
+            foodcardbtn!.style.animation = 'rotationanimation 0.5s ease reverse'
         }
         else{
             foodcard!.style.display = 'none'
