@@ -1,0 +1,353 @@
+@keyframes popoverAnimation {
+    0% {
+      opacity: 0;
+      transform: translateY(100%);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+}
+
+@keyframes btnAnimation {
+    0% {
+        opacity: 0;
+        transform: scale(1.5);
+    }
+    50% {
+        opacity: 0.12;
+        transform: scale(2.2);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(2);
+    }
+}
+
+@keyframes slideIn {
+    0% {
+      transform: translateX(-50%) translateY(80px);
+    }
+    100% {
+      transform: translateX(-50%) translateY(0);
+    }
+}
+
+@keyframes fadeOut {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      display: none;
+    }
+}
+
+@keyframes shake {
+    0%, 100% {
+      transform: translateX(0);
+    }
+    20%, 60% {
+      transform: translateX(-5px);
+    }
+    40%, 80% {
+      transform: translateX(5px);
+    }
+}
+.shake {
+    animation: shake 0.5s ease-in-out;
+}
+
+
+.myAlert {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 15px;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 25px;
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    white-space: nowrap;
+    animation: slideIn 0.5s ease-in-out, fadeOut 0.5s ease-in-out 3.5s forwards;
+    display: none;
+    z-index: 10;
+}
+
+.custpopoverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 3;
+}
+
+.custpopover {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 4;
+    background-color: #F6F6F6;
+    border-radius: 25px 25px 0 0;
+    overflow: hidden;
+    overflow-y: scroll;
+    max-height: 90%;
+    animation: popoverAnimation 0.3s ease;
+}
+
+.shortimage {
+    height: 70px;
+    width: 70px;
+    border-radius: 17.5px;
+    margin-right: 15px;
+    object-fit: cover;
+}
+
+.custclosebutton {
+    position: fixed;
+    right: 10px;
+    margin-top: 10px;
+    width: 20px;
+    z-index: 1;
+}
+
+.custheader {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    background-color: white;
+    box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.08);
+    position: sticky;
+    top: 0;
+    border-radius: 0 0 25px 25px;
+}
+
+.custvegstatus {
+    width: 15px;
+}
+
+.custitemname {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 800;
+    text-transform: capitalize;
+}
+
+.custstepname {
+    margin: 15px;
+    padding-top: 15px;
+    font-size: 16px;
+    font-weight: 800;
+    text-transform: capitalize;
+    color: #7427F5;
+}
+
+.addonscard {
+    background-color: white;
+    margin: 15px;
+    padding: 15px;
+    border-radius: 23px;
+    box-shadow: 0px 4px 11px 0px rgba(0, 0, 0, 0.08);
+    outline-offset: -1px;
+}
+
+.addontitle {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 800;
+    text-transform: capitalize;
+}
+
+.custdescription {
+    font-size: 12px;
+    font-weight: 500;
+    color: #787878;
+    padding-top: 3px;
+}
+
+.addonstitleholder {
+    padding-bottom: 10px;
+    margin-bottom: -10px;
+    border-bottom: 1px solid #EBEBEB;
+}
+
+.addonnameprice {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1;
+}
+
+.addonname {
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: capitalize;
+}
+
+.addonprice {
+    font-size: 14px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.addonitem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 25px 0 0 0;
+}
+
+
+/* ///////////CheckBOX\\\\\\\\\\\\ */
+
+.addoncheck {
+    display: none;
+}
+   
+.checkmark {
+    height: 18px;
+    width: 18px;
+    outline: 1.5px solid #787878;
+    outline-offset: -1.5px;
+    border-radius: 5px;
+    margin-left: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.addoncheck:checked ~ .checkmark {
+    background-color: #7427F5;
+    outline: 0;
+}
+
+.tickmark {
+    display: none;
+    width: 11px;
+}
+   
+.addoncheck:checked ~ .checkmark .tickmark {
+    display: block;
+}
+
+.checkboxbg {
+    margin-left: -18px;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    background-color: rgba(116, 39, 245, 1);
+    opacity: 0;
+}
+
+.addoncheck:checked ~ .checkboxbg {
+    animation: btnAnimation 0.3s ease;
+}
+
+/* ///////////CheckBOX\\\\\\\\\\\\ */
+
+/* ///////////RadioButton\\\\\\\\\\\\ */
+
+.varientcheck {
+    appearance: none;
+
+    height: 18px;
+    width: 18px;
+    outline: 1.5px solid #787878;
+    outline-offset: -1.5px;
+    border-radius: 50%;
+    margin: 0 0 0 10px;
+}
+
+.varientcheck:checked {
+    outline: 3px solid white;
+    outline-offset: -5px;
+    background-color: #7427F5;
+}
+
+.varientcheck:checked ~ .checkboxbg {
+    animation: btnAnimation 0.3s ease;
+}
+
+/* ///////////RadioButton\\\\\\\\\\\\ */
+
+.custfooter {
+    background-color: white;
+    padding: 15px;
+    position: sticky;
+    bottom: 0;
+    box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.08);
+}
+
+.additembtn {
+    width: 100%;
+    height: 45px;
+    font-size: 18px;
+    font-weight: 800;
+    border: 0;
+    padding: 0;
+    background-color: #7427F5;
+    color: white;
+    border-radius: 12px;
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.34);
+}
+
+.additembtn:disabled {
+    background-color: #787878;
+}
+
+.precardbtn {
+    margin: 15px;
+    padding: 15px;
+    border: 2px solid #7427F5;
+    border-radius: 28px;
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.34);
+}
+
+.selecteditem {
+    font-size: 16px;
+    font-weight: 800;
+    text-transform: capitalize;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.changeselecteditem {
+    padding-left: 15px;
+    font-size: 16px;
+    font-weight: 800;
+    color: #7427F5;
+}
+
+.backicon {
+    height: 16px;
+}
+
+.prebackbtn {
+    margin: 15px;
+    padding: 5px 10px;
+    border: 2px solid #7427F5;
+    border-radius: 23px;
+    background-color: white;
+    display: flex;
+    width: fit-content;
+    align-items: center;
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.34);
+}
+
+.backselecteditem {
+    padding-left: 8px;
+    font-size: 16px;
+    font-weight: 800;
+}

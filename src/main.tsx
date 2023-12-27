@@ -15,6 +15,7 @@ import Custpopup from './Menu Page/Cust_Popup/CustPopup';
 import Clearcartpopup from './Menu Page/Clear_Cart_Popup/ClearCartPopup';
 import Custrepeatpopup from './Menu Page/Cust_Repeat_Popup/CustRepeatPopup';
 import Cartpage1 from './Cart Page/CartPage1';
+import Cartcustpopup from './Cart Page/Cart_Cust_Popup/CartCustPopup';
 
 import { Link } from 'react-router-dom';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -70,7 +71,13 @@ const Router = createBrowserRouter([
     },
     {
       path: "/:hotelid/:merchantid/cart",
-      element: <Cartpage1/>
+      element: <Cartpage1/>,
+      children: [
+        {
+          path: "/:hotelid/:merchantid/cart/customization",
+          element: <Cartcustpopup/>
+        }
+      ]
     },
 
 

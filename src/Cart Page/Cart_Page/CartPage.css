@@ -1,32 +1,29 @@
 .cartpage {
     background-color: #F6F6F6;
+    padding-bottom: 500px;
 }
 
 .cartheader {
+    display: flex;
+    align-items: center;
     padding: 10px;
     background-color: #F6F6F6;
+    transition: background-color 0.3s linear;
     position: sticky;
     top: 0;
     z-index: 1;
-    border-bottom-left-radius: 23px;
-    border-bottom-right-radius: 23px;
-    height: 40px;
-    overflow: hidden;
-    transition: height 0.3s linear;
-}
-
-.cartheadertop {
-    display: flex;
-    align-items: center;
 }
 
 .cartheaderbottom {
-    padding: 8px 15px;
-    margin: 10px -10px -10px -10px;
-    background-color: #eefce5;
-    color: #49B707;
-    border-bottom-left-radius: 23px;
-    border-bottom-right-radius: 23px;
+    padding: 10px 15px;
+    background-color: #e4fdee;
+    color: #09aa46;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 0 0 18px 18px;
+    display: none;
+    position: sticky;
+    top: 60px;
+    z-index: 1;
 }
 
 .tsavingsiconh {
@@ -34,14 +31,14 @@
 }
 
 .tsavingstexth {
-    font-size: 12px;
-    font-weight: 400;
+    font-size: 13px;
+    font-weight: 500;
     padding-left: 8px;
 }
 
 .cheadertext {
     font-size: 16px;
-    font-weight: bold;
+    font-weight: 700;
     margin: 0;
     padding-left: 10px;
     text-transform: capitalize;
@@ -51,11 +48,11 @@
 }
 
 .tsavingsholder {
-    background-color: #eefce5;
-    color: #49B707;
+    background-color: #e4fdee;
+    color: #09aa46;
     padding: 10px;
     margin: 15px;
-    border: 1px solid #49B707;
+    border: 1px solid #09aa46;
     border-radius: 12px;
     overflow: hidden;
     max-height: 24px;
@@ -71,7 +68,7 @@
 
 .tsdivider {
     border: none;
-    border-top: 1px solid #49B707;
+    border-top: 1px solid #09aa46;
     margin: 10px 0 0 0;
 }
 
@@ -84,6 +81,7 @@
 .tsavingscontainer {
     display: flex;
     align-items: center;
+    overflow: hidden;
 }
 
 .tsavingsicon {
@@ -93,7 +91,11 @@
 .tsavingstext {
     font-size: 16px;
     font-weight: 500;
-    padding-left: 10px;
+    padding: 0 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
 }
 
 .rightbutton {
@@ -115,7 +117,7 @@
     background-color: white;
     padding: 0 15px;
     margin: 15px;
-    border-radius: 23px;
+    border-radius: 18px;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -129,16 +131,35 @@
 .citemnameholder {
     display: flex;
     padding: 15px 0;
+    overflow: hidden;
+}
+
+.citemnamecontainer {
+    overflow: hidden;
 }
 
 .cvegstatus {
-    height: 13px;
-    padding: 3px 10px 0 0;
+    height: 15px;
+    padding: 2px 8px 0 0;
 }
 
 .citemname {
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 800;
+    text-transform: capitalize;
+}
+
+.caddonsname {
+    font-size: 12px;
+    font-weight: 500;
+    margin-top: 5px;
+    color: #787878;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    text-wrap: balance;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .cqtnbtnholder {
@@ -146,7 +167,7 @@
     align-items: flex-end;
     justify-content: center;
     flex-direction: column;
-    padding: 15px 0;
+    padding: 15px 0 15px 15px;
 }
 
 .caddedbutton {
@@ -182,8 +203,8 @@
 }
 
 .citemprice {
-    font-size: 14px;
-    font-weight: 600;
+    font-size: 13px;
+    font-weight: 700;
     margin-top: 5px;
     text-decoration: line-through;
     color: #787878;
@@ -191,8 +212,23 @@
 }
 
 .cdisplayprice {
-    font-size: 14px;
-    font-weight: 600;
+    font-size: 13px;
+    font-weight: 700;
     text-wrap: nowrap;
     margin-top: 5px;
+}
+
+.ccustomizebtn {
+    font-size: 12px;
+    font-weight: 800;
+    color: #787878;
+    display: flex;
+    align-items: center;
+}
+
+.ccustomizebtn span {
+    color: #7427F5;
+    font-size: 20px;
+    font-weight: 600;
+    margin-top: -2px;
 }

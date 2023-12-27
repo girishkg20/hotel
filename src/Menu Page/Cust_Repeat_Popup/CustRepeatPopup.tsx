@@ -57,20 +57,20 @@ const Custrepeatpopup = () => {
         navigate(URL);
     };
 
-    const pushtocart = (Fooditem:any) => {
+    const pushtocart = (eachfooditem:any) => {
 
         const existingitem = actualpayload.cart_data.food_items.findIndex((eachitems:any) =>
-            eachitems._id === Fooditem._id
-            && _.isEqual(eachitems.addon_group, Fooditem.addon_group)
-            && _.isEqual(eachitems.customisation_steps, Fooditem.customisation_steps)
-            && _.isEqual(eachitems.variant_group, Fooditem.variant_group)
+            eachitems._id === eachfooditem._id
+            && _.isEqual(eachitems.addon_group, eachfooditem.addon_group)
+            && _.isEqual(eachitems.customisation_steps, eachfooditem.customisation_steps)
+            && _.isEqual(eachitems.variant_group, eachfooditem.variant_group)
         )
         
         const duplicatepayload = {...actualpayload, 
             cart_data: {...actualpayload.cart_data,
                 food_items: [...actualpayload.cart_data.food_items.slice(0, existingitem),
                     {...actualpayload.cart_data.food_items[existingitem],
-                        quantity: actualpayload.cart_data.food_items[existingitem].quantity + Fooditem.quantity
+                        quantity: actualpayload.cart_data.food_items[existingitem].quantity + eachfooditem.quantity
                     },
                     ...actualpayload.cart_data.food_items.slice(existingitem + 1),
                 ],
