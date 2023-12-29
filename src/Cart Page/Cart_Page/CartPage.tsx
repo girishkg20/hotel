@@ -6,10 +6,17 @@ import _ from 'lodash';
 
 import backbutton from './Source/back.png';
 import offer from './Source/offer.png';
-import right from './Source/right green.png';
+import rightgreen from './Source/right green.png';
+import right from './Source/right.png';
 import veg from './Source/veg.png';
 import egg from './Source/egg.png';
 import non_veg from './Source/non-veg.png';
+import food from './Source/food.png';
+import delivery from './Source/delivery.png';
+import coupon from './Source/coupon.png';
+import addmore from './Source/add more.png';
+import addnote from './Source/add instructions.png';
+import applycoupon from './Source/apply coupon.png';
 // import { addItem } from '../../Menu Page/CartSlice';
 import { cartId, clearCartId } from '../../Menu Page/CartidSlice';
 import { addItem, clearItem } from '../../Menu Page/CartSlice';
@@ -228,17 +235,21 @@ const Cartpage = () => {
                         <img className='tsavingsicon' src={offer} alt="offer"/>
                         <p className='tsavingstext'>You've <strong>{`saved ₹${Math.round(itemdiscount + deliverydiscount)}`}</strong> on this order!</p>
                     </div>
-                    <img className='rightbutton' id='tsrightbutton' src={right} alt=">"/>
+                    <img className='rightbutton' id='tsrightbutton' src={rightgreen} alt=">"/>
                 </div>
                 <div>
                     <hr className='tsdivider'/>
                     <div className='tsavingschild'>
-                        <img className='tsavingsicon' src={offer} alt="food" />
+                        <img className='tsavingsicon' src={food} alt="food" />
                         <p className='tsavingstext'><strong>{`Saved ₹${Math.round(itemdiscount)}`}</strong> on food</p>
                     </div>
                     <div className='tsavingschild'>
-                        <img className='tsavingsicon' src={offer} alt="delivery" />
+                        <img className='tsavingsicon' src={delivery} alt="delivery" />
                         <p className='tsavingstext'><strong>{`Saved ₹${Math.round(deliverydiscount)}`}</strong> on delivery</p>
+                    </div>
+                    <div className='tsavingschild'>
+                        <img className='tsavingsicon' src={coupon} alt="delivery" />
+                        <p className='tsavingstext'><strong>{`Saved ₹${Math.round(deliverydiscount)}`}</strong> with a coupon</p>
                     </div>
                 </div>
             </div>
@@ -283,6 +294,34 @@ const Cartpage = () => {
                 ))}
             </div>
 
+            <div className='cartholders'>
+                <div className='caddmorecontainer'>
+                    <div className='caddmore'>
+                        <img className='tsavingsicon' src={addmore} alt="offer"/>
+                        <p className='caddmoretext'>Add more items</p>
+                    </div>
+                    <img className='crightbutton' src={right} alt=">"/>
+                </div>
+                <hr className='cartholderdividers'/>
+                <div className='caddmorecontainer'>
+                    <div className='caddmore'>
+                        <img className='tsavingsicon' src={addnote} alt="offer"/>
+                        <p className='caddmoretext'>Add cooking instructions</p>
+                    </div>
+                    <img className='crightbutton' src={right} alt=">"/>
+                </div>
+            </div>
+
+            <h1 className='cartheadings'>COUPONS</h1>
+            <div className='cartholders'>
+                <div className='caddmorecontainer'>
+                    <div className='caddmore'>
+                        <img className='tsavingsicon' src={applycoupon} alt="offer"/>
+                        <p className='caddmoretext'><strong>Apply Coupon</strong></p>
+                    </div>
+                    <img className='crightbutton' src={right} alt=">"/>
+                </div>
+            </div>
             
             <Outlet/>
         </div>:null}</>

@@ -375,6 +375,7 @@
 .totalitemscount {
     color: white;
     padding-right: 5px;
+    text-wrap: nowrap;
 }
 
 .totalitemsdivider {
@@ -388,11 +389,13 @@
     padding-left: 5px;
     text-decoration: line-through;
     font-weight: 400;
+    text-wrap: nowrap;
 }
 
 .totalitemsprice {
     color: white;
     padding-left: 8px;
+    text-wrap: nowrap;
 }
 
 .totalcardmessage {
@@ -409,6 +412,7 @@
     border-radius: 15px;
     font-size: 14px;
     font-weight: 800;
+    text-wrap: nowrap;
     display: flex;
     align-items: center;
     box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.34);
