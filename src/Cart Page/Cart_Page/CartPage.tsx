@@ -240,16 +240,16 @@ const Cartpage = () => {
                 <div>
                     <hr className='tsdivider'/>
                     <div className='tsavingschild'>
-                        <img className='tsavingsicon' src={food} alt="food" />
-                        <p className='tsavingstext'><strong>{`Saved ₹${Math.round(itemdiscount)}`}</strong> on food</p>
+                        <img className='tsavingssmallicon' src={food} alt="food" />
+                        <p className='tsavsstext'><strong>{`Saved ₹${Math.round(itemdiscount)}`}</strong> on food</p>
                     </div>
                     <div className='tsavingschild'>
-                        <img className='tsavingsicon' src={delivery} alt="delivery" />
-                        <p className='tsavingstext'><strong>{`Saved ₹${Math.round(deliverydiscount)}`}</strong> on delivery</p>
+                        <img className='tsavingssmallicon' src={delivery} alt="delivery" />
+                        <p className='tsavsstext'><strong>{`Saved ₹${Math.round(deliverydiscount)}`}</strong> on delivery</p>
                     </div>
                     <div className='tsavingschild'>
-                        <img className='tsavingsicon' src={coupon} alt="delivery" />
-                        <p className='tsavingstext'><strong>{`Saved ₹${Math.round(deliverydiscount)}`}</strong> with a coupon</p>
+                        <img className='tsavingssmallicon' src={coupon} alt="delivery" />
+                        <p className='tsavsstext'><strong>{`Saved ₹${Math.round(deliverydiscount)}`}</strong> with a coupon</p>
                     </div>
                 </div>
             </div>
@@ -297,7 +297,7 @@ const Cartpage = () => {
             <div className='cartholders'>
                 <div className='caddmorecontainer'>
                     <div className='caddmore'>
-                        <img className='tsavingsicon' src={addmore} alt="offer"/>
+                        <img className='cartsideicons' src={addmore} alt="offer"/>
                         <p className='caddmoretext'>Add more items</p>
                     </div>
                     <img className='crightbutton' src={right} alt=">"/>
@@ -305,7 +305,7 @@ const Cartpage = () => {
                 <hr className='cartholderdividers'/>
                 <div className='caddmorecontainer'>
                     <div className='caddmore'>
-                        <img className='tsavingsicon' src={addnote} alt="offer"/>
+                        <img className='cartsideicons' src={addnote} alt="offer"/>
                         <p className='caddmoretext'>Add cooking instructions</p>
                     </div>
                     <img className='crightbutton' src={right} alt=">"/>
@@ -317,7 +317,18 @@ const Cartpage = () => {
                 <div className='caddmorecontainer'>
                     <div className='caddmore'>
                         <img className='tsavingsicon' src={applycoupon} alt="offer"/>
-                        <p className='caddmoretext'><strong>Apply Coupon</strong></p>
+                        <p className='ccoupontext'>Apply Coupon</p>
+                    </div>
+                    <img className='crightbutton' src={right} alt=">"/>
+                </div>
+            </div>
+
+            <h1 className='cartheadings'>BILL DETAILS</h1>
+            <div className='cartholders'>
+                <div className='caddmorecontainer'>
+                    <div className='caddmore'>
+                        <img className='tsavingsicon' src={applycoupon} alt="offer"/>
+                        <p className='ccoupontext'>Apply Coupon</p>
                     </div>
                     <img className='crightbutton' src={right} alt=">"/>
                 </div>

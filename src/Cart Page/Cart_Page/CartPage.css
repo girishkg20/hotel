@@ -88,8 +88,22 @@
     height: 24px;
 }
 
+.tsavingssmallicon {
+    height: 18px;
+    padding: 3px;
+}
+
 .tsavingstext {
     font-size: 16px;
+    font-weight: 500;
+    padding: 0 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.tsavsstext {
+    font-size: 14px;
     font-weight: 500;
     padding: 0 10px;
     white-space: nowrap;
@@ -260,14 +274,27 @@
 }
 
 .caddmoretext {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
+    padding: 0 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.ccoupontext {
+    font-size: 14px;
+    font-weight: 800;
     padding: 0 15px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-.crightbutton {
+.cartsideicons {
     height: 16px;
+}
+
+.crightbutton {
+    height: 14px;
 }
