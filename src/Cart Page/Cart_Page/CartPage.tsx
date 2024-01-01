@@ -17,6 +17,8 @@ import coupon from './Source/coupon.png';
 import addmore from './Source/add more.png';
 import addnote from './Source/add instructions.png';
 import applycoupon from './Source/apply coupon.png';
+import ilogo from './Source/info.png';
+import address from './Source/address.png';
 // import { addItem } from '../../Menu Page/CartSlice';
 import { cartId, clearCartId } from '../../Menu Page/CartidSlice';
 import { addItem, clearItem } from '../../Menu Page/CartSlice';
@@ -67,14 +69,14 @@ const Cartpage = () => {
             if(deldiscount < 0) {
                 setdeliverydiscount(deliveryquote.data[0].estimated_fare);
             }else{
-                setdeliverydiscount(deldiscount);
+                setdeliverydiscount(Usercart.available_delivery_discount);
             }
 
         }
     },[deliveryquote, Usercart])
 
     console.log(Usercart);
-    console.log(deliveryquote);
+    console.log(deliveryaddress);
 
     const openclose = (cid:string, btnid:string) => {
         const tscard = document.getElementById(cid);
@@ -216,7 +218,7 @@ const Cartpage = () => {
 
 
     return(<Cartpagedata.Provider value={{fooditemdata}}>
-        <>{Usercart ? <div className='cartpage'>
+        <>{Usercart && <div className='cartpage'>
             <div className='cartheader' id='cartheader'>
                 <img className='backbutton' src={backbutton} alt="Back" onClick={()=>navigate(-1)}/>
                 <h3 className='cheadertext'>{Usercart.merchant_details.name}</h3>
@@ -286,8 +288,13 @@ const Cartpage = () => {
                                 <p className='caddsub' onClick={() => pushtocart({...eachfooditem, quantity:1})}>+</p>
                             </button>
                             <div className='cpriceholder'>
-                                <p className='citemprice'>{`₹${Math.round(eachfooditem.total)}`}</p>
-                                <p className='cdisplayprice'>{`₹${Math.round(eachfooditem.total - eachfooditem.delivery_discount)}`}</p>
+                                {eachfooditem.delivery_discount > 0
+                                    ? <>
+                                        <p className='citemprice'>{`₹${Math.round(eachfooditem.total)}`}</p>
+                                        <p className='cdisplayprice'>{`₹${Math.round(eachfooditem.total - eachfooditem.delivery_discount)}`}</p>
+                                    </>
+                                    : <p className='cdisplayprice'>{`₹${Math.round(eachfooditem.total)}`}</p>
+                                }
                             </div>
                         </div>
                     </div>
@@ -325,17 +332,78 @@ const Cartpage = () => {
 
             <h1 className='cartheadings'>BILL DETAILS</h1>
             <div className='cartholders'>
-                <div className='caddmorecontainer'>
-                    <div className='caddmore'>
-                        <img className='tsavingsicon' src={applycoupon} alt="offer"/>
-                        <p className='ccoupontext'>Apply Coupon</p>
+                <div className='cbdcontainer'>
+                    <p className='cbdtextl'>Item Total</p>
+                    <p className='cbdtextr'>₹{Usercart.total_item_total.toFixed(2)}</p>
+                </div>
+                {Usercart.delivery_discount > 0 &&
+                    <div className='cbdcontainer'>
+                        <p className='cbdtextl'>Item Discount</p>
+                        <p className='cbdtextr'>- ₹{Usercart.delivery_discount.toFixed(2)}</p>
                     </div>
-                    <img className='crightbutton' src={right} alt=">"/>
+                }
+                <div className='cbdcontainer'>
+                    <p className='cbdtextl'>Sub Total</p>
+                    <p className='cbdtextr'>₹{(Usercart.total_item_total - Usercart.delivery_discount).toFixed(2)}</p>
+                </div>
+                <div className='cbdcontainer'>
+                    <p className='cbdtextl'>Taxes and Charges<img src={ilogo} alt="i" /></p>
+                    <p className='cbdtextr'>₹{(Usercart.total_extra_charges + Usercart.total_packing_charges + Usercart.total_taxes).toFixed(2)}</p>
+                </div>
+                <div className='cbdcontainer'>
+                    <p className='cbdtextl'>Delivery Charges</p>
+                    <div className='cbddeliveryfee'>
+                        {Usercart.available_delivery_discount && deliveryquote
+                            ? (deliveryquote.data[0].estimated_fare - Usercart.available_delivery_discount) > 0
+                                ? <>
+                                    <p className='cbdtextrscratch'>₹{deliveryquote.data[0].estimated_fare}</p>
+                                    <p className='cbdtextr'>₹{(deliveryquote.data[0].estimated_fare - Usercart.available_delivery_discount).toFixed(2)}</p>
+                                </>
+                                : <>
+                                    <p className='cbdtextrscratch'>₹{deliveryquote.data[0].estimated_fare}</p>
+                                    <p className='cbdfree'>FREE</p>
+                                </>
+                            : deliveryquote && <p className='cbdtextr'>₹{deliveryquote.data[0].estimated_fare}</p>
+                        }
+                    </div>
+                </div>
+                <div className='cbdcontainer'>
+                    <p className='cbdtextl'>Coupon Discount</p>
+                    <p className='cbdtextr'>- ₹ 00</p>
+                </div>
+                <hr className='cartholderdividersnm'/>
+                <div className='cbdcontainerlast'>
+                    <p className='cbdtextlarge'>Grand Total</p>
+                    <p className='cbdtextlarge'>₹{Usercart.total.toFixed(2)}</p>
                 </div>
             </div>
+
+
+            <div className='cartfooter'>
+                <div className='cartaddress'>
+                    <img className='calogo' src={address} alt="drop"/>
+                    <div className='cartaddressholder'>
+                        <p className='caddressname'>Delivery at <span>{deliveryaddress.nick_name}</span></p>
+                        <p className='cfulladdress'>{deliveryaddress.address_line}</p>
+                    </div>
+                </div>
+                <hr className='cartholderdividersnm'/>
+
+                <div className='cartpay'>
+                    <div>
+                        <p className='cpaytext'>Amount to Pay</p>
+                        <p className='cpayamount'>₹{Usercart.total.toFixed(2)}</p>
+                    </div>
+                    <button className='cartpaybutton'>Proceed to Pay</button>
+                </div>
+            </div>
+
+
+
+
             
             <Outlet/>
-        </div>:null}</>
+        </div>}</>
     </Cartpagedata.Provider>)
 }
 export default Cartpage;
