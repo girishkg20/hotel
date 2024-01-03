@@ -18,7 +18,7 @@ import addmore from './Source/add more.png';
 import addnote from './Source/add instructions.png';
 import applycoupon from './Source/apply coupon.png';
 import ilogo from './Source/info.png';
-import address from './Source/address.png';
+import address from './Source/location.png';
 // import { addItem } from '../../Menu Page/CartSlice';
 import { cartId, clearCartId } from '../../Menu Page/CartidSlice';
 import { addItem, clearItem } from '../../Menu Page/CartSlice';
@@ -347,7 +347,7 @@ const Cartpage = () => {
                     <p className='cbdtextr'>₹{(Usercart.total_item_total - Usercart.delivery_discount).toFixed(2)}</p>
                 </div>
                 <div className='cbdcontainer'>
-                    <p className='cbdtextl'>Taxes and Charges<img src={ilogo} alt="i" /></p>
+                    <p className='cbdtextlclick'>Taxes and Charges{/* <img src={ilogo} alt="i" /> */}</p>
                     <p className='cbdtextr'>₹{(Usercart.total_extra_charges + Usercart.total_packing_charges + Usercart.total_taxes).toFixed(2)}</p>
                 </div>
                 <div className='cbdcontainer'>
@@ -387,7 +387,7 @@ const Cartpage = () => {
                         <p className='cfulladdress'>{deliveryaddress.address_line}</p>
                     </div>
                 </div>
-                <hr className='cartholderdividersnm'/>
+                <hr className='cfdivider'/>
 
                 <div className='cartpay'>
                     <div>
