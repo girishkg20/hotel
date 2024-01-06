@@ -17,7 +17,6 @@ import coupon from './Source/coupon.png';
 import addmore from './Source/add more.png';
 import addnote from './Source/add instructions.png';
 import applycoupon from './Source/apply coupon.png';
-import ilogo from './Source/info.png';
 import address from './Source/location.png';
 // import { addItem } from '../../Menu Page/CartSlice';
 import { cartId, clearCartId } from '../../Menu Page/CartidSlice';
@@ -25,7 +24,7 @@ import { addItem, clearItem } from '../../Menu Page/CartSlice';
 import Cartpagedata from '../Cart_Page_Data/CartPageData';
 
 
-import ssvg from './Source/spike.svg';
+
 
 
 
@@ -110,7 +109,7 @@ const Cartpage = () => {
         }
 
         if(bheader) {
-            if (window.scrollY > 65) {
+            if (window.scrollY > 100) {
                 bheader!.style.display = 'flex';
             }else{
                 bheader!.style.display = 'none';
@@ -230,7 +229,6 @@ const Cartpage = () => {
                 </div>
             </div>
 
-            {/* <h1 className='chsavings'>TOTAL SAVINGS</h1> */}
             <div className='tsbackground'>
                 <div className='topspikecontainer'>
                     <div className='topspikeholder'></div>
@@ -356,7 +354,7 @@ const Cartpage = () => {
                     <p className='cbdtextr'>₹{(Usercart.total_item_total - Usercart.delivery_discount).toFixed(2)}</p>
                 </div>
                 <div className='cbdcontainer'>
-                    <p className='cbdtextlclick'>Taxes and Charges{/* <img src={ilogo} alt="i" /> */}</p>
+                    <p className='cbdtextlclick'>Taxes and Charges</p>
                     <p className='cbdtextr'>₹{(Usercart.total_extra_charges + Usercart.total_packing_charges + Usercart.total_taxes).toFixed(2)}</p>
                 </div>
                 <div className='cbdcontainer'>
@@ -399,7 +397,7 @@ const Cartpage = () => {
                 <hr className='cfdivider'/>
 
                 <div className='cartpay'>
-                    <div className='cartpaycontainer'>
+                    <div>
                         <p className='cpaytext'>Amount to Pay</p>
                         <p className='cpayamount'>₹{Usercart.total.toFixed(2)}</p>
                     </div>
