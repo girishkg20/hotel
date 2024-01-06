@@ -25,7 +25,7 @@ import { addItem, clearItem } from '../../Menu Page/CartSlice';
 import Cartpagedata from '../Cart_Page_Data/CartPageData';
 
 
-
+import ssvg from './Source/spike.svg';
 
 
 
@@ -230,29 +230,38 @@ const Cartpage = () => {
                 </div>
             </div>
 
-            <h1 className='cartheadings'>SAVINGS</h1>
-            <div className='tsavingsholder' id='tsavingsholder'>
-                <div className='tsvisiblepart' onClick={() => openclose('tsavingsholder', 'tsrightbutton')}>
-                    <div className='tsavingscontainer'>
-                        <img className='tsavingsicon' src={offer} alt="offer"/>
-                        <p className='tsavingstext'>You've <strong>{`saved ₹${Math.round(itemdiscount + deliverydiscount)}`}</strong> on this order!</p>
-                    </div>
-                    <img className='rightbutton' id='tsrightbutton' src={rightgreen} alt=">"/>
+            {/* <h1 className='chsavings'>TOTAL SAVINGS</h1> */}
+            <div className='tsbackground'>
+                <div className='topspikecontainer'>
+                    <div className='topspikeholder'></div>
                 </div>
-                <div>
-                    <hr className='tsdivider'/>
-                    <div className='tsavingschild'>
-                        <img className='tsavingssmallicon' src={food} alt="food" />
-                        <p className='tsavsstext'><strong>{`Saved ₹${Math.round(itemdiscount)}`}</strong> on food</p>
+                <h1 className='chsavings'>TOTAL SAVINGS</h1>
+                <div className='tsavingsholder' id='tsavingsholder'>
+                    <div className='tsvisiblepart' onClick={() => openclose('tsavingsholder', 'tsrightbutton')}>
+                        <div className='tsavingscontainer'>
+                            <img className='tsavingsicon' src={offer} alt="offer"/>
+                            <p className='tsavingstext'>You've <strong>{`saved ₹${Math.round(itemdiscount + deliverydiscount)}`}</strong> on this order!</p>
+                        </div>
+                        <img className='rightbutton' id='tsrightbutton' src={rightgreen} alt=">"/>
                     </div>
-                    <div className='tsavingschild'>
-                        <img className='tsavingssmallicon' src={delivery} alt="delivery" />
-                        <p className='tsavsstext'><strong>{`Saved ₹${Math.round(deliverydiscount)}`}</strong> on delivery</p>
+                    <div>
+                        <hr className='tsdivider'/>
+                        <div className='tsavingschild'>
+                            <img className='tsavingssmallicon' src={food} alt="food" />
+                            <p className='tsavsstext'><strong>{`Saved ₹${Math.round(itemdiscount)}`}</strong> on food</p>
+                        </div>
+                        <div className='tsavingschild'>
+                            <img className='tsavingssmallicon' src={delivery} alt="delivery" />
+                            <p className='tsavsstext'><strong>{`Saved ₹${Math.round(deliverydiscount)}`}</strong> on delivery</p>
+                        </div>
+                        <div className='tsavingschild'>
+                            <img className='tsavingssmallicon' src={coupon} alt="delivery" />
+                            <p className='tsavsstext'><strong>{`Saved ₹${Math.round(deliverydiscount)}`}</strong> with a coupon</p>
+                        </div>
                     </div>
-                    <div className='tsavingschild'>
-                        <img className='tsavingssmallicon' src={coupon} alt="delivery" />
-                        <p className='tsavsstext'><strong>{`Saved ₹${Math.round(deliverydiscount)}`}</strong> with a coupon</p>
-                    </div>
+                </div>
+                <div className='bottomspikecontainer'>
+                    <div className='bottomspikeholder'></div>
                 </div>
             </div>
 
@@ -390,7 +399,7 @@ const Cartpage = () => {
                 <hr className='cfdivider'/>
 
                 <div className='cartpay'>
-                    <div>
+                    <div className='cartpaycontainer'>
                         <p className='cpaytext'>Amount to Pay</p>
                         <p className='cpayamount'>₹{Usercart.total.toFixed(2)}</p>
                     </div>
