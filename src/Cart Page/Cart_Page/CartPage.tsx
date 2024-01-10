@@ -117,6 +117,19 @@ const Cartpage = () => {
         }
     }
 
+    const openclosepop = (id:any) => {
+        const popelement = document.getElementById(id);
+        const popoverlay = document.getElementById(`${id}_overlay`);
+         
+        if(popelement!.style.display == 'block') {
+            popelement!.style.display = 'none';
+            popoverlay!.style.display = 'none';
+        }else{
+            popelement!.style.display = 'block';
+            popoverlay!.style.display = 'block';
+        }
+    }
+
     const pushtocart = (eachfooditem:any) => {
 
         const existingitem = actualpayload.cart_data.food_items.findIndex((eachitems:any) =>
@@ -150,6 +163,12 @@ const Cartpage = () => {
         navigate("customization");
     };
 
+    const navtorestaurant = () => {
+        navigate(-1);
+        const prepath = window.location.pathname.split("/")[1];
+        navigate(`/${prepath}/${Usercart.merchant_id}`, {replace: true});
+    }
+    
     useEffect(() => {
         if(actualpayload.hasOwnProperty("cart_data") && actualpayload.cart_data.food_items.length > 0) {
             
@@ -309,7 +328,7 @@ const Cartpage = () => {
             </div>
 
             <div className='cartholders'>
-                <div className='caddmorecontainer'>
+                <div className='caddmorecontainer' onClick={navtorestaurant}>
                     <div className='caddmore'>
                         <img className='cartsideicons' src={addmore} alt="offer"/>
                         <p className='caddmoretext'>Add more items</p>
@@ -354,7 +373,29 @@ const Cartpage = () => {
                     <p className='cbdtextr'>₹{(Usercart.total_item_total - Usercart.delivery_discount).toFixed(2)}</p>
                 </div>
                 <div className='cbdcontainer'>
-                    <p className='cbdtextlclick'>Taxes and Charges</p>
+                    <p className='cbdtextlclick' onTouchStart={() => openclosepop("tandcpop")}>Taxes and Charges</p>
+
+                    <div className='tandcoverlay' id='tandcpop_overlay' onTouchStart={() => openclosepop("tandcpop")}></div>
+                    <div className='tandcpop' id='tandcpop'>
+                        <p className='tandcheading'>Taxes and Charges</p>
+                        <div className='tandctextholder'>
+                            <p>Packaging Charges</p>
+                            <p>₹{Usercart.total_packing_charges.toFixed(2)}</p>
+                        </div>
+                        <div className='tandctextholder'>
+                            <p>Service Fee</p>
+                            <p>₹{Usercart.total_extra_charges.toFixed(2)}</p>
+                        </div>
+                        <div className='tandctextholder'>
+                            <p>GST</p>
+                            <p>₹{Usercart.total_taxes.toFixed(2)}</p>
+                        </div>
+                        <div className='tandctextholderl'>
+                            <p>Total</p>
+                            <p>₹{(Usercart.total_extra_charges + Usercart.total_packing_charges + Usercart.total_taxes).toFixed(2)}</p>
+                        </div>
+                    </div>
+
                     <p className='cbdtextr'>₹{(Usercart.total_extra_charges + Usercart.total_packing_charges + Usercart.total_taxes).toFixed(2)}</p>
                 </div>
                 <div className='cbdcontainer'>
