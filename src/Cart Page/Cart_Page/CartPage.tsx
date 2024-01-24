@@ -18,6 +18,7 @@ import addmore from './Source/add more.png';
 import addnote from './Source/add instructions.png';
 import applycoupon from './Source/apply coupon.png';
 import address from './Source/location.png';
+import tick from './Source/tick.png';
 // import { addItem } from '../../Menu Page/CartSlice';
 import { cartId, clearCartId } from '../../Menu Page/CartidSlice';
 import { addItem, clearItem } from '../../Menu Page/CartSlice';
@@ -231,6 +232,25 @@ const Cartpage = () => {
             .then(data => setdeliveryquote(data.response))
         }
     },[])
+
+    const removecoupon = () => {
+        const url = `https://prod-server.tipplr.in/app/user/food-order/cart/${Usercart._id}`;
+        const payload = {cart_data: { ...Usercart, promo_used: {} }}
+
+        fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': userdata.token
+            },
+            body: JSON.stringify(payload)
+        })
+        .then(response => response.json())
+        .then(data => {
+            const createdcart = data.response.data;
+            Dispatch(cartId(createdcart));
+        })
+    };
     
 
 
@@ -271,10 +291,12 @@ const Cartpage = () => {
                             <img className='tsavingssmallicon' src={delivery} alt="delivery" />
                             <p className='tsavsstext'><strong>{`Saved ₹${Math.round(deliverydiscount)}`}</strong> on delivery</p>
                         </div>
-                        <div className='tsavingschild'>
-                            <img className='tsavingssmallicon' src={coupon} alt="delivery" />
-                            <p className='tsavsstext'><strong>{`Saved ₹${Math.round(deliverydiscount)}`}</strong> with a coupon</p>
-                        </div>
+                        {Usercart.promo_used && Usercart.promo_used.value &&
+                            <div className='tsavingschild'>
+                                <img className='tsavingssmallicon' src={coupon} alt="delivery" />
+                                <p className='tsavsstext'><strong>{`Saved ₹${Math.round(Usercart.promo_used.value)}`}</strong> with a coupon</p>
+                            </div>
+                        }
                     </div>
                 </div>
                 <div className='bottomspikecontainer'>
@@ -346,16 +368,27 @@ const Cartpage = () => {
             </div>
 
             <h1 className='cartheadings'>COUPONS</h1>
-            <div className='cartholders'>
-                <div className='caddmorecontainer'>
-                    <div className='caddmore'>
-                        <img className='tsavingsicon' src={applycoupon} alt="offer"/>
-                        <p className='ccoupontext'>Apply Coupon</p>
+            {Usercart.promo_used && Usercart.promo_used.value
+                ?<div className='cartholders'>
+                    <div className='caddmorecontainer'>
+                        <div className='caddmore'>
+                            <img className='tsavingsicon' src={tick} alt="done"/>
+                            <p className='ccoupontext'><strong>₹{Usercart.promo_used.value} Coupon Savings</strong></p>
+                        </div>
+                        <p className='ccouponremove' onClick={removecoupon}>remove</p>
                     </div>
-                    <img className='crightbutton' src={right} alt=">"/>
                 </div>
-            </div>
-
+                :<div className='cartholders' onClick={() => navigate('coupons')}>
+                    <div className='caddmorecontainer'>
+                        <div className='caddmore'>
+                            <img className='tsavingsicon' src={applycoupon} alt="offer"/>
+                            <p className='ccoupontext'>Apply Coupon</p>
+                        </div>
+                        <img className='crightbutton' src={right} alt=">"/>
+                    </div>
+                </div>
+            }
+            
             <h1 className='cartheadings'>BILL DETAILS</h1>
             <div className='cartholders'>
                 <div className='cbdcontainer'>
@@ -415,15 +448,23 @@ const Cartpage = () => {
                         }
                     </div>
                 </div>
-                <div className='cbdcontainer'>
-                    <p className='cbdtextl'>Coupon Discount</p>
-                    <p className='cbdtextr'>- ₹ 00</p>
-                </div>
+                {Usercart.promo_used && Usercart.promo_used.value &&
+                    <div className='cbdcontainer'>
+                        <p className='cbdtextl'>Coupon Discount</p>
+                        <p className='cbdtextr'>- ₹{Usercart.promo_used.value}</p>
+                    </div>
+                }
                 <hr className='cartholderdividersnm'/>
                 <div className='cbdcontainerlast'>
                     <p className='cbdtextlarge'>Grand Total</p>
                     <p className='cbdtextlarge'>₹{Usercart.total.toFixed(2)}</p>
                 </div>
+            </div>
+
+            <h1 className='cartheadings'>CANCELLATION POLICY</h1>
+            <div className='cartholderlast'>
+                <p className='cptext'><span>Note: </span>Join us in cutting down food waste by avoiding cancellations after placing your order.</p>
+                <p className='cptextb'>To support these actions, a 100% cancellation fee is applied. We appreciate your support in promoting sustainability.</p>
             </div>
 
 

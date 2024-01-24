@@ -1,0 +1,137 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
+
+.acheader {
+    position: sticky;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: white;
+    padding: 15px;
+    box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.08);
+    z-index: 1;
+}
+
+.acheadertext {
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.acclosebtn {
+    width: 20px;
+}
+
+.couponheading {
+    font-size: 16px;
+    font-weight: 800;
+    text-align: center;
+    color: #4901b4;
+    margin: 30px 15px;
+    letter-spacing: 2px;
+}
+
+.accard {
+    display: flex;
+    margin: 30px 15px;
+    background-color: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.15);
+}
+
+.aclpart {
+    font-size: 22px;
+    font-weight: 800;
+    text-align: center;
+    writing-mode: vertical-lr;
+    rotate: 180deg;
+    /* letter-spacing: 1px; */
+    padding: 8px 8px 8px 13px;
+    background: linear-gradient(145deg, #7427F5 55%, #9354ff 55% 60%, #7427F5 60% 63%, #9354ff 63% 77%, #7427F5 77%);
+    color: white;
+    /* Generated Style */
+    --mask:
+        radial-gradient(4.46px at 6.30px 50%,#000 99%,#0000 101%) 0 calc(50% - 6px)/100% 12px,
+        radial-gradient(4.46px at -3.3px 50%,#0000 99%,#000 101%) 3px 50%/100% 12px repeat-y;
+        -webkit-mask: var(--mask);
+                mask: var(--mask);
+     /* Generated Style */
+    position: relative;
+    font-family: "Rubik", sans-serif;
+}
+
+.aclpart::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 7px;
+    border-right: 2px dashed white;
+}
+
+.acrpart {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+}
+
+.accodeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 15px 0 15px;
+}
+
+.accode {
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-align: center;
+    border: 2px dashed #7427F5;
+    background-color: #F9F5FF;
+    border-radius: 5px;
+    padding: 5px 10px 5px 10px;
+}
+
+.tapac {
+    font-size: 10px;
+    font-weight: 800;
+    padding: 5px;
+    color: #4901b4;
+    color: #7427F5;
+
+    /* font-family: "Rubik", sans-serif; */
+    /* color: black; */
+}
+
+.achtext {
+    font-size: 14px;
+    font-weight: 800;
+    padding: 5px 15px 15px 15px;
+    text-align: center;
+
+    /* font-family: "Rubik", sans-serif; */
+    /* color: #4901b4; */
+}
+
+.aclastpart {
+    font-size: 10px;
+    font-weight: 800;
+    text-align: center;
+    writing-mode: vertical-lr;
+    rotate: 180deg;
+    padding: 10px 5px;
+    background-color: #ebdffc;
+    color: #4901b4;
+    border-right: 1px dashed #4901b4;
+}
+
+
+
+.remove {
+    padding-bottom: 500px;
+    padding-top: 50px;
+}
