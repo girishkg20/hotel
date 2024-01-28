@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
 
-
 .acheader {
     position: sticky;
     top: 0;
@@ -46,7 +45,6 @@
     text-align: center;
     writing-mode: vertical-lr;
     rotate: 180deg;
-    /* letter-spacing: 1px; */
     padding: 8px 8px 8px 13px;
     background: linear-gradient(145deg, #7427F5 55%, #9354ff 55% 60%, #7427F5 60% 63%, #9354ff 63% 77%, #7427F5 77%);
     color: white;
@@ -101,10 +99,6 @@
     font-weight: 800;
     padding: 5px;
     color: #4901b4;
-    color: #7427F5;
-
-    /* font-family: "Rubik", sans-serif; */
-    /* color: black; */
 }
 
 .achtext {
@@ -112,9 +106,6 @@
     font-weight: 800;
     padding: 5px 15px 15px 15px;
     text-align: center;
-
-    /* font-family: "Rubik", sans-serif; */
-    /* color: #4901b4; */
 }
 
 .aclastpart {
@@ -127,11 +118,4 @@
     background-color: #ebdffc;
     color: #4901b4;
     border-right: 1px dashed #4901b4;
-}
-
-
-
-.remove {
-    padding-bottom: 500px;
-    padding-top: 50px;
 }

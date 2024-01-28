@@ -23,6 +23,7 @@ import tick from './Source/tick.png';
 import { cartId, clearCartId } from '../../Menu Page/CartidSlice';
 import { addItem, clearItem } from '../../Menu Page/CartSlice';
 import Cartpagedata from '../Cart_Page_Data/CartPageData';
+import Couponappliedpopup from '../Confetti_Animation/ConfettiAnimation';
 
 
 
@@ -37,7 +38,7 @@ const Cartpage = () => {
     const [header, setheader] = useState <HTMLDivElement | null>();
     const [bheader, setbheader] = useState <HTMLDivElement | null>();
     const [fooditemdata, setfooditemdata] = useState<any>();
-    // const [custitem, setcustitem] = useState<any>();
+    const [visible, setvisible] = useState<boolean>(false);
 
     const navigate = useNavigate();
     const Dispatch = useDispatch();
@@ -130,6 +131,16 @@ const Cartpage = () => {
             popoverlay!.style.display = 'block';
         }
     }
+
+    useEffect(() => {
+        if(Usercart.promo_used && Usercart.promo_used.value) {
+            setvisible(true);
+
+            setTimeout(() => {
+                setvisible(false);
+            }, 3500);
+        }
+    },[Usercart])
 
     const pushtocart = (eachfooditem:any) => {
 
@@ -264,7 +275,7 @@ const Cartpage = () => {
             <div className='cartheaderbottom' id='cartheaderbottom'>
                 <div className='tsavingscontainer'>
                     <img className='tsavingsiconh' src={offer} alt="offer"/>
-                    <p className='tsavingstexth'>You've <strong>{`saved ₹${Math.round(itemdiscount + deliverydiscount)}`}</strong> on this order!</p>
+                    <p className='tsavingstexth'>You've <strong>{`saved ₹${Math.round(itemdiscount + deliverydiscount + (Usercart.promo_used.value || 0))}`}</strong> on this order!</p>
                 </div>
             </div>
 
@@ -277,7 +288,7 @@ const Cartpage = () => {
                     <div className='tsvisiblepart' onClick={() => openclose('tsavingsholder', 'tsrightbutton')}>
                         <div className='tsavingscontainer'>
                             <img className='tsavingsicon' src={offer} alt="offer"/>
-                            <p className='tsavingstext'>You've <strong>{`saved ₹${Math.round(itemdiscount + deliverydiscount)}`}</strong> on this order!</p>
+                            <p className='tsavingstext'>You've <strong>{`saved ₹${Math.round( itemdiscount + deliverydiscount + (Usercart.promo_used.value || 0) )}`}</strong> on this order!</p>
                         </div>
                         <img className='rightbutton' id='tsrightbutton' src={rightgreen} alt=">"/>
                     </div>
@@ -487,9 +498,18 @@ const Cartpage = () => {
                 </div>
             </div>
 
+            {Usercart.promo_used && Usercart.promo_used.value && visible &&
+                <div className='caaniholder'>
+                    <Couponappliedpopup/>
+                    <div className='caanipopup'>
+                        <img className='caaniimage' src={tick} alt="correct"/>
+                        <p className='caaniapplied'>"{Usercart.promo_used.coupon_code}" applied</p>
+                        <p className='caanisavings'>You saved ₹{Usercart.promo_used.value} with this coupon</p>
+                    </div>
+                </div>
+            }
 
-
-
+            
             
             <Outlet/>
         </div>}</>
