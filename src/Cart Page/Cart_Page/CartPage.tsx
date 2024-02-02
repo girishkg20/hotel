@@ -20,7 +20,6 @@ import applycoupon from './Source/apply coupon.png';
 import address from './Source/location.png';
 import tick from './Source/tick.png';
 import emptycart from './Source/emptycart.png';
-// import { addItem } from '../../Menu Page/CartSlice';
 import { cartId, clearCartId } from '../../Menu Page/CartidSlice';
 import { addItem, clearItem } from '../../Menu Page/CartSlice';
 import Cartpagedata from '../Cart_Page_Data/CartPageData';
@@ -49,6 +48,7 @@ const Cartpage = () => {
     const deliveryaddress = useSelector((state:any) => state.perReducers.saveaddress.value);
     const userdata = useSelector((state:any) => state.perReducers.auth.value);
     const actualpayload = useSelector((state:any) => state.perReducers.addItem.value);
+    const cookinginstructions = useSelector((state:any) => state.foodinstruction.value);
 
     const loggedin = userdata.token;
 
@@ -76,9 +76,6 @@ const Cartpage = () => {
 
         }
     },[deliveryquote, Usercart])
-
-    console.log(Usercart);
-    console.log(deliveryaddress);
 
     const openclose = (cid:string, btnid:string) => {
         const tscard = document.getElementById(cid);
@@ -167,8 +164,6 @@ const Cartpage = () => {
         removeditem >= 0 && duplicatepayload.cart_data.food_items.splice(removeditem, 1);
         
         Dispatch(addItem(duplicatepayload));
-        console.log("cart", actualpayload);
-
     };
 
     const generateData = (fooditem:any) => {
@@ -368,10 +363,16 @@ const Cartpage = () => {
                         <img className='crightbutton' src={right} alt=">"/>
                     </div>
                     <hr className='cartholderdividers'/>
-                    <div className='caddmorecontainer'>
+                    <div className='caddmorecontainer' onClick={() => navigate('instructions')}>
                         <div className='caddmore'>
                             <img className='cartsideicons' src={addnote} alt="offer"/>
-                            <p className='caddmoretext'>Add cooking instructions</p>
+                            <div className='cookingholder'>{cookinginstructions == ""
+                                ? <p className='caddmoretext'>Add cooking instructions</p>
+                                : <>
+                                    <p className='cookingheading'>Cooking Instructions</p>
+                                    <p className='cookingtext'>{cookinginstructions}</p>
+                                </>
+                            }</div>
                         </div>
                         <img className='crightbutton' src={right} alt=">"/>
                     </div>

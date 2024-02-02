@@ -17,6 +17,7 @@ import Custrepeatpopup from './Menu Page/Cust_Repeat_Popup/CustRepeatPopup';
 import Cartpage1 from './Cart Page/CartPage1';
 import Cartcustpopup from './Cart Page/Cart_Cust_Popup/CartCustPopup';
 import Applycouponpage from './Cart Page/Apply_Coupon_Page/ApplyCouponPage';
+import Addinstructionspage from './Cart Page/Add_Instructions_Page/AddInstructionsPage';
 
 import { Link } from 'react-router-dom';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -81,6 +82,10 @@ const Router = createBrowserRouter([
         {
           path: "/:hotelid/:merchantid/cart/coupons",
           element: <Applycouponpage/>
+        },
+        {
+          path: "/:hotelid/:merchantid/cart/instructions",
+          element: <Addinstructionspage/>
         }
       ]
     },

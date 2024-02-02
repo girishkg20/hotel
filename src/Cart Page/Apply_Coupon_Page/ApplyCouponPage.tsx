@@ -87,7 +87,7 @@ const Applycouponpage = () => {
         <div className='custpopoverlay' onClick={() => navigate(-1)}></div>
 
         <div className="custpopover" style={{minHeight:"80%"}}>
-            <div className="myAlert" id="myAlert"></div>
+            {/* <div className="myAlert" id="myAlert"></div> Need this for search & apply*/}
 
             <div className='acheader'>
                 <p className="acheadertext">Coupons</p>

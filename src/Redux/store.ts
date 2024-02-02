@@ -9,6 +9,7 @@ import Phnoslice from "../Login Page/Enter_Ph_No/PhNoSlice";
 import AuthSlice from "../Login Page/Enter_Otp/AuthSlice";
 import CartSlice from "../Menu Page/CartSlice";
 import CartidSlice from "../Menu Page/CartidSlice";
+import FoodInstructionSlice from "../Cart Page/FoodInstructionSlice";
 
 
 
@@ -32,6 +33,7 @@ export const store = configureStore({
     reducer: {
         VegFilterSlice: VegfilterSlice,
         mobileNumber: Phnoslice,
+        foodinstruction: FoodInstructionSlice,
         
         perReducers: persistedReducer,
     },

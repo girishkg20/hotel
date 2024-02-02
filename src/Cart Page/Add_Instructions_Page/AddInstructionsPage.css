@@ -1,0 +1,44 @@
+.insttextbox {
+    padding: 10px;
+    border-radius: 12px;
+    background-color: #F6F6F6;
+    /* border: 1px solid #ececec; */
+}
+
+.insttextbox textarea {
+    resize: none;
+    width: 100%;
+    padding: 0;
+    border: none;
+    outline: none;
+    font-family: 'manrope';
+    background-color: transparent;
+    font-size: 16px;
+    font-weight: 800;
+    color: #383838;
+}
+
+.insttextbox textarea::placeholder {
+    font-weight: 600;
+}
+
+.insttext {
+    font-size: 14px;
+    font-weight: 600;
+    padding-top: 15px;
+}
+
+.insttextbox div {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: -3px;
+}
+
+.insttextbox button {
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    color: #7427F5;
+    font-size: 14px;
+    font-weight: 800;
+}

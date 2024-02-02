@@ -11,7 +11,6 @@
 
 .cartpage {
     background-color: #F6F6F6;
-    /* padding-bottom: 500px; */
 }
 
 .cartheader {
@@ -343,6 +342,31 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.cookingholder {
+    overflow: hidden;
+}
+
+.cookingheading {
+    font-size: 14px;
+    font-weight: 800;
+    padding: 0 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cookingtext {
+    font-size: 14px;
+    font-weight: 500;
+    margin: 3px 10px 0 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #787878;
+    border-bottom: 1px dashed #787878;
+    max-width: fit-content;
 }
 
 .ccoupontext {
