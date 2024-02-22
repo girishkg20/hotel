@@ -111,6 +111,7 @@
 .catname {
     font-size: 12px;
     font-weight: 800;
+    text-align: center;
     color: #3D167C;
     padding: 5px 10px 5px 10px;
     border-radius: 15px;

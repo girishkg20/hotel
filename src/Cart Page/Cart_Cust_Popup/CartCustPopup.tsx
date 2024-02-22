@@ -19,7 +19,7 @@ import { addItem } from "../../Menu Page/CartSlice";
 
 const Cartcustpopup = () => {
     const {fooditemdata} = useContext(Cartpagedata);
-    const fooditem = fooditemdata.original_food_item;
+    const fooditem = fooditemdata && fooditemdata.original_food_item;
     const Fooditem = {...fooditemdata}
     
     const navigate = useNavigate();
@@ -28,8 +28,11 @@ const Cartcustpopup = () => {
     const [totalcards, settotalcards] = useState(0);
     const [activecard, setactivecard] = useState(0);
     const [varient, setvarient] = useState<any>([]);
+    const [preselect, setpreselect] = useState<any>([]);
     
-    document.body.style.overflow = "hidden"
+    document.body.style.overflow = "hidden";
+
+    console.log(Fooditem)
 
     useEffect(() => {
         if(!fooditemdata) {
@@ -282,6 +285,35 @@ const Cartcustpopup = () => {
     };
 
 
+    useEffect(() => {
+        if(Fooditem && Fooditem.customisation_steps && Fooditem.customisation_steps.length > 0) {
+            const addedcustomizations = Fooditem.customisation_steps.reduce((acc:any, eachitem:any) => {
+                acc.push(eachitem.option_code);
+                return acc;
+            },[])
+            setpreselect(addedcustomizations);
+        }else{
+            if(Fooditem && Fooditem.variant_group && Fooditem.variant_group.length > 0) {
+                const addedcustomizations = Fooditem.variant_group.reduce((acc:any, eachitem:any) => {
+                    acc.push(eachitem.option_code);
+                    return acc;
+                },[])
+                setpreselect(addedcustomizations);
+            };
+        }
+    },[])
+
+    const isselected = (optioncode:any) => {
+        let selected;
+        preselect.map((eachitem:any)=>{
+            if(eachitem === optioncode) {
+                selected = true;
+            };
+        })
+        return selected;
+    };
+
+
 
     return(<>{ fooditemdata ? <>
         <div className='custpopoverlay' onClick={() => navigate(-1)}></div>
@@ -333,7 +365,7 @@ const Cartcustpopup = () => {
                                     <p className="addonprice">{`₹ ${Math.round(eachvariants.price + fooditem.price)}`}</p>
                                 </div>
                                 
-                                <input className="varientcheck" type="radio" value={JSON.stringify({...eachvariants, varient_title: eachaddon.title})} name={`${eachaddon.title}_${index}`}/>
+                                <input className="varientcheck" type="radio" defaultChecked={isselected(eachvariants.option_code)} value={JSON.stringify({...eachvariants, varient_title: eachaddon.title})} name={`${eachaddon.title}_${index}`}/>
                                 <div className="checkboxbg"></div>
                             </label>
                         ))}
@@ -371,7 +403,7 @@ const Cartcustpopup = () => {
                                 {eachaddons.price > 0 && <p className="addonprice">{`+₹ ${Math.round(eachaddons.price)}`}</p>}
                             </div>
                             
-                            <input className="addoncheck" type="checkbox" value={JSON.stringify({...eachaddons, varient_title: eachaddon.title})} name={'alladdons'}/>
+                            <input className="addoncheck" type="checkbox" defaultChecked={isselected(eachaddons.option_code)} value={JSON.stringify({...eachaddons, varient_title: eachaddon.title})} name={'alladdons'}/>
                             <div className="checkmark">
                                 <img className="tickmark" src={tick} alt="✔"/>
                             </div>
@@ -416,7 +448,7 @@ const Cartcustpopup = () => {
                                                     <p className="addonprice">{`₹ ${Math.round(eachoptions.price + fooditem.price)}`}</p>
                                                 </div>
                                                 
-                                                <input className="varientcheck" type="radio" id="custselection" defaultChecked={nestedindex === 0} value={JSON.stringify(eachoptions)} name={`${eachaddon.item_name}_${index}`}/>
+                                                <input className="varientcheck" type="radio" id="custselection" defaultChecked={isselected(eachoptions.option_code)} value={JSON.stringify(eachoptions)} name={`${eachaddon.item_name}_${index}`}/>
                                                 <div className="checkboxbg"></div>
                                             </>
                                             : <>
@@ -425,7 +457,7 @@ const Cartcustpopup = () => {
                                                     <p className="addonprice">{`+₹ ${Math.round(eachoptions.price)}`}</p>
                                                 </div>
                                                 
-                                                <input className="addoncheck" type="checkbox" id="custselection" value={JSON.stringify(eachoptions)} name="alladdons"/>
+                                                <input className="addoncheck" type="checkbox" id="custselection" defaultChecked={isselected(eachoptions.option_code)} value={JSON.stringify(eachoptions)} name="alladdons"/>
                                                 <div className="checkmark">
                                                     <img className="tickmark" width="10px" height="10px" src={tick} alt="✔"/>
                                                 </div>

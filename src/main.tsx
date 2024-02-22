@@ -6,6 +6,7 @@ import { store, persistor } from './Redux/store';
 import './index.css';
 import Homepage1 from './Home Page/HomePage1';
 import Profile from './Profile/Profile.js';
+import Topcuisinespage1 from './Top Cuisines Page/TopCuisinesPage1';
 import Menupage1 from './Menu Page/MenuPage1';
 import Itempopup from './Menu Page/Item_Popup/ItemPopup';
 import Loginpage from './Login Page/LoginPage';
@@ -34,6 +35,10 @@ const Router = createBrowserRouter([
     {
       path: "/:hotelid/profile",
       element: <Profile/>,
+    },
+    {
+      path: "/:hotelid/cuisine/:cuisineid",
+      element: <Topcuisinespage1/>,
     },
     {
       path: "/:hotelid/:merchantid",

@@ -252,12 +252,12 @@ const Itemlisting = () => {
     useEffect(()=>{
         if(actualpayload.hasOwnProperty("cart_data") && actualpayload.cart_data.food_items.length > 0) {
             
-            const url = Usercart._id
+            const url = Usercart && Usercart._id
             ? `https://prod-server.tipplr.in/app/user/food-order/cart/${Usercart._id}`
             : "https://prod-server.tipplr.in/app/user/food-order/cart";
 
             fetch(url, {
-                method: Usercart._id ? 'PUT' : 'POST',
+                method: Usercart && Usercart._id ? 'PUT' : 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': loggedin
@@ -271,7 +271,7 @@ const Itemlisting = () => {
             })
 
         }else{
-            if(Usercart._id) {
+            if(Usercart && Usercart._id) {
                 const url = `https://prod-server.tipplr.in/app/user/food-order/cart/${Usercart._id}`
                 fetch(url, {
                     method: 'DELETE',
@@ -320,7 +320,7 @@ const Itemlisting = () => {
             });
             
         };
-    },[Usercart.food_items, Menu])
+    },[Usercart, Menu])
     
 
 
@@ -515,7 +515,7 @@ const Itemlisting = () => {
                             <p>Menu</p>
                         </div>
                     </div>
-                    {Usercart.food_items && 
+                    {Usercart && Usercart.food_items && 
                         <div className='totalcard'>
                             <div>
                                 <div className='itemstotalholder'>

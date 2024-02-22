@@ -7,7 +7,7 @@
     background-color: white;
     border-radius: 25px 25px 0 0;
     box-shadow: 0px -30px 25px white;
-    /* height: 300px; */
+    min-height: 330px;
     animation: popoverAnimation 0.3s ease;
 }
 

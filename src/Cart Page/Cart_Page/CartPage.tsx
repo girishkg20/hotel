@@ -178,28 +178,125 @@ const Cartpage = () => {
     }
     
     useEffect(() => {
-        if(actualpayload.hasOwnProperty("cart_data") && actualpayload.cart_data.food_items.length > 0) {
-            
-            const url = Usercart._id
-            ? `https://prod-server.tipplr.in/app/user/food-order/cart/${Usercart._id}`
-            : "https://prod-server.tipplr.in/app/user/food-order/cart";
+        window.scrollTo(0,0);
+
+        if(loggedin && Usercart && Usercart._id && deliveryaddress && deliveryaddress._id) {
+            const url = `https://prod-server.tipplr.in/app/user/food-order/cart/${Usercart._id}`;
 
             fetch(url, {
-                method: Usercart._id ? 'PUT' : 'POST',
+                method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': loggedin
-                },
-                body: JSON.stringify(actualpayload)
+                }
             })
             .then(response => response.json())
             .then(data => {
-                const createdcart = data.response.data;
-                Dispatch(cartId(createdcart));
+
+                if(data.response.data.food_items && data.response.data.food_items.length > 0) {
+
+                    const createdcart = data.response.data;
+                    Dispatch(cartId(createdcart));
+
+                    const availablepayload = {...actualpayload,
+                        cart_data: {...actualpayload.cart_data,
+                            extra_charges: createdcart.extra_charges,
+                            food_items: createdcart.food_items
+                        }
+                    }
+                    Dispatch(addItem(availablepayload));
+
+                    const url = "https://prod-server.tipplr.in/hotel/delivery-quotes";
+                    const payload = {
+                        merchant_id: Usercart.merchant_id,
+                        user_address_id: deliveryaddress._id
+                    }
+        
+                    fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': loggedin
+                        },
+                        body: JSON.stringify(payload)
+                    })
+                    .then(response => response.json())
+                    .then(data => setdeliveryquote(data.response))
+                    
+                }else{
+                    const url = `https://prod-server.tipplr.in/app/user/food-order/cart/${Usercart._id}`
+
+                    fetch(url, {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': loggedin
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(() => {
+                        Dispatch(clearCartId());
+                        Dispatch(clearItem());
+                    })
+                }
             })
+        }
+
+    },[])
+
+    useEffect(() => {
+        if(actualpayload.hasOwnProperty("cart_data") && actualpayload.cart_data.food_items && actualpayload.cart_data.food_items.length > 0) {
+
+            if(loggedin && deliveryquote) {
+                const url = Usercart && Usercart._id
+                ? `https://prod-server.tipplr.in/app/user/food-order/cart/${Usercart._id}`
+                : "https://prod-server.tipplr.in/app/user/food-order/cart";
+
+                fetch(url, {
+                    method: Usercart && Usercart._id ? 'PUT' : 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': loggedin
+                    },
+                    body: JSON.stringify(actualpayload)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const createdcart = data.response.data;
+                    Dispatch(cartId(createdcart));
+
+                    const deliveryprice = +(deliveryquote.data[0].estimated_fare - createdcart.available_delivery_discount).toFixed(2);
+
+                    if(deliveryprice > 0) {
+                        const url = `https://prod-server.tipplr.in/app/user/food-order/cart/${createdcart._id}`;
+
+                        const payload = {
+                            cart_data: { ...createdcart,
+                                delivery_charges: deliveryprice,
+                                // delivery_address: deliveryaddress,
+                                // user_address_id: deliveryaddress._id
+                            }
+                        };
+
+                        fetch(url, {
+                            method: 'PUT',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': loggedin
+                            },
+                            body: JSON.stringify(payload)
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            const createdcart = data.response.data;
+                            Dispatch(cartId(createdcart)); 
+                        })
+                    }
+                })
+            }
 
         }else{
-            if(Usercart._id) {
+            if(Usercart && Usercart._id) {
                 const url = `https://prod-server.tipplr.in/app/user/food-order/cart/${Usercart._id}`
                 fetch(url, {
                     method: 'DELETE',
@@ -215,30 +312,7 @@ const Cartpage = () => {
                 })
             }
         }
-    },[actualpayload])
-    
-    useEffect(() => {
-        window.scrollTo(0,0);
-        if(loggedin && Usercart && Usercart.merchant_id && deliveryaddress && deliveryaddress._id) {
-
-            const url = "https://prod-server.tipplr.in/hotel/delivery-quotes";
-            const payload = {
-                merchant_id: Usercart.merchant_id,
-                user_address_id: deliveryaddress._id
-            }
-
-            fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': loggedin
-                },
-                body: JSON.stringify(payload)
-            })
-            .then(response => response.json())
-            .then(data => setdeliveryquote(data.response))
-        }
-    },[])
+    },[actualpayload, deliveryquote])
 
     const removecoupon = () => {
         const url = `https://prod-server.tipplr.in/app/user/food-order/cart/${Usercart._id}`;
@@ -509,8 +583,6 @@ const Cartpage = () => {
                     </div>
                 }
 
-                
-                
                 <Outlet/>
             </div>
             :<div className="nrholder">

@@ -178,7 +178,7 @@ const Enterotp = () => {
             <p className="loginwelmsg">Enter 4 digit OTP</p>
 
             <div className="otpboxholder">
-                <input className="otpbox" type="tel" maxLength={1}/>
+                <input className="otpbox" type="tel" maxLength={1} autoFocus/>
                 <input className="otpbox" type="tel" maxLength={1}/>
                 <input className="otpbox" type="tel" maxLength={1}/>
                 <input className="otpbox" type="tel" maxLength={1}/>

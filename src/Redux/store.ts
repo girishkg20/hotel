@@ -1,6 +1,7 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import sessionStorage from "redux-persist/lib/storage/session";
 import thunk from 'redux-thunk';
 
 import VegfilterSlice from "../Menu Page/VegfilterSlice";
@@ -10,13 +11,17 @@ import AuthSlice from "../Login Page/Enter_Otp/AuthSlice";
 import CartSlice from "../Menu Page/CartSlice";
 import CartidSlice from "../Menu Page/CartidSlice";
 import FoodInstructionSlice from "../Cart Page/FoodInstructionSlice";
-
-
+import SessionIdSlice from "../Home Page/Home_Page_API/SessionIdSlice";
 
 
 const PersistConfig = {
     key: "root",
     storage,
+}
+
+const SessionConfig = {
+    key: "session-root",
+    storage: sessionStorage,
 }
 
 const perReducers = combineReducers({
@@ -26,8 +31,12 @@ const perReducers = combineReducers({
     cartId: CartidSlice
 })
 
+const sesReducers = combineReducers({
+    sessionid: SessionIdSlice
+})
 
-const persistedReducer = persistReducer(PersistConfig, perReducers)
+const persistedReducer = persistReducer(PersistConfig, perReducers);
+const sessionReducers = persistReducer(SessionConfig, sesReducers);
 
 export const store = configureStore({
     reducer: {
@@ -36,6 +45,7 @@ export const store = configureStore({
         foodinstruction: FoodInstructionSlice,
         
         perReducers: persistedReducer,
+        sesReducers: sessionReducers,
     },
     middleware: [thunk],
 })
