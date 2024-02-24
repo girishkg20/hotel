@@ -180,7 +180,7 @@ const Cartpage = () => {
     useEffect(() => {
         window.scrollTo(0,0);
 
-        if(loggedin && Usercart && Usercart._id && deliveryaddress && deliveryaddress._id) {
+        if(loggedin && Usercart && Usercart._id && deliveryaddress && deliveryaddress.tagged_user_id) {
             const url = `https://prod-server.tipplr.in/app/user/food-order/cart/${Usercart._id}`;
 
             fetch(url, {
@@ -209,7 +209,7 @@ const Cartpage = () => {
                     const url = "https://prod-server.tipplr.in/hotel/delivery-quotes";
                     const payload = {
                         merchant_id: Usercart.merchant_id,
-                        user_address_id: deliveryaddress._id
+                        user_address_id: deliveryaddress.tagged_user_id
                     }
         
                     fetch(url, {
@@ -274,7 +274,7 @@ const Cartpage = () => {
                             cart_data: { ...createdcart,
                                 delivery_charges: deliveryprice,
                                 // delivery_address: deliveryaddress,
-                                // user_address_id: deliveryaddress._id
+                                // user_address_id: deliveryaddress.tagged_user_id
                             }
                         };
 
@@ -557,8 +557,8 @@ const Cartpage = () => {
                     <div className='cartaddress'>
                         <img className='calogo' src={address} alt="drop"/>
                         <div className='cartaddressholder'>
-                            <p className='caddressname'>Delivery at <span>{deliveryaddress.nick_name}</span></p>
-                            <p className='cfulladdress'>{deliveryaddress.address_line}</p>
+                            <p className='caddressname'>Delivery at <span>{deliveryaddress.name}</span></p>
+                            <p className='cfulladdress'>{deliveryaddress.full_address}</p>
                         </div>
                     </div>
                     <hr className='cfdivider'/>

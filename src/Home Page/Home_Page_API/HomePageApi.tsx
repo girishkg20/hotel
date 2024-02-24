@@ -3,7 +3,7 @@ import Homepagedata from './HomePageData.jsx';
 import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { saveaddress } from "./UserAddressSlice.js";
-import { sessionid } from "./SessionIdSlice.js";
+import { sessionid, clearsessionid } from "./SessionIdSlice.js";
 import { useSelector } from "react-redux";
 
 
@@ -12,78 +12,95 @@ const Homepageapi = ({ children }: { children: React.ReactNode }) => {
   const Dispatch = useDispatch();
   let {hotelid} = useParams();
 
-  const sessionId = useSelector((state:any) => state.sesReducers.sessionid.value);
+  const [sessid, setsessid] = useState<string>();
+
+  const sessionID = useSelector((state:any) => state.sesReducers.sessionid.value);
+  const savedaddress = useSelector((state:any) => state.perReducers.saveaddress.value);
+
+  const HotelID = savedaddress.merchant_sku;
 
   useEffect(() => {
 
-    if (!sessionId) {
-      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-      const length = 10;
-    
-      let sessionId = '';
-      for (let i = 0; i < length; i++) {
-        const randomIndex = Math.floor(Math.random() * characters.length);
-        sessionId += characters.charAt(randomIndex);
-      }
-      Dispatch(sessionid(sessionId));
+    if (sessionID && HotelID != hotelid) {
+      Dispatch(clearsessionid());
+    }else{
+      if (!sessionID) {
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        const length = 10;
+      
+        let sessionId = '';
+        for (let i = 0; i < length; i++) {
+          const randomIndex = Math.floor(Math.random() * characters.length);
+          sessionId += characters.charAt(randomIndex);
+        };
+        setsessid(sessionId);
+      }else{
+        setsessid(sessionID);
+      };
     }
 
-  },[sessionId])
+  },[sessionID])
   
-  let mainurl = `https://prod-server.tipplr.in/hotel/merchant/${hotelid}?session_id=${sessionId}`;
-
-  const [Useraddress, setUseraddress] = useState([]);
   const [Hotelname, setHotelname] = useState('Loading...');
   const [Cuisines, setCuisines] = useState([]);
   const [Data, setData] = useState<[]>();
 
-  useEffect(() => {sessionId &&
-    fetch(mainurl)
-      .then((response) => response.json())
-      .then((data) => {
-        window.scrollTo(0,0);
-        setUseraddress(data.response.address);
-        setHotelname(data.response.data.name);
+  useEffect(() => {
+    if(!sessionID && sessid) {
+      const mainurl = `https://prod-server.tipplr.in/hotel/merchant/${hotelid}?session_id=${sessid}`;
+      fetch(mainurl)
+        .then((response) => response.json())
+        .then((data) => {
+          window.scrollTo(0,0);
+          setHotelname(data.response.data.name);
 
-        Dispatch(saveaddress(data.response.address));
+          Dispatch(saveaddress(data.response.data));
+          Dispatch(sessionid(sessid));
+        })
+      .catch((error) => console.log(error));
+    }else{
+      window.scrollTo(0,0);
+      setHotelname(savedaddress.name);
+    }
+  }, [sessid]);
+
+  useEffect(() => {
+    if(sessionID && HotelID === hotelid) {
+      let limit = 100;
+      let skip = 0;
+      let latitude = savedaddress.location_lat;
+      let longitude = savedaddress.location_long;
+      let area = savedaddress.area_name;
+      let hour_value = new Date().getHours();
+      let hotel_merchant_id = savedaddress._id;
+  
+      let myurl = `https://prod-server.tipplr.in/hotel/es/restaurants/new?limit=${limit}&skip=${skip}&latitude=${latitude}&longitude=${longitude}&area_name=${area}&hour_value=${hour_value}&hotel_merchant_id=${hotel_merchant_id}`;
+  
+      fetch(myurl)
+        .then(response => response.json())
+        .then(data => {
+          setCuisines(data.response.cuisines)
+          setData(data.response.data)
         
-        let limit = 100;
-        let skip = 0;
-        let latitude = data.response.address.location_lat;
-        let longitude = data.response.address.location_long;
-        let area = data.response.address.area;
-        let hour_value = new Date().getHours();
-        let hotel_merchant_id = data.response.data._id;
-
-        let myurl = `https://prod-server.tipplr.in/hotel/es/restaurants/new?limit=${limit}&skip=${skip}&latitude=${latitude}&longitude=${longitude}&area_name=${area}&hour_value=${hour_value}&hotel_merchant_id=${hotel_merchant_id}`;
-
-        fetch(myurl)
-          .then(response => response.json())
-          .then(data => {
-            setCuisines(data.response.cuisines)
-            setData(data.response.data)
+          const url = `https://prod-server.tipplr.in/hotel/session_id/${sessionID}`;
+          const payload = {
+            page_name: `Home Page - ${data.response.data.length} Restaurants`,
+          };
           
-            const url = `https://prod-server.tipplr.in/hotel/session_id/${sessionId}`;
-            const payload = {
-              page_name: `Home Page - ${data.response.data.length} Restaurants`,
-            };
-            
-            fetch(url, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(payload)
-            }).catch((error) => console.log(error));
-
-          })
-        .catch((error) => console.log(error));
-      })
-    .catch((error) => console.log(error));
+          fetch(url, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload)
+          }).catch((error) => console.log(error));
   
-  }, [sessionId]);
+        })
+      .catch((error) => console.log(error));
+    }
+  },[sessionID, HotelID])
   
-  return ( <Homepagedata.Provider value={{Useraddress, Hotelname, Cuisines, Data}}>
+  return ( <Homepagedata.Provider value={{ Hotelname, Cuisines, Data}}>
             { children } 
           </Homepagedata.Provider>
   );

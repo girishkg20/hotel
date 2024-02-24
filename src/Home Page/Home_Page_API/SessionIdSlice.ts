@@ -16,9 +16,12 @@ const Sessionidslice = createSlice({
     reducers: {
         sessionid: (state, action: PayloadAction<string>) => {
             state.value = action.payload
+        },
+        clearsessionid: (state) => {
+            state.value = initialState.value
         }
     },
 })
 
-export const {sessionid} = Sessionidslice.actions
+export const {sessionid, clearsessionid} = Sessionidslice.actions;
 export default Sessionidslice.reducer;

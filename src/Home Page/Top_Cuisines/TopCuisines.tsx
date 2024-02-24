@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 const Topcuisines = () => {
-  const { Hotelname, Cuisines, Data } = useContext(Homepagedata);
+  const { Cuisines } = useContext(Homepagedata);
   let defaultcuisineimage = "https://tipplr-media.s3.ap-south-1.amazonaws.com/images/cuisine_imagezKI4Ho6kGTZ8UFNMo0DK.jpg";
 
   const navigate = useNavigate();
