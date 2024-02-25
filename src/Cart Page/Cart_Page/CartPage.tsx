@@ -24,6 +24,7 @@ import { cartId, clearCartId } from '../../Menu Page/CartidSlice';
 import { addItem, clearItem } from '../../Menu Page/CartSlice';
 import Cartpagedata from '../Cart_Page_Data/CartPageData';
 import Couponappliedpopup from '../Confetti_Animation/ConfettiAnimation';
+import Uniloader from '../../Universal Loader/UniLoader';
 
 
 
@@ -39,6 +40,7 @@ const Cartpage = () => {
     const [bheader, setbheader] = useState <HTMLDivElement | null>();
     const [fooditemdata, setfooditemdata] = useState<any>();
     const [visible, setvisible] = useState<boolean>(false);
+    const [loading, setloading] = useState<boolean>(true);
 
     const navigate = useNavigate();
     const Dispatch = useDispatch();
@@ -237,6 +239,7 @@ const Cartpage = () => {
                     .then(() => {
                         Dispatch(clearCartId());
                         Dispatch(clearItem());
+                        setloading(false);
                     })
                 }
             })
@@ -264,6 +267,7 @@ const Cartpage = () => {
                 .then(data => {
                     const createdcart = data.response.data;
                     Dispatch(cartId(createdcart));
+                    setloading(false);
 
                     const deliveryprice = +(deliveryquote.data[0].estimated_fare - createdcart.available_delivery_discount).toFixed(2);
 
@@ -309,6 +313,7 @@ const Cartpage = () => {
                 .then(() => {
                     Dispatch(clearCartId());
                     Dispatch(clearItem());
+                    setloading(false);
                 })
             }
         }
@@ -331,6 +336,10 @@ const Cartpage = () => {
             const createdcart = data.response.data;
             Dispatch(cartId(createdcart));
         })
+    };
+
+    if(loading) {
+        return(<Uniloader/>)
     };
     
     return(<Cartpagedata.Provider value={{fooditemdata}}>

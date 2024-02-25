@@ -1,0 +1,47 @@
+.cuisinepage {
+    background-color: #F8F8F8;
+}
+
+.cuisinestop {
+    background-color: #C4C4C4;
+    border-radius: 0 0 23px 23px;
+    background-size: 150%;
+    background-position: center;
+}
+
+.cuisinestoplayer {
+    border-radius: 0 0 23px 23px;
+    padding: 15px 15px 15px 15px;
+    backdrop-filter: blur(100px) saturate(3);
+}
+
+.tccuisineimgholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-right: 15px;
+}
+
+.tccuisineimg {
+    width: 192px;
+}
+
+.tccuisinename {
+    font-size: 22px;
+    font-weight: 800;
+    color: black;
+    text-transform: uppercase;
+    font-family: "Rubik", sans-serif;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.3);
+    padding: 15px;
+    margin-top: 15px;
+    border-radius: 15px 15px 15px 15px;
+}
+
+.tcrestaurantheading {
+    margin: 30px 15px 5px 15px;
+    font-size: 18px;
+    font-weight: 800;
+    text-transform: capitalize;
+}

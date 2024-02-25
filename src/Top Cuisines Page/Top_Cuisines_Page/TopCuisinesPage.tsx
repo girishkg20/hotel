@@ -5,12 +5,17 @@ import { useEffect, useState } from 'react';
 import discountimg from './Source/offer.png';
 import locationpin from './Source/location pin.png';
 import Endimage from '../../Home Page/End_Image/EndImage';
+import backbutton from './Source/back.png';
+import Uniloader from '../../Universal Loader/UniLoader';
+
 
 
 const Topcuisinespage = () => {
 
     const Useraddress = useSelector((state:any) => state.perReducers.saveaddress.value);
-    const [Data, setData] = useState([]);
+    const [Data, setData] = useState<any>([]);
+    const [cuisine, setcuisine] = useState<any>();
+    const [loading, setloading] = useState<boolean>(true);
 
     const {cuisineid} = useParams();
     const navigate = useNavigate();
@@ -20,6 +25,7 @@ const Topcuisinespage = () => {
 
     useEffect(() => {
         const baseurl = "https://prod-server.tipplr.in/hotel/es/restaurants/new";
+
         const queryparams = new URLSearchParams({
             limit: "50",
             skip: "0",
@@ -28,22 +34,84 @@ const Topcuisinespage = () => {
             delivery_available: "1",
             'cuisines:in': `${cuisineid}`,
         });
+
         const url = baseurl + "?" + queryparams.toString();
-        console.log(url);
+
         fetch(url)
             .then(response => response.json())
-            .then((data) => setData(data.response.data))
-        ;
+            .then((data) => {
+                setData(data.response.data);
+                const cuisineindex = data.response.cuisines.findIndex((eachcuisines:any) => eachcuisines._id === cuisineid);
+                setcuisine(data.response.cuisines[cuisineindex]);
+                setloading(false);
+            })
+        .catch((error) => console.log(error));
     },[])
-    
 
-    return(<>
-        <h1>Top Cuisines Page</h1>
-        <h5 className="restaurantheading">Restaurants Around You</h5>
+    const fixheader = () => {
+        const header = document.getElementById('mpheader');
+        const headertext = document.getElementById('headertext');
+
+        if(header && headertext) {
+            if (window.scrollY > 55) {
+                header!.classList.add('fixed')
+                headertext!.style.display = "flex";
+            }else{
+                header!.classList.remove('fixed')
+                headertext!.style.display = "none";
+            }
+        }
+    }
+
+    useEffect(() => {
+        window.addEventListener('scroll', fixheader)
+        return () => {
+            window.removeEventListener('scroll', fixheader);
+        };
+    },[])
+
+    const navtorestaurant = (id:any) => {
+        const hotelid = window.location.pathname.split("/")[1];
+        navigate(`/${hotelid}/${id}`)
+    }
+
+
+
+    if(loading) {
+        return(<Uniloader/>)
+    };
+
+    return(<>{Data && cuisine && <div className='cuisinepage'>
+        <div className='mpheader' id='mpheader'>
+            <div className='backtitle'>
+                <img className='backbutton' src={backbutton} alt="Back" onClick={()=>navigate(-1)}/>
+                <h3 className='headertext' id='headertext'>{cuisine.name}</h3>
+            </div>
+        </div>
+
+        <div className='cuisinestop' style={{backgroundImage: `url(${cuisine.image})`}}>
+            <div className='cuisinestoplayer'>
+                {cuisine.image &&
+                <div className='tccuisineimgholder'>
+                    <img className='tccuisineimg' src={cuisine.image} alt="cuisine"/>
+                </div>
+                }
+                <p className='tccuisinename'>{cuisine.name}</p>
+            </div>
+        </div>
+                 
+
+
+
+
+
+
+
+        <h5 className="tcrestaurantheading">{`Restaurants Serving ${cuisine.name}`}</h5>
 
         <div className="restaurantholder" id="restaurantscontainer">
         {Data && Data.map((eachRestaurant: any) => (
-            <div key={eachRestaurant._id} className="restaurantcard" onClick={()=>navigate(eachRestaurant._id)}>
+            <div key={eachRestaurant._id} className="restaurantcard" onClick={()=>navtorestaurant(eachRestaurant._id)}>
             <img
                 className="restaurantimg"
                 loading="lazy"
@@ -101,6 +169,6 @@ const Topcuisinespage = () => {
         ))}
         </div>
         <Endimage/>
-    </>)
+    </div>}</>)
 }
 export default Topcuisinespage;
