@@ -8,6 +8,7 @@ import Homepage1 from './Home Page/HomePage1';
 import Profile from './Profile/Profile.js';
 import Topcuisinespage1 from './Top Cuisines Page/TopCuisinesPage1';
 import Menupage1 from './Menu Page/MenuPage1';
+import Menusearchpage from './Menu Page/Menu_Search_Page/MenuSearchPage';
 import Itempopup from './Menu Page/Item_Popup/ItemPopup';
 import Loginpage from './Login Page/LoginPage';
 import Phno from './Login Page/Enter_Ph_No/PhNo';
@@ -44,6 +45,10 @@ const Router = createBrowserRouter([
       path: "/:hotelid/:merchantid",
       element: <Menupage1/>,
       children: [
+        {
+          path: "/:hotelid/:merchantid/search",
+          element: <Menusearchpage/>
+        },
         {
           path: "/:hotelid/:merchantid/:itemid",
           element: <Itempopup/>

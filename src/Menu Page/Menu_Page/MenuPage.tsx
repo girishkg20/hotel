@@ -1,7 +1,6 @@
 import './MenuPage.css';
 import backbutton from './Source/back.png';
 import Merchantinfo from '../Merchant_Info/MerchantInfo';
-import Menusearchbar from '../Menu_Search_Bar/MenuSearchBar';
 import Itemlisting from '../Item_Listing/ItemListing';
 import veg from './Source/veg.png';
 import reset from './Source/reset.png';
@@ -137,12 +136,19 @@ const Menupage = () => {
                 <img className='backbutton' src={backbutton} alt="Back" onClick={()=>navigate(-1)}/>
                 <h3 className='headertext' id='headertext'>{Restaurantname}</h3>
             </div>
-            <img className='hsearchlogo' id='hsearchlogo' src={search} alt="search"/>
+            <img className='hsearchlogo' id='hsearchlogo' src={search} alt="search" onClick={() => navigate('search')}/>
         </div>
 
         <div className='menupagetop' style={{backgroundImage: `url(${restaurantimage})`}}><Merchantinfo/></div>
                  
-        <div id='msearchbar'><Menusearchbar/></div>
+        <div id='msearchbar'>
+            <div className="searchbarholder">
+                <form className="searchbar">
+                    <img className="searchlogo" src={search}/>
+                    <input className="searchbox" onClick={() => navigate('search')} onFocus={(e) => e.target.blur()} placeholder="Search for dishes"/>
+                </form>
+            </div>
+        </div>
 
         <div className='filters'>
             <hr className='filterline'/>
