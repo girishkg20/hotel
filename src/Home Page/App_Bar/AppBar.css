@@ -16,6 +16,10 @@
   filter: drop-shadow(0px 4px 9px rgba(0, 0, 0, 0.14));
 }
 
+.searchbarcontainer {
+  padding: 10px 10px 15px 10px;
+}
+
 .appbar {
   display: flex;
   justify-content: space-between;

@@ -1,21 +1,39 @@
-import React, { useEffect, useState } from 'react';
 import './MenuSearchBar.css';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import reset from './Source/reset.png';
 import search from './Source/search.png';
+import back from './Source/right.png';
 
 
 const Menusearchbar = () => {
+
+    const navigate = useNavigate();
 
     const [resetbutton, setresetbutton] = useState<HTMLButtonElement | null>();
     const [searchdata, setsearchdata] = useState<HTMLInputElement | null>();
     const [boxboarder, setboxboarder] = useState<HTMLFormElement | null>();
 
     useEffect(() => {
-        setresetbutton(document.getElementById("resetbtn") as HTMLButtonElement | null);
-        setsearchdata(document.getElementById("searchbox") as HTMLInputElement | null);
-        setboxboarder(document.getElementById("searchbar") as HTMLFormElement | null);
+        setresetbutton(document.getElementById("menuresetbtn") as HTMLButtonElement | null);
+        setsearchdata(document.getElementById("menusearchbox") as HTMLInputElement | null);
+        setboxboarder(document.getElementById("menusearchbar") as HTMLFormElement | null);
     },[]);
 
+    useEffect(() => {
+        const removeinputfocus = (event: TouchEvent) => {
+            if(!searchdata!.contains(event.target as Node) && !resetbutton!.contains(event.target as Node)) {
+                searchdata!.blur();
+            }
+        }
+
+        window.addEventListener('touchstart', removeinputfocus);
+        return () => {
+            window.removeEventListener('touchstart', removeinputfocus);
+        };
+
+    },[searchdata, resetbutton]);
 
     function datacheck() {
         if (searchdata) {
@@ -31,11 +49,11 @@ const Menusearchbar = () => {
     };
 
     function boarderadd() {
-        boxboarder!.style.border = "2px solid #7527F5";
+        boxboarder!.style.outline = "2px solid #7527F5";
     };
 
     function boarderremove() {
-        boxboarder!.style.border = "1px solid #B2AEB9";
+        boxboarder!.style.outline = "none";
     };
 
     function clrbtn() {
@@ -45,13 +63,18 @@ const Menusearchbar = () => {
 
     return (<>
 
-    <div className="searchbarholder">
-        <form className="searchbar" id="searchbar">
-            <img className="searchlogo" src={search}/>
-            <input className="searchbox" id="searchbox" type="search" onFocus={boarderadd} onInput={datacheck} onBlur={boarderremove} placeholder="Search for dishes"/>
-            <button className="rbtn" id="resetbtn" type="reset" onClick={clrbtn}>
-                <img className="resetlogo" src={reset}/>
+    <div className="menusearchbarholder">
+        <form className="menusearchbar" id="menusearchbar">
+            <div className='menusearchback' onClick={()=>navigate(-1)}>
+                <img className="menusearchbackimg" src={back}/>
+            </div>
+            <input className="menusearchbox" id="menusearchbox" type="search" onFocus={boarderadd} onInput={datacheck} onBlur={boarderremove} placeholder="Search for dishes"/>
+            <button className="menuresetbtn" id="menuresetbtn" type="reset" onClick={clrbtn}>
+                <img className="menuresetlogo" src={reset}/>
             </button>
+            <div className='menusearchlogoholder'>
+                <img className="menusearchlogo" src={search}/>
+            </div>
         </form>
     </div>
 

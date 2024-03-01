@@ -62,7 +62,7 @@ const Cartpage = () => {
         return () => {
             window.removeEventListener('scroll', fixheader);
         };
-    },[header,bheader])
+    },[header, bheader, loading])
 
     useEffect(() => {
         if(deliveryquote && Usercart) {

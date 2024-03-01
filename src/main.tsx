@@ -47,7 +47,25 @@ const Router = createBrowserRouter([
       children: [
         {
           path: "/:hotelid/:merchantid/search",
-          element: <Menusearchpage/>
+          element: <Menusearchpage/>,
+          children: [
+            {
+              path: "/:hotelid/:merchantid/search/:itemid",
+              element: <Itempopup/>
+            },
+            {
+              path: "/:hotelid/:merchantid/search/:itemid/customize",
+              element: <Custrepeatpopup/>
+            },
+            {
+              path: "/:hotelid/:merchantid/search/:itemid/customization",
+              element: <Custpopup/>
+            },
+            {
+              path: "/:hotelid/:merchantid/search/:itemid/clearcart",
+              element: <Clearcartpopup/>
+            }
+          ]
         },
         {
           path: "/:hotelid/:merchantid/:itemid",

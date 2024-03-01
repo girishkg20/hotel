@@ -16,6 +16,20 @@ const Searchbar = () => {
         setboxboarder(document.getElementById("searchbar") as HTMLFormElement | null);
     },[]);
 
+    useEffect(() => {
+        const removeinputfocus = (event: TouchEvent) => {
+            if(!searchdata!.contains(event.target as Node) && !resetbutton!.contains(event.target as Node)) {
+                searchdata!.blur();
+            }
+        }
+
+        window.addEventListener('touchstart', removeinputfocus);
+        return () => {
+            window.removeEventListener('touchstart', removeinputfocus);
+        };
+
+    },[searchdata, resetbutton]);
+
     function datacheck() {
         if (searchdata) {
             let searchvalue = searchdata!.value;
@@ -29,16 +43,16 @@ const Searchbar = () => {
     };
     
     function boarderadd() {
-    boxboarder!.style.border = "2px solid #7527F5";
+        boxboarder!.style.outline = "2px solid #7527F5";
     };
     
     function boarderremove() {
-    boxboarder!.style.border = "1px solid #B2AEB9";
+        boxboarder!.style.outline = "none";
     };
     
     function clrbtn() {
-    searchdata!.focus();
-    resetbutton!.style.display = "none";
+        searchdata!.focus();
+        resetbutton!.style.display = "none";
     };
 
     return (<>

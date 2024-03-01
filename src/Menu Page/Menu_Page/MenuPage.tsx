@@ -142,7 +142,7 @@ const Menupage = () => {
         <div className='menupagetop' style={{backgroundImage: `url(${restaurantimage})`}}><Merchantinfo/></div>
                  
         <div id='msearchbar'>
-            <div className="searchbarholder">
+            <div className="msearchbarholder">
                 <form className="searchbar">
                     <img className="searchlogo" src={search}/>
                     <input className="searchbox" onClick={() => navigate('search')} onFocus={(e) => e.target.blur()} placeholder="Search for dishes"/>

@@ -44,11 +44,13 @@ const Appbar = () => {
 
         </div>
 
-        <Searchbar/>
+        <div className="searchbarcontainer">
+          <Searchbar/>
+        </div>
 
       </div>
 
-      <hr className="linehidden" /> 
+      <hr className="linehidden" />
     </>
   );
 };

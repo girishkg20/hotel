@@ -34,6 +34,10 @@
     display: none;
 }
 
+.msearchbarholder {
+    padding: 15px;
+}
+
 .filters {
     background-color: white;
     align-items: center;
