@@ -44,6 +44,7 @@ const Menusearchpage = () => {
 
     useEffect(() => {
         if(inputbox) {
+            inputbox.focus();
             inputbox.placeholder = `Search in ${menu.merchant.name}`;
 
             const getsearchkey = () => {

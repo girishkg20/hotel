@@ -135,6 +135,7 @@
     align-items: center;
     justify-content: space-between;
     border-top: 1px solid #EBEBEB;
+    padding-top: 10px;
     animation: foodcardanimation 0.3s ease;
 }
 
