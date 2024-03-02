@@ -143,9 +143,9 @@ const Menupage = () => {
                  
         <div id='msearchbar'>
             <div className="msearchbarholder">
-                <form className="searchbar">
-                    <img className="searchlogo" src={search}/>
-                    <input className="searchbox" onClick={() => navigate('search')} onFocus={(e) => e.target.blur()} placeholder="Search for dishes"/>
+                <form className="hpsearchbar">
+                    <img className="hpsearchlogo" src={search}/>
+                    <input className="hpsearchbox" onClick={() => navigate('search')} onFocus={(e) => e.target.blur()} placeholder="Search for dishes"/>
                 </form>
             </div>
         </div>
