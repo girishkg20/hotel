@@ -47,11 +47,11 @@ const Appbar = () => {
 
         </div>
 
-        <div className="searchbarcontainer">
-          <div className="searchbarholder">
-            <form className="searchbar">
-              <img className="searchlogo" src={search}/>
-              <input className="searchbox" onClick={() => navigate('search')} onFocus={(e) => e.target.blur()} placeholder="Search for food and restaurants"/>
+        <div className="hpsearchbarcontainer">
+          <div className="hpsearchbarholder">
+            <form className="hpsearchbar">
+              <img className="hpsearchlogo" src={search} />
+              <input className="hpsearchbox" onClick={() => navigate('search')} onFocus={(e) => e.target.blur()} placeholder="Search for food and restaurants"/>
             </form>
           </div>
         </div>
