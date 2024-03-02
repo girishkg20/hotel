@@ -32,8 +32,6 @@ const Cartcustpopup = () => {
     
     document.body.style.overflow = "hidden";
 
-    console.log(Fooditem)
-
     useEffect(() => {
         if(!fooditemdata) {
             navigate(-1)

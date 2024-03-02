@@ -28,11 +28,11 @@ const Menusearchpage = () => {
 
     const [totalitems, settotalitems] = useState<number>(0);
     const [inputbox, setinputbox] = useState<HTMLInputElement>();
+    const [resetbutton, setresetbutton] = useState<HTMLButtonElement>();
     const [searchkey, setsearchkey] = useState<string>();
     const [searchresult, setsearchresult] = useState<any>();
     const [viewfooditem, setviewfooditem] = useState<any>();
     const [fooditemdata, setfooditemdata] = useState<any>();
-
 
     const Usercart = useSelector((state:any) => state.perReducers.cartId.value);
     const userdata = useSelector((state:any) => state.perReducers.auth.value);
@@ -40,20 +40,28 @@ const Menusearchpage = () => {
 
     useEffect(() => {
         setinputbox(document.getElementById("menusearchbox") as HTMLInputElement);
+        setresetbutton(document.getElementById("menuresetbtn") as HTMLButtonElement);
     },[])
 
     useEffect(() => {
-        if(inputbox) {
+        if(inputbox && resetbutton) {
             inputbox.focus();
             inputbox.placeholder = `Search in ${menu.merchant.name}`;
 
             const getsearchkey = () => {
-                setsearchkey(inputbox.value);
+                setsearchkey(inputbox.value); 
+            }
+
+            const clearsearchkey = () => {
+                setsearchkey("");
+                setsearchresult("");
             }
 
             inputbox.addEventListener("input", getsearchkey);
+            resetbutton.addEventListener("click", clearsearchkey);
             return () => {
                 inputbox.removeEventListener("input", getsearchkey);
+                resetbutton.removeEventListener("touchend", clearsearchkey);
             }
         };
     },[inputbox])
@@ -74,8 +82,11 @@ const Menusearchpage = () => {
     // },[inputbox])
 
     useEffect(() => {
-        const searchresponse = Menu.filter((eachitem:any) => searchkey && eachitem.name.toLowerCase().includes(searchkey.toLowerCase()));
-        setsearchresult(searchresponse)
+        if(searchkey) {
+            const searchresponse = Menu.filter((eachitem:any) => eachitem.name.toLowerCase().includes(searchkey.toLowerCase()));
+            setsearchresult(searchresponse)
+            console.log(searchresponse);
+        }
     },[searchkey])
 
     // console.log(Menu);
@@ -228,6 +239,11 @@ const Menusearchpage = () => {
         setviewfooditem(fooditem);
         navigate(fooditem._id);
     };
+
+    const gotocart = () => {
+        const currenturl = window.location.pathname.replace('search','cart');
+        navigate(currenturl, {replace: true})
+    };
     
 
     return(<Menupagedata.Provider value={{viewfooditem, fooditemdata, setfooditemdata, menu}}>
@@ -237,68 +253,73 @@ const Menusearchpage = () => {
                     <Menusearchbar/>
                 </div>
 
-                {searchresult && searchresult.length > 0 && <div className="searchresultcard"> {
+                {searchkey && searchresult && searchresult.length > 0
+                    ? <div className="searchresultcard"> {
                     
-                    searchresult.map((eachfooditem: any) => (
-                        <div className="searchfoodcard" key={`foodcard-${eachfooditem._id}`}>
+                        searchresult.map((eachfooditem: any) => (
+                            <div className="searchfoodcard" key={`foodcard-${eachfooditem._id}`}>
 
-                            <div className="fooditemside">
-                                <img className="vegstatus" src={
-                                    eachfooditem.veg_status == "veg" ? veg :
-                                    eachfooditem.veg_status == "egg" ? egg : non_veg
-                                } alt="Veg Status" />
-                                <p className="itemname">{eachfooditem.name}</p>
+                                <div className="fooditemside">
+                                    <img className="vegstatus" src={
+                                        eachfooditem.veg_status == "veg" ? veg :
+                                        eachfooditem.veg_status == "egg" ? egg : non_veg
+                                    } alt="Veg Status" />
+                                    <p className="itemname">{eachfooditem.name}</p>
 
-                                {
-                                    eachfooditem.price == 0 ?
-                                        <div className='pricebox'>
-                                            <p className="itemprice">₹ {Math.round(eachfooditem.default_price)}</p>
-                                            <p className="displayprice">₹ {Math.round(eachfooditem.default_price - eachfooditem.discounted_price_rupees)}</p>
-                                        </div>:
-                                    eachfooditem.hasOwnProperty('offer_price')?
-                                        <div className='pricebox'>
-                                            <p className="itemprice">₹ {Math.round(eachfooditem.price)}</p>
-                                            <p className="displayprice">₹ {Math.round(eachfooditem.offer_price)}</p>
-                                        </div>:
-                                        <div className='pricebox'>
-                                            <p className="displayprice">₹ {Math.round(eachfooditem.price)}</p>
-                                        </div>
-                                }
+                                    {
+                                        eachfooditem.price == 0 ?
+                                            <div className='pricebox'>
+                                                <p className="itemprice">₹ {Math.round(eachfooditem.default_price)}</p>
+                                                <p className="displayprice">₹ {Math.round(eachfooditem.default_price - eachfooditem.discounted_price_rupees)}</p>
+                                            </div>:
+                                        eachfooditem.hasOwnProperty('offer_price')?
+                                            <div className='pricebox'>
+                                                <p className="itemprice">₹ {Math.round(eachfooditem.price)}</p>
+                                                <p className="displayprice">₹ {Math.round(eachfooditem.offer_price)}</p>
+                                            </div>:
+                                            <div className='pricebox'>
+                                                <p className="displayprice">₹ {Math.round(eachfooditem.price)}</p>
+                                            </div>
+                                    }
 
-                                <p className="morebutton" onClick={ () => generateData(eachfooditem) }>
-                                    More Details <img className="arrowright" src={right} alt="" />
-                                </p>
+                                    <p className="morebutton" onClick={ () => generateData(eachfooditem) }>
+                                        More Details <img className="arrowright" src={right} alt="" />
+                                    </p>
+                                </div>
+
+                                <div className="foodimageside">
+                                    {eachfooditem.food_image && (
+                                        <img className="foodimage" loading='lazy' style={eachfooditem.availablity.availability == false ? {filter: 'grayscale(80%)'}:{}} src={eachfooditem.food_image} alt="Food Image" onClick={() => generateData(eachfooditem)}/>
+                                    )}
+                                    {eachfooditem.availablity.availability == false
+                                        ? <p className='notavailable'>{eachfooditem.availablity.availability_message}</p>
+                                        : (Usercart.food_items && Usercart.food_items.some((fooditem:any)=>(fooditem._id == eachfooditem._id)))
+                                        ? <>
+                                            <button className="addedbutton">
+                                                <p className='addsub' onClick={() => {checkAuth({...eachfooditem, quantity:-1})}}>-</p>
+                                                <p id={"search-"+eachfooditem._id}>0</p>
+                                                <p className='addsub' onClick={() => checkAuth(eachfooditem)}>+</p>
+                                            </button>
+                                            {(eachfooditem.customisation_steps.length || eachfooditem.addon_group.length || eachfooditem.variant_group.length) > 0
+                                                ? <p className='custotext'>Customisable</p> : null
+                                            }
+                                        </>
+                                        : <>
+                                            <button className="addbutton" onClick={() => checkAuth(eachfooditem)}>ADD</button>
+                                            {(eachfooditem.customisation_steps.length || eachfooditem.addon_group.length || eachfooditem.variant_group.length) > 0
+                                                ? <p className='custotext'>Customisable</p> : null
+                                            }
+                                        </>
+                                    }
+                                </div>
+
                             </div>
-
-                            <div className="foodimageside">
-                                {eachfooditem.food_image && (
-                                    <img className="foodimage" loading='lazy' style={eachfooditem.availablity.availability == false ? {filter: 'grayscale(80%)'}:{}} src={eachfooditem.food_image} alt="Food Image" onClick={() => generateData(eachfooditem)}/>
-                                )}
-                                {eachfooditem.availablity.availability == false
-                                    ? <p className='notavailable'>{eachfooditem.availablity.availability_message}</p>
-                                    : (Usercart.food_items && Usercart.food_items.some((fooditem:any)=>(fooditem._id == eachfooditem._id)))
-                                    ? <>
-                                        <button className="addedbutton">
-                                            <p className='addsub' onClick={() => {checkAuth({...eachfooditem, quantity:-1})}}>-</p>
-                                            <p id={"search-"+eachfooditem._id}>0</p>
-                                            <p className='addsub' onClick={() => checkAuth(eachfooditem)}>+</p>
-                                        </button>
-                                        {(eachfooditem.customisation_steps.length || eachfooditem.addon_group.length || eachfooditem.variant_group.length) > 0
-                                            ? <p className='custotext'>Customisable</p> : null
-                                        }
-                                    </>
-                                    : <>
-                                        <button className="addbutton" onClick={() => checkAuth(eachfooditem)}>ADD</button>
-                                        {(eachfooditem.customisation_steps.length || eachfooditem.addon_group.length || eachfooditem.variant_group.length) > 0
-                                            ? <p className='custotext'>Customisable</p> : null
-                                        }
-                                    </>
-                                }
-                            </div>
-
-                        </div>
-                    ))
-                }</div>}
+                        ))
+                    }</div>
+                    : searchkey && searchresult && <>
+                        <p className="nofoundmsg">No results found for {<strong>"{searchkey}"</strong>}</p>
+                    </>
+                }
 
 
                 {/* <Itemlisting/> */}
@@ -326,7 +347,7 @@ const Menusearchpage = () => {
                                 </div>
                                 <p className='totalcardmessage'>Additional charges may apply</p>
                             </div>
-                            <button className='viewcartbtn'onClick={() => navigate("cart")}>View Cart<img src={right} alt=">"/></button>
+                            <button className='viewcartbtn'onClick={() => gotocart()}>View Cart<img src={right} alt=">"/></button>
                         </div>
                     </div>
                 }

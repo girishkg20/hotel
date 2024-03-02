@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import { store, persistor } from './Redux/store';
 import './index.css';
 import Homepage1 from './Home Page/HomePage1';
+import Searchpage1 from './Search Page/SearchPage1';
 import Profile from './Profile/Profile.js';
 import Topcuisinespage1 from './Top Cuisines Page/TopCuisinesPage1';
 import Menupage1 from './Menu Page/MenuPage1';
@@ -32,6 +33,10 @@ const Router = createBrowserRouter([
       path: "/:hotelid",
       element: <Homepage1/>,
       errorElement: <div><h1>Wrong URL! Channa</h1></div>,
+    },
+    {
+      path: "/:hotelid/search",
+      element: <Searchpage1/>,
     },
     {
       path: "/:hotelid/profile",

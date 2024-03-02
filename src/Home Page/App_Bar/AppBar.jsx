@@ -1,12 +1,15 @@
 import { useContext, useEffect, useState } from "react";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import "./AppBar.css";
 import profilelogo from "./Source/account.png";
-import Searchbar from "../Search_Bar/SearchBar.tsx";
+import search from "./Source/search.png";
 import Homepagedata from '../Home_Page_API/HomePageData.jsx';
 
 
 const Appbar = () => {
+
+  const navigate = useNavigate();
+
   window.onscroll = function () {
     Headfix();
   };
@@ -45,7 +48,12 @@ const Appbar = () => {
         </div>
 
         <div className="searchbarcontainer">
-          <Searchbar/>
+          <div className="searchbarholder">
+            <form className="searchbar">
+              <img className="searchlogo" src={search}/>
+              <input className="searchbox" onClick={() => navigate('search')} onFocus={(e) => e.target.blur()} placeholder="Search for food and restaurants"/>
+            </form>
+          </div>
         </div>
 
       </div>
