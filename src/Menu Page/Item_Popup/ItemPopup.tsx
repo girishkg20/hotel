@@ -72,7 +72,7 @@ const Itempopup = () => {
             const cartdata = {
                 "merchant_id": fooditem.merchant_id,
                 "food_items" : [Fooditem],
-                "extra_charges" : menu.extra_charges,
+                // "extra_charges" : menu.extra_charges,
                 "is_club": 0
             }
             const payload = {"cart_data" : cartdata}

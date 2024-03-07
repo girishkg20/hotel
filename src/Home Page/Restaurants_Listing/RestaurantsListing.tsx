@@ -68,10 +68,12 @@ const Restaurantslisting = () => {
                   : `${eachRestaurant.order_count} people have ordered from this place`}
               </p>
 
-              <div className="distanceholder">
-                <img className="locationpin" src={locationpin} />
-                <p className="rldistance">{`${eachRestaurant.distance} km`}</p>
-              </div>
+              {eachRestaurant.distance && 
+                <div className="distanceholder">
+                  <img className="locationpin" src={locationpin} />
+                  <p className="rldistance">{`${eachRestaurant.distance} km`}</p>
+                </div>
+              }
             </div>
           </div>
         ))}

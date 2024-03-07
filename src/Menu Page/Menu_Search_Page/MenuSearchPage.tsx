@@ -49,7 +49,7 @@ const Menusearchpage = () => {
             inputbox.placeholder = `Search in ${menu.merchant.name}`;
 
             const getsearchkey = () => {
-                setsearchkey(inputbox.value); 
+                setsearchkey(inputbox.value);
             }
 
             const clearsearchkey = () => {
@@ -66,21 +66,6 @@ const Menusearchpage = () => {
         };
     },[inputbox])
 
-    // useEffect(() => {
-    //     if(inputbox) {
-
-    //         const getsearchkey = () => {
-    //             setsearchkey(inputbox.value);
-    //         }
-
-    //         inputbox.addEventListener("input", getsearchkey);
-    //         return () => {
-    //             inputbox.removeEventListener("input", getsearchkey);
-    //         }
-
-    //     };
-    // },[inputbox])
-
     useEffect(() => {
         if(searchkey) {
             const searchresponse = Menu.filter((eachitem:any) => eachitem.name.toLowerCase().includes(searchkey.toLowerCase()));
@@ -88,14 +73,6 @@ const Menusearchpage = () => {
             console.log(searchresponse);
         }
     },[searchkey])
-
-    // console.log(Menu);
-
-    // useEffect(() => {
-    //     console.log("Ans", searchresult);
-    // },[searchresult])
-    
-
 
     useEffect(()=>{
         if(Usercart.food_items && Usercart.food_items.length > 0) {
@@ -159,7 +136,7 @@ const Menusearchpage = () => {
             const cartdata = {
                 "merchant_id": fooditem.merchant_id,
                 "food_items" : [Fooditem],
-                "extra_charges" : menu.extra_charges,
+                // "extra_charges" : menu.extra_charges,
                 "is_club": 0
             }
             const payload = {"cart_data" : cartdata}

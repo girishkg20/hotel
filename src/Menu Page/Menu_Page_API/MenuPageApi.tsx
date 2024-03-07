@@ -25,7 +25,7 @@ const Menupageapi = ({ children }: any) => {
     let MenuURL = `https://prod-server.tipplr.in/hotel/explore/restaurants/${merchantid}/restaurant-details?date=${CurrentDate}`;
 
     useEffect(() => {
-        // if (Useraddress.location_lat) {
+        if (Useraddress.location_lat && merchantid) {
             fetch(MenuURL)
                 .then((response) => response.json())
                 .then((data) => {
@@ -57,9 +57,9 @@ const Menupageapi = ({ children }: any) => {
 
                 })
                 .catch((error) => console.log(error));
-        // }
+        }
 
-    }, [Useraddress.location_lat]);
+    }, [Useraddress.location_lat, merchantid]);
 
 
     return (

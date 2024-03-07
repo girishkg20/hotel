@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import Homepagedata from './HomePageData.jsx';
 import { useParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { saveaddress } from "./UserAddressSlice.js";
 import { sessionid, clearsessionid } from "./SessionIdSlice.js";
-import { useSelector } from "react-redux";
+import { merchantsData } from "./MerchantsdataSlice.js";
 
 
 const Homepageapi = ({ children }: { children: React.ReactNode }) => {
@@ -79,8 +79,10 @@ const Homepageapi = ({ children }: { children: React.ReactNode }) => {
       fetch(myurl)
         .then(response => response.json())
         .then(data => {
-          setCuisines(data.response.cuisines)
-          setData(data.response.data)
+          setCuisines(data.response.cuisines);
+          setData(data.response.data);
+
+          Dispatch(merchantsData(data.response.data));
         
           const url = `https://prod-server.tipplr.in/hotel/session_id/${sessionID}`;
           const payload = {

@@ -15,6 +15,7 @@ input, button {
     font-family: inherit;
     color: inherit;
     outline-color: #7427F5;
+    caret-color: #7427F5;
 }
 
 p {

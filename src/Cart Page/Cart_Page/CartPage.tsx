@@ -174,9 +174,16 @@ const Cartpage = () => {
     };
 
     const navtorestaurant = () => {
-        navigate(-1);
         const prepath = window.location.pathname.split("/")[1];
-        navigate(`/${prepath}/${Usercart.merchant_id}`, {replace: true});
+        const newpath = `/${prepath}/${Usercart.merchant_id}`;
+
+        const redirecttoresto = () => {
+            navigate(newpath, {replace: true});
+            window.removeEventListener("popstate", redirecttoresto)
+        }
+
+        window.addEventListener("popstate", redirecttoresto);
+        navigate(-1);
     }
     
     useEffect(() => {

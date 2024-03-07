@@ -12,6 +12,7 @@ import CartSlice from "../Menu Page/CartSlice";
 import CartidSlice from "../Menu Page/CartidSlice";
 import FoodInstructionSlice from "../Cart Page/FoodInstructionSlice";
 import SessionIdSlice from "../Home Page/Home_Page_API/SessionIdSlice";
+import MerchantsdataSlice from "../Home Page/Home_Page_API/MerchantsdataSlice";
 
 
 const PersistConfig = {
@@ -28,7 +29,8 @@ const perReducers = combineReducers({
     saveaddress: UserAddressSlice,
     auth: AuthSlice,
     addItem: CartSlice,
-    cartId: CartidSlice
+    cartId: CartidSlice,
+    merchantsData: MerchantsdataSlice
 })
 
 const sesReducers = combineReducers({
