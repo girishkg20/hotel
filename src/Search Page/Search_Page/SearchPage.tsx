@@ -11,9 +11,10 @@ import arrow from './Source/arrow.png';
 
 import { addItem, clearItem } from "../../Menu Page/CartSlice";
 import { cartId, clearCartId } from "../../Menu Page/CartidSlice";
+import { searchdatapositions, clearsearchdatapositions } from "../SearchDataSlice";
 import Menupagedata from "../../Menu Page/Menu_Page_API/MenuPageData";
 
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Outlet, useNavigate } from "react-router-dom";
 
@@ -35,11 +36,13 @@ const Searchpage = () => {
     const Usercart = useSelector((state:any) => state.perReducers.cartId.value);
     const userdata = useSelector((state:any) => state.perReducers.auth.value);
     const actualpayload = useSelector((state:any) => state.perReducers.addItem.value);
+    const searchadjust = useSelector((state:any) => state.searchdatapositions.value);
 
     const Default_Cover_Image = "https://res.cloudinary.com/tipplr-server/image/upload/fl_lossy,f_auto,q_auto,c_fill,w_512,h_256/v1679409245/ty1nlgx7buizm5onqseu.jpg";
     
     const [inputbox, setinputbox] = useState<HTMLInputElement>();
     const [resetbutton, setresetbutton] = useState<HTMLButtonElement>();
+    const [cardscreated, setcardscreated] = useState<HTMLDivElement>();
     const [tab, settab] = useState<string>("restauranttab");
     const [searchkey, setsearchkey] = useState<string>();
     const [restaurants, setrestaurants] = useState<any>();
@@ -52,11 +55,18 @@ const Searchpage = () => {
     useEffect(() => {
         setinputbox(document.getElementById("searchbox") as HTMLInputElement);
         setresetbutton(document.getElementById("resetbtn") as HTMLButtonElement);
+        setcardscreated(document.getElementById('searchresults') as HTMLDivElement);
     },[])
 
     useEffect(() => {
         if(inputbox && resetbutton) {
             inputbox.focus();
+
+            if(searchadjust && searchadjust.searchkey) {
+                settab(searchadjust.searchtab);
+                inputbox.value = searchadjust.searchkey;
+                setsearchkey(inputbox.value);
+            }
 
             const getsearchkey = () => {
                 setsearchkey(inputbox.value);
@@ -97,7 +107,18 @@ const Searchpage = () => {
             .then((data) => {
                 tab === "restauranttab"
                 ? setrestaurants(data.response.data)
-                : setdishes(data.response.data)
+                : setdishes(data.response.data);
+
+                if(searchadjust && searchadjust.searchkey) {
+                    setTimeout(() => {
+
+                        if(window.location.pathname.includes("search")) {
+                            window.scrollTo(0, searchadjust.searchscrollposition);
+                        }
+                        Dispatch(clearsearchdatapositions());
+
+                    }, 50);
+                };
             })
         }
     },[searchkey, tab]);
@@ -342,11 +363,25 @@ const Searchpage = () => {
     };
 
     const navtorestaurant = (id:any) => {
+        const searchdatapos = {
+            searchkey: searchkey,
+            searchtab: tab,
+            searchscrollposition: window.scrollY
+        }
+        Dispatch(searchdatapositions(searchdatapos))
+
         const hotelid = window.location.pathname.split("/")[1];
         navigate(`/${hotelid}/${id}`)
-    }
+    };
 
     const gotocart = () => {
+        const searchdatapos = {
+            searchkey: searchkey,
+            searchtab: tab,
+            searchscrollposition: window.scrollY
+        }
+        Dispatch(searchdatapositions(searchdatapos))
+
         const currenturl = window.location.pathname.replace('search', Usercart.merchant_id + "/cart");
         navigate(currenturl);
     };

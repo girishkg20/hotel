@@ -13,6 +13,7 @@ import CartidSlice from "../Menu Page/CartidSlice";
 import FoodInstructionSlice from "../Cart Page/FoodInstructionSlice";
 import SessionIdSlice from "../Home Page/Home_Page_API/SessionIdSlice";
 import MerchantsdataSlice from "../Home Page/Home_Page_API/MerchantsdataSlice";
+import SearchDataSlice from "../Search Page/SearchDataSlice";
 
 
 const PersistConfig = {
@@ -45,6 +46,7 @@ export const store = configureStore({
         VegFilterSlice: VegfilterSlice,
         mobileNumber: Phnoslice,
         foodinstruction: FoodInstructionSlice,
+        searchdatapositions: SearchDataSlice,
         
         perReducers: persistedReducer,
         sesReducers: sessionReducers,

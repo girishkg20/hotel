@@ -1,5 +1,6 @@
 import "./HomePage.css";
 import { useContext, useEffect, useState } from 'react';
+import { useDispatch } from "react-redux";
 
 //components
 import Brandbanner from '../Brand_Banner/BrandBanner';
@@ -13,15 +14,21 @@ import Uniloader from '../../Universal Loader/UniLoader';
 //Resources
 import Homepagedata from '../Home_Page_API/HomePageData.jsx';
 import norestaurants from './Source/no_restaurants_found.png';
+import {clearsearchdatapositions} from '../../Search Page/SearchDataSlice';
 
 
 const Homepage = () => {
 
   const {Data} = useContext(Homepagedata);
-  
+
+  const dispatch = useDispatch();
+
   const [loading, setloading] = useState<boolean>(true);
   const [restaurantfound, setrestaurantfound] = useState<boolean>(false);
 
+  // clear unwanted data
+  dispatch(clearsearchdatapositions());
+  
   useEffect(() => {
     
     if(Data) {

@@ -35,18 +35,17 @@ const Searchbar = () => {
 
     },[searchdata, resetbutton]);
 
-    function datacheck() {
+    useEffect(() => {
         if (searchdata) {
-
             let searchvalue = searchdata!.value;
+
             if (searchvalue.length == 0) {
                 resetbutton!.style.display = "none";
             } else {
                 resetbutton!.style.display = "flex";
             }
-
         }
-    };
+    },[searchdata && searchdata.value]);
 
     function boarderadd() {
         boxboarder!.style.outline = "2px solid #7527F5";
@@ -68,7 +67,7 @@ const Searchbar = () => {
             <div className='searchback' onClick={()=>navigate(-1)}>
                 <img className="searchbackimg" src={back}/>
             </div>
-            <input className="searchbox" id="searchbox" type="search" onFocus={boarderadd} onInput={datacheck} onBlur={boarderremove} placeholder="Search for food and restaurants"/>
+            <input className="searchbox" id="searchbox" type="search" onFocus={boarderadd} onBlur={boarderremove} placeholder="Search for food and restaurants"/>
             <button className="resetbtn" id="resetbtn" type="reset" onClick={clrbtn}>
                 <img className="resetlogo" src={reset}/>
             </button>

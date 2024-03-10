@@ -35,18 +35,17 @@ const Menusearchbar = () => {
 
     },[searchdata, resetbutton]);
 
-    function datacheck() {
+    useEffect(() => {
         if (searchdata) {
-
             let searchvalue = searchdata!.value;
+
             if (searchvalue.length == 0) {
                 resetbutton!.style.display = "none";
             } else {
                 resetbutton!.style.display = "flex";
             }
-
         }
-    };
+    },[searchdata && searchdata.value]);
 
     function boarderadd() {
         boxboarder!.style.outline = "2px solid #7527F5";
@@ -63,20 +62,20 @@ const Menusearchbar = () => {
 
     return (<>
 
-    <div className="menusearchbarholder">
-        <form className="menusearchbar" id="menusearchbar">
-            <div className='menusearchback' onClick={()=>navigate(-1)}>
-                <img className="menusearchbackimg" src={back}/>
-            </div>
-            <input className="menusearchbox" id="menusearchbox" type="search" onFocus={boarderadd} onInput={datacheck} onBlur={boarderremove} placeholder="Search for dishes"/>
-            <button className="menuresetbtn" id="menuresetbtn" type="reset" onClick={clrbtn}>
-                <img className="menuresetlogo" src={reset}/>
-            </button>
-            <div className='menusearchlogoholder'>
-                <img className="menusearchlogo" src={search}/>
-            </div>
-        </form>
-    </div>
+        <div className="menusearchbarholder">
+            <form className="menusearchbar" id="menusearchbar">
+                <div className='menusearchback' onClick={()=>navigate(-1)}>
+                    <img className="menusearchbackimg" src={back}/>
+                </div>
+                <input className="menusearchbox" id="menusearchbox" type="search" onFocus={boarderadd} onBlur={boarderremove} placeholder="Search for dishes"/>
+                <button className="menuresetbtn" id="menuresetbtn" type="reset" onClick={clrbtn}>
+                    <img className="menuresetlogo" src={reset}/>
+                </button>
+                <div className='menusearchlogoholder'>
+                    <img className="menusearchlogo" src={search}/>
+                </div>
+            </form>
+        </div>
 
     </>)
 }
