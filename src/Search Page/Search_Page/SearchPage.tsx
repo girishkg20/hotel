@@ -14,7 +14,7 @@ import { cartId, clearCartId } from "../../Menu Page/CartidSlice";
 import { searchdatapositions, clearsearchdatapositions } from "../SearchDataSlice";
 import Menupagedata from "../../Menu Page/Menu_Page_API/MenuPageData";
 
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Outlet, useNavigate } from "react-router-dom";
 
@@ -42,7 +42,6 @@ const Searchpage = () => {
     
     const [inputbox, setinputbox] = useState<HTMLInputElement>();
     const [resetbutton, setresetbutton] = useState<HTMLButtonElement>();
-    const [cardscreated, setcardscreated] = useState<HTMLDivElement>();
     const [tab, settab] = useState<string>("restauranttab");
     const [searchkey, setsearchkey] = useState<string>();
     const [restaurants, setrestaurants] = useState<any>();
@@ -55,17 +54,16 @@ const Searchpage = () => {
     useEffect(() => {
         setinputbox(document.getElementById("searchbox") as HTMLInputElement);
         setresetbutton(document.getElementById("resetbtn") as HTMLButtonElement);
-        setcardscreated(document.getElementById('searchresults') as HTMLDivElement);
     },[])
 
     useEffect(() => {
         if(inputbox && resetbutton) {
-            inputbox.focus();
-
             if(searchadjust && searchadjust.searchkey) {
                 settab(searchadjust.searchtab);
                 inputbox.value = searchadjust.searchkey;
                 setsearchkey(inputbox.value);
+            }else{
+                inputbox.focus();
             }
 
             const getsearchkey = () => {

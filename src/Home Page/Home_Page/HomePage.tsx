@@ -1,6 +1,7 @@
 import "./HomePage.css";
 import { useContext, useEffect, useState } from 'react';
 import { useDispatch } from "react-redux";
+import { useAliveController } from "react-activation";
 
 //components
 import Brandbanner from '../Brand_Banner/BrandBanner';
@@ -28,6 +29,9 @@ const Homepage = () => {
 
   // clear unwanted data
   dispatch(clearsearchdatapositions());
+
+  const {dropScope} = useAliveController();
+  dropScope("topcuisines");
   
   useEffect(() => {
     

@@ -70,12 +70,13 @@
 }
 
 .searchdisharrow {
-    height: 20px;
+    height: 16px;
+    padding-right: 15px;
 }
 
 .searchrestoarea {
     font-size: 16px;
-    font-weight: 800;
+    font-weight: 600;
     text-transform: capitalize;
     color: #787878;
 }

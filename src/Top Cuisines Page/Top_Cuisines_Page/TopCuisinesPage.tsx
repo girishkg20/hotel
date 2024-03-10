@@ -1,12 +1,15 @@
-import { useSelector } from 'react-redux';
 import './TopCuisinesPage.css';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import Endimage from '../../Home Page/End_Image/EndImage';
+import Uniloader from '../../Universal Loader/UniLoader';
+
 import discountimg from './Source/offer.png';
 import locationpin from './Source/location pin.png';
-import Endimage from '../../Home Page/End_Image/EndImage';
 import backbutton from './Source/back.png';
-import Uniloader from '../../Universal Loader/UniLoader';
+
+import { useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+
 
 
 
@@ -44,6 +47,7 @@ const Topcuisinespage = () => {
                 const cuisineindex = data.response.cuisines.findIndex((eachcuisines:any) => eachcuisines._id === cuisineid);
                 setcuisine(data.response.cuisines[cuisineindex]);
                 setloading(false);
+                window.scrollTo(0, 0);
             })
         .catch((error) => console.log(error));
     },[])
@@ -75,8 +79,6 @@ const Topcuisinespage = () => {
         navigate(`/${hotelid}/${id}`)
     }
 
-
-
     if(loading) {
         return(<Uniloader/>)
     };
@@ -99,13 +101,6 @@ const Topcuisinespage = () => {
                 <p className='tccuisinename'>{cuisine.name}</p>
             </div>
         </div>
-                 
-
-
-
-
-
-
 
         <h5 className="tcrestaurantheading">{`Restaurants Serving ${cuisine.name}`}</h5>
 
