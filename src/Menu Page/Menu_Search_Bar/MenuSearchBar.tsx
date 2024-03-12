@@ -35,16 +35,27 @@ const Menusearchbar = () => {
 
     },[searchdata, resetbutton]);
 
-    useEffect(() => {
-        if (searchdata) {
-            let searchvalue = searchdata!.value;
-
-            if (searchvalue.length == 0) {
-                resetbutton!.style.display = "none";
+    const checkdata = () => {
+        if (searchdata && resetbutton) {
+            const searchvalue = searchdata.value;
+            
+            if (searchvalue) {
+                resetbutton.style.display = "flex";
             } else {
-                resetbutton!.style.display = "flex";
+                resetbutton.style.display = "none";
             }
         }
+    };
+
+    useEffect(() => {
+        checkdata();
+
+        if(searchdata) {
+            searchdata.addEventListener('input', checkdata);
+            return () => {
+                searchdata.removeEventListener('input', checkdata);
+            }
+        };
     },[searchdata && searchdata.value]);
 
     function boarderadd() {

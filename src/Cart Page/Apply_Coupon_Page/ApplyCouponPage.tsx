@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 
 import close from './Source/close.png'
+import nocoupon from './Source/nocoupon.png';
 import { cartId } from '../../Menu Page/CartidSlice';
 
 
@@ -80,43 +81,55 @@ const Applycouponpage = () => {
         }
 
     }
-    
 
 
     return(<>
         <div className='custpopoverlay' onClick={() => navigate(-1)}></div>
 
         <div className="custpopover" style={{minHeight:"80%"}}>
-            {/* <div className="myAlert" id="myAlert"></div> Need this for search & apply*/}
+            {/* <div className="myAlert" id="myAlert"></div> Need this for search & apply */}
 
             <div className='acheader'>
                 <p className="acheadertext">Coupons</p>
                 <img className="acclosebtn" src={close} alt="Close" onClick={() => navigate(-1)}/>
             </div>
 
-            <h1 className='couponheading'>EXCLUSIVE COUPONS</h1>
+            {coupons && coupons.length < 0 ?
+                <>
+                    <h1 className='couponheading'>EXCLUSIVE COUPONS</h1>
 
-            {coupons.map((eachcoupon:any) => (
-                <div className='accard' key={eachcoupon.coupon_code}
-                    onClick={() => applycoupon(eachcoupon.coupon_code, eachcoupon.min_transaction_value)}
-                    style={
-                        eachcoupon.min_transaction_value > (Usercart.total_item_total - Usercart.delivery_discount)
-                        ? {filter:'grayscale(1)'}
-                        : {filter:'none'}
-                    }>
-                    <p className='aclpart'>₹{eachcoupon.value} OFF</p>
+                    {coupons.map((eachcoupon:any) => (
+                        <div className='accard' key={eachcoupon.coupon_code}
+                            onClick={() => applycoupon(eachcoupon.coupon_code, eachcoupon.min_transaction_value)}
+                            style={
+                                eachcoupon.min_transaction_value > (Usercart.total_item_total - Usercart.delivery_discount)
+                                ? {filter:'grayscale(1)'}
+                                : {filter:'none'}
+                            }>
+                            <p className='aclpart'>₹{eachcoupon.value} OFF</p>
 
-                    <div className='acrpart'>  
-                        <div className='accodeholder'>
-                            <p className='accode'><code>{eachcoupon.coupon_code}</code></p>
-                            <p className='tapac'>TAP TO APPLY COUPON</p>
+                            <div className='acrpart'>  
+                                <div className='accodeholder'>
+                                    <p className='accode'><code>{eachcoupon.coupon_code}</code></p>
+                                    <p className='tapac'>TAP TO APPLY COUPON</p>
+                                </div>
+                                <p className='achtext'>Save an additional ₹{eachcoupon.value} discount on orders above ₹{eachcoupon.min_transaction_value}</p>
+                            </div>
+
+                            <p className='aclastpart'>Expires on {unixtodate(eachcoupon.validity_end_date)}</p>
                         </div>
-                        <p className='achtext'>Save an additional ₹{eachcoupon.value} discount on orders above ₹{eachcoupon.min_transaction_value}</p>
+                    ))}
+                </> :
+                <>
+                    <div className="acncholder">
+                        <img src={nocoupon} alt="!" width={192}/>
+                        <h6 className="nrmessage">Unfortunately, no coupons were found :&#40;</h6>
+                        <div className='rcbtnholder'>
+                            <button className='getotpbutton' onClick={() => navigate(-1)}>Back</button>
+                        </div>
                     </div>
-
-                    <p className='aclastpart'>Expires on {unixtodate(eachcoupon.validity_end_date)}</p>
-                </div>
-            ))}
+                </>
+            }
         </div>
     </>)
 }

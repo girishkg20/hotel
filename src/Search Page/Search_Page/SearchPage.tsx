@@ -64,17 +64,24 @@ const Searchpage = () => {
                 setsearchkey(inputbox.value);
             }else{
                 inputbox.focus();
-            }
+            };
 
             const getsearchkey = () => {
                 setsearchkey(inputbox.value);
-            }
+
+                if(!inputbox.value) {
+                    setrestaurants("");
+                    setdishes("");
+                    setsorteddishes("");
+                };
+            };
 
             const clearsearchkey = () => {
                 setsearchkey("");
                 setrestaurants("");
                 setdishes("");
-            }
+                setsorteddishes("");
+            };
 
             inputbox.addEventListener("input", getsearchkey);
             resetbutton.addEventListener("click", clearsearchkey);
@@ -86,8 +93,9 @@ const Searchpage = () => {
     },[inputbox])
 
     useEffect(() => {
-        window.scrollTo(0, 0);
-        if(searchkey) {
+        if(searchkey && searchkey.length > 1) {
+            window.scrollTo(0, 0);
+
             let search_text = searchkey;
             let merchant_ids = merchantids;
 
@@ -156,9 +164,9 @@ const Searchpage = () => {
                     qntbtn.innerHTML = `${value}`;
                 };
             });
-            
+
         };
-    },[Usercart, dishes])
+    },[Usercart, sorteddishes])
 
     const loggedin = userdata.token;
     const checkAuth = (fooditem: any) => {
@@ -259,8 +267,15 @@ const Searchpage = () => {
                 };
             };
         }else{
-            const currentURL = window.location.pathname.split("/");
-            const loginURL = `${currentURL[0]}/${currentURL[1]}/auth/login`;
+            const searchdatapos = {
+                searchkey: searchkey,
+                searchtab: tab,
+                searchscrollposition: window.scrollY
+            }
+            Dispatch(searchdatapositions(searchdatapos))
+            
+            const hotelid = window.location.pathname.split("/")[1];
+            const loginURL = `/${hotelid}/auth/login`;
             
             navigate(loginURL);
         };
@@ -356,7 +371,10 @@ const Searchpage = () => {
     };
 
     const generateData = (fooditem:any) => {
-        setviewfooditem(fooditem);
+        const actualfooditem = structuredClone(fooditem);
+        actualfooditem.merchant_id = fooditem.merchant_id._id;
+        
+        setviewfooditem(actualfooditem);
         navigate(fooditem._id);
     };
 

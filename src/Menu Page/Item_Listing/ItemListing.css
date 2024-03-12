@@ -338,6 +338,8 @@
     bottom: 0;
     right: 0;
     left: 0;
+    background-color: white;
+    box-shadow: -15px -15px 15px rgba(255, 255, 255, 1), 15px -15px 15px rgba(255, 255, 255, 1), -15px -15px 25px rgba(255, 255, 255, 0.3), 15px -15px 25px rgba(255, 255, 255, 0.3);
 }
 
 .fabholder {

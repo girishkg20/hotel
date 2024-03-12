@@ -1,6 +1,6 @@
 import "./HomePage.css";
 import { useContext, useEffect, useState } from 'react';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useAliveController } from "react-activation";
 
 //components
@@ -27,11 +27,13 @@ const Homepage = () => {
   const [loading, setloading] = useState<boolean>(true);
   const [restaurantfound, setrestaurantfound] = useState<boolean>(false);
 
-  // clear unwanted data
-  dispatch(clearsearchdatapositions());
-
+  // clearing unwanted data
   const {dropScope} = useAliveController();
+  const searchdatapos = useSelector((state:any) => state.searchdatapositions.value.searchkey);
+
   dropScope("topcuisines");
+  searchdatapos && dispatch(clearsearchdatapositions());
+  // clearing unwanted data
   
   useEffect(() => {
     

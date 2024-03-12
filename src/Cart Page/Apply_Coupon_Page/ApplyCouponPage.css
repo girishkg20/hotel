@@ -119,3 +119,11 @@
     color: #4901b4;
     border-right: 1px dashed #4901b4;
 }
+
+.acncholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 80vh;
+}

@@ -5,6 +5,7 @@ import Uniloader from '../../Universal Loader/UniLoader';
 import discountimg from './Source/offer.png';
 import locationpin from './Source/location pin.png';
 import backbutton from './Source/back.png';
+import restaurantclosed from './Source/restaurant_closed.png';
 
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -81,6 +82,18 @@ const Topcuisinespage = () => {
 
     if(loading) {
         return(<Uniloader/>)
+    };
+
+    if(Data && Data.length < 1) {
+        return(<>
+            <div className="nrholder">
+              <img src={restaurantclosed} alt="!" width={192}/>
+              <h6 className="nrmessage">Sorry, these restaurants are currently closed. Please try again later :&#40;</h6>
+              <div className='rcbtnholder'>
+                <button className='getotpbutton' onClick={() => navigate(-1)}>Back to Restaurants</button>
+              </div>
+            </div>
+        </>)
     };
 
     return(<>{Data && cuisine && <div className='cuisinepage'>

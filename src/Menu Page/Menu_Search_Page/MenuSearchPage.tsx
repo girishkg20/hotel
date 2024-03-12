@@ -50,27 +50,30 @@ const Menusearchpage = () => {
 
             const getsearchkey = () => {
                 setsearchkey(inputbox.value);
-            }
+                
+                if(!inputbox.value) {
+                    setsearchresult("");
+                }
+            };
 
             const clearsearchkey = () => {
                 setsearchkey("");
                 setsearchresult("");
-            }
+            };
 
             inputbox.addEventListener("input", getsearchkey);
             resetbutton.addEventListener("click", clearsearchkey);
             return () => {
                 inputbox.removeEventListener("input", getsearchkey);
                 resetbutton.removeEventListener("touchend", clearsearchkey);
-            }
+            };
         };
     },[inputbox])
 
     useEffect(() => {
-        if(searchkey) {
+        if(searchkey && searchkey.length > 1) {
             const searchresponse = Menu.filter((eachitem:any) => eachitem.name.toLowerCase().includes(searchkey.toLowerCase()));
             setsearchresult(searchresponse)
-            console.log(searchresponse);
         }
     },[searchkey])
 
@@ -100,13 +103,9 @@ const Menusearchpage = () => {
             });
             
         };
-    },[Usercart, menu, searchresult])
+    },[Usercart, searchresult])
 
-
-
-    
     const loggedin = userdata.token;
-
     const checkAuth = (fooditem: any) => {
 
         if(loggedin) {
@@ -297,15 +296,6 @@ const Menusearchpage = () => {
                         <p className="nofoundmsg">No results found for {<strong>"{searchkey}"</strong>}</p>
                     </>
                 }
-
-
-                {/* <Itemlisting/> */}
-                
-
-
-
-
-
 
                 {Usercart && Usercart.food_items && 
                     <div className='floatingfooter'>

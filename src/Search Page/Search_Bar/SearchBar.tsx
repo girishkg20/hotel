@@ -35,16 +35,27 @@ const Searchbar = () => {
 
     },[searchdata, resetbutton]);
 
-    useEffect(() => {
-        if (searchdata) {
-            let searchvalue = searchdata!.value;
-
-            if (searchvalue.length == 0) {
-                resetbutton!.style.display = "none";
+    const checkdata = () => {
+        if (searchdata && resetbutton) {
+            const searchvalue = searchdata.value;
+            
+            if (searchvalue) {
+                resetbutton.style.display = "flex";
             } else {
-                resetbutton!.style.display = "flex";
+                resetbutton.style.display = "none";
             }
         }
+    };
+
+    useEffect(() => {
+        checkdata();
+
+        if(searchdata) {
+            searchdata.addEventListener('input', checkdata);
+            return () => {
+                searchdata.removeEventListener('input', checkdata);
+            }
+        };
     },[searchdata && searchdata.value]);
 
     function boarderadd() {
@@ -62,20 +73,20 @@ const Searchbar = () => {
 
     return (<>
 
-    <div className="searchbarholder">
-        <form className="searchbar" id="searchbar">
-            <div className='searchback' onClick={()=>navigate(-1)}>
-                <img className="searchbackimg" src={back}/>
-            </div>
-            <input className="searchbox" id="searchbox" type="search" onFocus={boarderadd} onBlur={boarderremove} placeholder="Search for food and restaurants"/>
-            <button className="resetbtn" id="resetbtn" type="reset" onClick={clrbtn}>
-                <img className="resetlogo" src={reset}/>
-            </button>
-            <div className='searchlogoholder'>
-                <img className="searchlogo" src={search}/>
-            </div>
-        </form>
-    </div>
+        <div className="searchbarholder">
+            <form className="searchbar" id="searchbar">
+                <div className='searchback' onClick={()=>navigate(-1)}>
+                    <img className="searchbackimg" src={back}/>
+                </div>
+                <input className="searchbox" id="searchbox" type="search" onFocus={boarderadd} onBlur={boarderremove} placeholder="Search for food and restaurants"/>
+                <button className="resetbtn" id="resetbtn" type="reset" onClick={clrbtn}>
+                    <img className="resetlogo" src={reset}/>
+                </button>
+                <div className='searchlogoholder'>
+                    <img className="searchlogo" src={search}/>
+                </div>
+            </form>
+        </div>
 
     </>)
 }
