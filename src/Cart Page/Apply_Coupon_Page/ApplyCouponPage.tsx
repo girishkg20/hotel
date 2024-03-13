@@ -94,7 +94,7 @@ const Applycouponpage = () => {
                 <img className="acclosebtn" src={close} alt="Close" onClick={() => navigate(-1)}/>
             </div>
 
-            {coupons && coupons.length < 0 ?
+            {coupons && coupons.length > 0 ?
                 <>
                     <h1 className='couponheading'>EXCLUSIVE COUPONS</h1>
 
