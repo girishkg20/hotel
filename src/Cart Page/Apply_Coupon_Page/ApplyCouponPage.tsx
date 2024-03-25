@@ -15,13 +15,13 @@ const Applycouponpage = () => {
     const dispatch = useDispatch();
     document.body.style.overflow = "hidden";
     
-    const [coupons, setcoupons] = useState<any>([]);
+    const [coupons, setcoupons] = useState<any>();
     const userdata = useSelector((state:any) => state.perReducers.auth.value);
     const Usercart = useSelector((state:any) => state.perReducers.cartId.value);
     
     useEffect(() => {
         const mobile_number = userdata.phone_number;
-        const url = `https://prod-server.tipplr.in/hotel/user/public-coupon-code?coupon_type=public&phone_number=${mobile_number}`
+        const url = `${import.meta.env.VITE_BASE_URL}/hotel/user/public-coupon-code?coupon_type=public&phone_number=${mobile_number}`;
         fetch(url)
             .then(response => response.json())
             .then(data => setcoupons(data.response.data))
@@ -41,7 +41,7 @@ const Applycouponpage = () => {
         const subtotal = Usercart.total_item_total - Usercart.delivery_discount;
 
         if(subtotal >= minvalue) {
-            const url = 'https://prod-server.tipplr.in/hotel/user/coupon-code/check';
+            const url = `${import.meta.env.VITE_BASE_URL}/hotel/user/coupon-code/check`;
             const payload = {
                 coupon_code: couponcode,
                 claim_type: "food_delivery",
@@ -60,7 +60,7 @@ const Applycouponpage = () => {
             .then(data => {
                 const coupondata = data.response.data;
             
-                const url = `https://prod-server.tipplr.in/app/user/food-order/cart/${Usercart._id}`;
+                const url = `${import.meta.env.VITE_BASE_URL}/app/user/food-order/cart/${Usercart._id}`;
                 const payload = {cart_data: {...Usercart, promo_used: coupondata}}
 
                 fetch(url, {
@@ -119,7 +119,7 @@ const Applycouponpage = () => {
                             <p className='aclastpart'>Expires on {unixtodate(eachcoupon.validity_end_date)}</p>
                         </div>
                     ))}
-                </> :
+                </> : coupons &&
                 <>
                     <div className="acncholder">
                         <img src={nocoupon} alt="!" width={192}/>

@@ -6,7 +6,7 @@ import { store, persistor } from './Redux/store';
 import './index.css';
 import Homepage1 from './Home Page/HomePage1';
 import Searchpage1 from './Search Page/SearchPage1';
-import Profile from './Profile/Profile.js';
+import Profilepage1 from './Profile Page/ProfilePage1';
 import Topcuisinespage1 from './Top Cuisines Page/TopCuisinesPage1';
 import Menupage1 from './Menu Page/MenuPage1';
 import Menusearchpage from './Menu Page/Menu_Search_Page/MenuSearchPage';
@@ -58,7 +58,7 @@ const Router = createBrowserRouter([
     },
     {
       path: "/:hotelid/profile",
-      element: <Profile/>,
+      element: <Profilepage1/>,
     },
     {
       path: "/:hotelid/cuisine/:cuisineid",

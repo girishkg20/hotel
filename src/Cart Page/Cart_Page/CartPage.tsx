@@ -190,7 +190,7 @@ const Cartpage = () => {
         window.scrollTo(0,0);
 
         if(loggedin && Usercart && Usercart._id && deliveryaddress && deliveryaddress.tagged_user_id) {
-            const url = `https://prod-server.tipplr.in/app/user/food-order/cart/${Usercart._id}`;
+            const url = `${import.meta.env.VITE_BASE_URL}/app/user/food-order/cart/${Usercart._id}`;
 
             fetch(url, {
                 method: 'GET',
@@ -215,7 +215,7 @@ const Cartpage = () => {
                     }
                     Dispatch(addItem(availablepayload));
 
-                    const url = "https://prod-server.tipplr.in/hotel/delivery-quotes";
+                    const url = `${import.meta.env.VITE_BASE_URL}/hotel/delivery-quotes`;
                     const payload = {
                         merchant_id: Usercart.merchant_id,
                         user_address_id: deliveryaddress.tagged_user_id
@@ -233,7 +233,7 @@ const Cartpage = () => {
                     .then(data => setdeliveryquote(data.response))
                     
                 }else{
-                    const url = `https://prod-server.tipplr.in/app/user/food-order/cart/${Usercart._id}`
+                    const url = `${import.meta.env.VITE_BASE_URL}/app/user/food-order/cart/${Usercart._id}`
 
                     fetch(url, {
                         method: 'DELETE',
@@ -259,8 +259,8 @@ const Cartpage = () => {
 
             if(loggedin && deliveryquote) {
                 const url = Usercart && Usercart._id
-                ? `https://prod-server.tipplr.in/app/user/food-order/cart/${Usercart._id}`
-                : "https://prod-server.tipplr.in/app/user/food-order/cart";
+                ? `${import.meta.env.VITE_BASE_URL}/app/user/food-order/cart/${Usercart._id}`
+                : `${import.meta.env.VITE_BASE_URL}/app/user/food-order/cart`;
 
                 fetch(url, {
                     method: Usercart && Usercart._id ? 'PUT' : 'POST',
@@ -279,7 +279,7 @@ const Cartpage = () => {
                     const deliveryprice = +(deliveryquote.data[0].estimated_fare - createdcart.available_delivery_discount).toFixed(2);
 
                     if(deliveryprice > 0) {
-                        const url = `https://prod-server.tipplr.in/app/user/food-order/cart/${createdcart._id}`;
+                        const url = `${import.meta.env.VITE_BASE_URL}/app/user/food-order/cart/${createdcart._id}`;
 
                         const payload = {
                             cart_data: { ...createdcart,
@@ -308,7 +308,7 @@ const Cartpage = () => {
 
         }else{
             if(Usercart && Usercart._id) {
-                const url = `https://prod-server.tipplr.in/app/user/food-order/cart/${Usercart._id}`
+                const url = `${import.meta.env.VITE_BASE_URL}/app/user/food-order/cart/${Usercart._id}`
                 fetch(url, {
                     method: 'DELETE',
                     headers: {
@@ -327,7 +327,7 @@ const Cartpage = () => {
     },[actualpayload, deliveryquote])
 
     const removecoupon = () => {
-        const url = `https://prod-server.tipplr.in/app/user/food-order/cart/${Usercart._id}`;
+        const url = `${import.meta.env.VITE_BASE_URL}/app/user/food-order/cart/${Usercart._id}`;
         const payload = {cart_data: { ...Usercart, promo_used: {} }}
 
         fetch(url, {

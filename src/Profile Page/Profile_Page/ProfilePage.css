@@ -1,0 +1,93 @@
+.ppheader {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+}
+
+.udetailsholder {
+    margin: 15px 15px 30px 15px;
+    padding: 15px;
+    border-radius: 18px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(135deg, #7427F5 57% 62%, #9354ff 62% 67%, #7427F5 67% 70%, #9354ff 70% 86%, #7427F5 86%);
+}
+
+.uname {
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 5px;
+    color: white;
+}
+
+.uphnum {
+    font-size: 14px;
+    font-weight: 400;
+    color: white;
+}
+
+.profilecards {
+    margin: 15px;
+    padding: 5px 15px;
+    background-color: white;
+    border-radius: 18px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.profilecardheading {
+    font-size: 18px;
+    font-weight: 800;
+    padding: 10px 0;
+    color: #7427F5;
+}
+
+.profileitemgroup {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.profileitemleft {
+    display: flex;
+    align-items: center;
+}
+
+.profileitemicon {
+    height: 18px;
+}
+
+.profilesubheadings {
+    font-size: 16px;
+    font-weight: 600;
+    padding: 0 10px;
+}
+
+.profileitemright {
+    height: 14px;
+}
+
+.ppdivider {
+    margin: 0;
+    border: 0px solid #B2AEB9;
+    border-bottom: 1px solid #EBEBEB;
+}
+
+.logoutholder {
+    display: flex;
+    justify-content: center;
+    margin: 30px 0 35vh 0;
+}
+
+.logoutbtn {
+    background-color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #F35858;
+    border: 1px solid #EBEBEB;
+    border-radius: 12px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}

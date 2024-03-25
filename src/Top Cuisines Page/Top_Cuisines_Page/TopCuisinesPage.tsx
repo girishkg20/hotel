@@ -28,7 +28,7 @@ const Topcuisinespage = () => {
 
 
     useEffect(() => {
-        const baseurl = "https://prod-server.tipplr.in/hotel/es/restaurants/new";
+        const baseurl = `${import.meta.env.VITE_BASE_URL}/hotel/es/restaurants/new`;
 
         const queryparams = new URLSearchParams({
             limit: "50",

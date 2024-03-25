@@ -47,7 +47,7 @@ const Homepageapi = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     if(!sessionID && sessid) {
-      const mainurl = `https://prod-server.tipplr.in/hotel/merchant/${hotelid}?session_id=${sessid}`;
+      const mainurl = `${import.meta.env.VITE_BASE_URL}/hotel/merchant/${hotelid}?session_id=${sessid}`;
       fetch(mainurl)
         .then((response) => response.json())
         .then((data) => {
@@ -74,7 +74,7 @@ const Homepageapi = ({ children }: { children: React.ReactNode }) => {
       let hour_value = new Date().getHours();
       let hotel_merchant_id = savedaddress._id;
   
-      let myurl = `https://prod-server.tipplr.in/hotel/es/restaurants/new?limit=${limit}&skip=${skip}&latitude=${latitude}&longitude=${longitude}&area_name=${area}&hour_value=${hour_value}&hotel_merchant_id=${hotel_merchant_id}`;
+      let myurl = `${import.meta.env.VITE_BASE_URL}/hotel/es/restaurants/new?limit=${limit}&skip=${skip}&latitude=${latitude}&longitude=${longitude}&area_name=${area}&hour_value=${hour_value}&hotel_merchant_id=${hotel_merchant_id}`;
   
       fetch(myurl)
         .then(response => response.json())
@@ -84,7 +84,7 @@ const Homepageapi = ({ children }: { children: React.ReactNode }) => {
 
           Dispatch(merchantsData(data.response.data));
         
-          const url = `https://prod-server.tipplr.in/hotel/session_id/${sessionID}`;
+          const url = `${import.meta.env.VITE_BASE_URL}/hotel/session_id/${sessionID}`;
           const payload = {
             page_name: `Home Page - ${data.response.data.length} Restaurants`,
           };

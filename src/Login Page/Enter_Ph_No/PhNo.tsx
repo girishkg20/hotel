@@ -77,21 +77,7 @@ const Phno = () => {
         const currentURL = window.location.pathname;
         const newurl = currentURL.replace(currentURL.split('/')[3], 'otp')
         
-        navigate(newurl)
-
-        // const url = "https://prod-server.tipplr.in/hotel/login";
-        // const payload = {"phone_number": enterednumber?.value}
-
-        // fetch(url, {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify(payload)
-        // })
-        // .then(response => response.json())
-        // .then(data => console.log(data))
-        
+        navigate(newurl);
     }
 
 

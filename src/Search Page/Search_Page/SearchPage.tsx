@@ -100,8 +100,8 @@ const Searchpage = () => {
             let merchant_ids = merchantids;
 
             const url = tab === "restauranttab"
-            ? `https://prod-server.tipplr.in/hotel/search/restaurant?limit=25&skip=0&search_text=${search_text}&merchant_ids=${merchant_ids}`
-            : `https://prod-server.tipplr.in/hotel/search/dishes?limit=25&skip=0&search_text=${search_text}&merchant_ids=${merchant_ids}`;
+            ? `${import.meta.env.VITE_BASE_URL}/hotel/search/restaurant?limit=25&skip=0&search_text=${search_text}&merchant_ids=${merchant_ids}`
+            : `${import.meta.env.VITE_BASE_URL}/hotel/search/dishes?limit=25&skip=0&search_text=${search_text}&merchant_ids=${merchant_ids}`;
             
             fetch(url, {
                 method: 'GET',
@@ -285,8 +285,8 @@ const Searchpage = () => {
         if(actualpayload.hasOwnProperty("cart_data") && actualpayload.cart_data.food_items.length > 0) {
             
             const url = Usercart && Usercart._id
-            ? `https://prod-server.tipplr.in/app/user/food-order/cart/${Usercart._id}`
-            : "https://prod-server.tipplr.in/app/user/food-order/cart";
+            ? `${import.meta.env.VITE_BASE_URL}/app/user/food-order/cart/${Usercart._id}`
+            : `${import.meta.env.VITE_BASE_URL}/app/user/food-order/cart`;
 
             fetch(url, {
                 method: Usercart && Usercart._id ? 'PUT' : 'POST',
@@ -304,7 +304,7 @@ const Searchpage = () => {
 
         }else{
             if(Usercart && Usercart._id) {
-                const url = `https://prod-server.tipplr.in/app/user/food-order/cart/${Usercart._id}`
+                const url = `${import.meta.env.VITE_BASE_URL}/app/user/food-order/cart/${Usercart._id}`
                 fetch(url, {
                     method: 'DELETE',
                     headers: {

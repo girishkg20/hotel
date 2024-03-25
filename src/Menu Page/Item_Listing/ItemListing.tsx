@@ -253,8 +253,8 @@ const Itemlisting = () => {
         if(actualpayload.hasOwnProperty("cart_data") && actualpayload.cart_data.food_items.length > 0) {
             
             const url = Usercart && Usercart._id
-            ? `https://prod-server.tipplr.in/app/user/food-order/cart/${Usercart._id}`
-            : "https://prod-server.tipplr.in/app/user/food-order/cart";
+            ? `${import.meta.env.VITE_BASE_URL}/app/user/food-order/cart/${Usercart._id}`
+            : `${import.meta.env.VITE_BASE_URL}/app/user/food-order/cart`;
 
             fetch(url, {
                 method: Usercart && Usercart._id ? 'PUT' : 'POST',
@@ -272,7 +272,7 @@ const Itemlisting = () => {
 
         }else{
             if(Usercart && Usercart._id) {
-                const url = `https://prod-server.tipplr.in/app/user/food-order/cart/${Usercart._id}`
+                const url = `${import.meta.env.VITE_BASE_URL}/app/user/food-order/cart/${Usercart._id}`
                 fetch(url, {
                     method: 'DELETE',
                     headers: {

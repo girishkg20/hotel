@@ -22,7 +22,7 @@ const Menupageapi = ({ children }: any) => {
     const {merchantid} = useParams();
     let CurrentDate = FormatedDate;
 
-    let MenuURL = `https://prod-server.tipplr.in/hotel/explore/restaurants/${merchantid}/restaurant-details?date=${CurrentDate}`;
+    let MenuURL = `${import.meta.env.VITE_BASE_URL}/hotel/explore/restaurants/${merchantid}/restaurant-details?date=${CurrentDate}`;
 
     useEffect(() => {
         if (Useraddress.location_lat && merchantid) {
@@ -32,7 +32,7 @@ const Menupageapi = ({ children }: any) => {
                     window.scrollTo(0,0);
                     setMenu(data.response);
 
-                    const UseraddressURL = "https://prod-server.tipplr.in/hotel/delivery-quotes/merchant";
+                    const UseraddressURL = `${import.meta.env.VITE_BASE_URL}/hotel/delivery-quotes/merchant`;
 
                     const PostData = {
                         "merchant_lat": data.response.merchant.location_lat,

@@ -118,7 +118,7 @@ const Enterotp = () => {
 ////////////////////////OTP BOXES
 
     const getOTP = () => {
-        const url = "https://prod-server.tipplr.in/hotel/login";
+        const url = `${import.meta.env.VITE_BASE_URL}/hotel/login`;
         const payload = {"phone_number": MobileNumber}
 
         fetch(url, {
@@ -145,7 +145,7 @@ const Enterotp = () => {
 /////////////////////////////////////// Verify User //////////////////////
 
     const verifyUser = () => {
-        const url = "https://prod-server.tipplr.in/hotel/verify";
+        const url = `${import.meta.env.VITE_BASE_URL}/hotel/verify`;
         const payload = {
             "token": token,
             "otp": otp
