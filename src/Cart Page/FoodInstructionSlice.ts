@@ -16,9 +16,12 @@ const Foodinstructionslice = createSlice({
     reducers: {
         foodinstruction: (state, action: PayloadAction<string>) => {
             state.value = action.payload
+        },
+        clearfoodinstruction: (state) => {
+            state.value = initialState.value
         }
     },
 })
 
-export const {foodinstruction} = Foodinstructionslice.actions
+export const {foodinstruction, clearfoodinstruction} = Foodinstructionslice.actions
 export default Foodinstructionslice.reducer;

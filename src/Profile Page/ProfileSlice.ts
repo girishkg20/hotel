@@ -1,25 +1,27 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 export interface forobject {
-    value: Object;
+    value: object;
 };
 
 const initialState: forobject = {
     value: {},
 };
 
-const Authslice = createSlice({
-    name: "Auth",
+
+
+const Profileslice = createSlice({
+    name: 'ProfileSlice',
     initialState,
     reducers: {
-        auth: (state, action: PayloadAction<Object>) => {
+        profiledata: (state, action: PayloadAction<object>) => {
             state.value = action.payload
         },
-        clearauth: (state) => {
+        clearprofiledata: (state) => {
             state.value = initialState.value
         }
     },
-});
+})
 
-export const {auth, clearauth} = Authslice.actions;
-export default Authslice.reducer;
+export const {profiledata, clearprofiledata} = Profileslice.actions;
+export default Profileslice.reducer;

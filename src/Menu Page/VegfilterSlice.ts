@@ -16,9 +16,12 @@ const Slice = createSlice({
     reducers: {
         selectvegfilter: (state, action: PayloadAction<boolean>) => {
             state.value = action.payload
+        },
+        clearselectvegfilter: (state) => {
+            state.value = initialState.value
         }
     },
 })
 
-export const {selectvegfilter} = Slice.actions
+export const {selectvegfilter, clearselectvegfilter} = Slice.actions
 export default Slice.reducer

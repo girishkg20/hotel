@@ -14,9 +14,12 @@ const Useraddressslice = createSlice({
     reducers: {
         saveaddress: (state, action: PayloadAction<object>) => {
             state.value = action.payload
+        },
+        clearsaveaddress: (state) => {
+            state.value = initialState.value
         }
     },
 })
 
-export const {saveaddress} = Useraddressslice.actions;
+export const {saveaddress, clearsaveaddress} = Useraddressslice.actions;
 export default Useraddressslice.reducer;

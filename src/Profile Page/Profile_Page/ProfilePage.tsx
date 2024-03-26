@@ -1,6 +1,7 @@
 import "./ProfilePage.css";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
 import backbutton from "./Source/back.png";
 import right from "./Source/right.png";
@@ -12,6 +13,20 @@ import term from "./Source/tandc.png";
 import privacy from "./Source/privacy_policy.png";
 import payment from "./Source/payment_policy.png";
 import about from "./Source/about.png";
+
+import { profiledata, clearprofiledata } from "../ProfileSlice";
+
+import { clearselectvegfilter } from "../../Menu Page/VegfilterSlice";
+import { clearsaveaddress } from "../../Home Page/Home_Page_API/UserAddressSlice";
+import { clearmobileNumber } from "../../Login Page/Enter_Ph_No/PhNoSlice";
+import { clearauth } from "../../Login Page/Enter_Otp/AuthSlice";
+import { clearItem } from "../../Menu Page/CartSlice";
+import { clearCartId } from "../../Menu Page/CartidSlice";
+import { clearfoodinstruction } from "../../Cart Page/FoodInstructionSlice";
+import { clearsessionid } from "../../Home Page/Home_Page_API/SessionIdSlice";
+import { clearmerchantsData } from "../../Home Page/Home_Page_API/MerchantsdataSlice";
+import { clearsearchdatapositions } from "../../Search Page/SearchDataSlice";
+
 
 
 
@@ -26,7 +41,20 @@ import about from "./Source/about.png";
 const Profilepage = () => {
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
+    const auth = useSelector((state:any) => state.perReducers.auth.value);
+    const loggedin = auth.token;
+
+    useEffect(() => {
+        if(!loggedin) {
+            const url = location.pathname.replace('profile', 'auth/login');
+            navigate(url, {replace: true});
+        }
+    },[])
+
+    const profile = useSelector((state:any) => state.perReducers.profiledata.value);
+    
     const [header, setHeader] = useState <HTMLDivElement | null>();
     const [headertext, setHeadertext] = useState <HTMLHeadingElement | null>();
 
@@ -58,18 +86,43 @@ const Profilepage = () => {
         
     }
 
-    console.log(import.meta.env.VITE_BASE_URL);
+    useEffect(() => {
 
+        if(loggedin) {
+            window.scrollTo(0,0);
+            const url = `${import.meta.env.VITE_BASE_URL}/app/user/profile`;
 
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': loggedin
+                }
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                dispatch(profiledata(data.response.data));
+            })
+        };
 
+    },[])
 
+    const logout = () => {
+        dispatch(clearselectvegfilter());
+        dispatch(clearsaveaddress());
+        dispatch(clearmobileNumber());
+        dispatch(clearauth());
+        dispatch(clearItem());
+        dispatch(clearCartId());
+        dispatch(clearfoodinstruction());
+        dispatch(clearsessionid());
+        dispatch(clearmerchantsData());
+        dispatch(clearsearchdatapositions());
+        dispatch(clearprofiledata());
 
-
-
-
-
-
-
+        const historylength = window.history.length - 2;
+        navigate(-historylength);
+    }
 
 
 
@@ -84,8 +137,12 @@ const Profilepage = () => {
         </div>
     
         <div className="udetailsholder">
-            <p className="uname">CHANNAPPA A C</p>
-            <p className="uphnum">+91 9988996643</p>
+            {profile && profile.phone_number ? <>
+                <p className="uname">{`${profile.first_name} ${profile.last_name}`}</p>
+                <p className="uphnum">{`+91 ${profile.phone_number}`}</p>
+            </>:<>
+                <p className="uname">Loading...</p>
+            </>}
         </div>
 
         <div className="profilecards">
@@ -130,7 +187,6 @@ const Profilepage = () => {
                 </div>
                 <img className="profileitemright" src={right} alt=">"/>
             </div>
-            
         </div>
         
         <div className="profilecards">
@@ -176,7 +232,7 @@ const Profilepage = () => {
 
         </div>
 
-        <div className="logoutholder">
+        <div className="logoutholder" onClick={() => logout()}>
             <button className="logoutbtn">Log Out</button>
         </div>
 

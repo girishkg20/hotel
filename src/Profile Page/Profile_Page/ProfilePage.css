@@ -18,6 +18,7 @@
 .uname {
     font-size: 20px;
     font-weight: 800;
+    text-transform: uppercase;
     margin-bottom: 5px;
     color: white;
 }
@@ -39,7 +40,7 @@
 .profilecardheading {
     font-size: 18px;
     font-weight: 800;
-    padding: 10px 0;
+    padding: 15px 0;
     color: #7427F5;
 }
 
@@ -47,7 +48,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 0;
+    padding: 15px 0;
 }
 
 .profileitemleft {
@@ -62,7 +63,7 @@
 .profilesubheadings {
     font-size: 16px;
     font-weight: 600;
-    padding: 0 10px;
+    padding: 0 15px;
 }
 
 .profileitemright {

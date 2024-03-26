@@ -14,9 +14,12 @@ const Merchantsdataslice = createSlice({
     reducers: {
         merchantsData: (state, action: PayloadAction<object>) => {
             state.value = action.payload
+        },
+        clearmerchantsData: (state) => {
+            state.value = initialState.value
         }
     },
 })
 
-export const {merchantsData} = Merchantsdataslice.actions;
+export const {merchantsData, clearmerchantsData} = Merchantsdataslice.actions;
 export default Merchantsdataslice.reducer;

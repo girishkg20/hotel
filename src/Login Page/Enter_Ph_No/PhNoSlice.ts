@@ -14,9 +14,12 @@ const Phnoslice = createSlice({
     reducers: {
         mobileNumber: (state, action: PayloadAction<String>) => {
             state.value = action.payload
+        },
+        clearmobileNumber: (state) => {
+            state.value = initialState.value
         }
     },
 });
 
-export const {mobileNumber} = Phnoslice.actions;
+export const {mobileNumber, clearmobileNumber} = Phnoslice.actions;
 export default Phnoslice.reducer;
