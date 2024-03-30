@@ -1,0 +1,35 @@
+.supportholder {
+    position: absolute;
+    padding: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.supportbtnholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.supportbtn {
+    box-sizing: border-box;
+    text-decoration: none;
+    padding: 10px;
+    background-color: #7427F5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 210px;
+    border-radius: 26px;
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.34);
+}
+
+.supportbtntext {
+    font-size: 18px;
+    font-weight: 600;
+    color: white;
+    padding-left: 10px;
+}

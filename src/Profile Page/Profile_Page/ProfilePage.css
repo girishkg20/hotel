@@ -1,3 +1,8 @@
+.ppbackground {
+    background-color: #F6F6F6;
+    padding-bottom: 35vh;
+}
+
 .ppheader {
     padding: 10px;
     display: flex;
@@ -5,6 +10,7 @@
     justify-content: space-between;
     position: sticky;
     top: 0;
+    z-index: 1;
 }
 
 .udetailsholder {
@@ -79,7 +85,7 @@
 .logoutholder {
     display: flex;
     justify-content: center;
-    margin: 30px 0 35vh 0;
+    margin-top: 30px;
 }
 
 .logoutbtn {

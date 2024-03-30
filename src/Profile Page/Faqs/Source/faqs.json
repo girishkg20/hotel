@@ -1,0 +1,67 @@
+[
+    {
+        "id": 1,
+        "question": "What is Tipplr Customer Support number ?",
+        "answer": "You can reach out to Tipplr customer support number on +918929221233 or write to us on support@tipplr.in"
+    },
+    {
+        "id": 2,
+        "question": "How do I track my order?",
+        "answer": "You can track your order under Orders tabs or order status page. In case you want to know where your order is, you can call the delivery partner directly. The delivery partner number is provided on the order status page."
+    },
+    {
+        "id": 3,
+        "question": "I want to cancel the order",
+        "answer": "We will do our best to accommodate your request if the order is not placed to the restaurant (Customer service number: +918929221233 ). Please note that we will have a right to charge a cancellation fee up to full order value to compensate our restaurant and delivery partners if your order has been confirmed."
+    },
+    {
+        "id": 4,
+        "question": "What is Tipplr Customer Support number ?",
+        "answer": "You can reach out to Tipplr customer support"
+    },
+    {
+        "id": 5,
+        "question": "This is from Json File",
+        "answer": "Add FAQ's into this JSON file and i will update"
+    },
+    {
+        "id": 6,
+        "question": "This is from Json File",
+        "answer": "Add FAQ's into this JSON file and i will update"
+    },
+    {
+        "id": 7,
+        "question": "This is from Json File",
+        "answer": "Add FAQ's into this JSON file and i will update"
+    },
+    {
+        "id": 8,
+        "question": "This is from Json File",
+        "answer": "Add FAQ's into this JSON file and i will update"
+    },
+    {
+        "id": 9,
+        "question": "This is from Json File",
+        "answer": "Add FAQ's into this JSON file and i will update"
+    },
+    {
+        "id": 10,
+        "question": "This is from Json File",
+        "answer": "Add FAQ's into this JSON file and i will update"
+    },
+    {
+        "id": 11,
+        "question": "This is from Json File",
+        "answer": "Add FAQ's into this JSON file and i will update"
+    },
+    {
+        "id": 12,
+        "question": "This is from Json File",
+        "answer": "Add FAQ's into this JSON file and i will update"
+    },
+    {
+        "id": 13,
+        "question": "This is from Json File",
+        "answer": "Add FAQ's into this JSON file and i will update"
+    }
+]

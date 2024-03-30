@@ -1,0 +1,52 @@
+.pspcontentsholder {
+    padding: 30px 15px 35vh 15px;
+}
+
+.qaholder {
+    display: block;
+    border-bottom: 1px solid #EBEBEB;
+    overflow-y: hidden;
+    padding-right: 3px;
+    padding-bottom: 10px;
+}
+
+.questionopen {
+    display: none;
+}
+
+.qholder {
+    display: flex;
+    align-items: first baseline;
+    justify-content: space-between;
+    padding: 10px 0;
+}
+
+.question {
+    font-size: 16px;
+    font-weight: 800;
+    margin: 0;
+    padding-right: 10px;
+}
+
+.questionrightbtn {
+    height: 14px;
+    rotate: 90deg;
+    transition: rotate 0.3s linear;
+}
+
+.questionopen:checked + .qholder .questionrightbtn {
+    rotate: 270deg;
+}
+
+.answer {
+    font-size: 16px;
+    font-weight: 500;
+    color: #6E6D70;
+    overflow-y: hidden;
+    max-height: 0px;
+    transition: max-height 0.3s linear;
+}
+
+.questionopen:checked ~ .answer {
+    max-height: 300px;
+}

@@ -1,5 +1,5 @@
 import "./ProfilePage.css";
-import { useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -14,25 +14,7 @@ import privacy from "./Source/privacy_policy.png";
 import payment from "./Source/payment_policy.png";
 import about from "./Source/about.png";
 
-import { profiledata, clearprofiledata } from "../ProfileSlice";
-
-import { clearselectvegfilter } from "../../Menu Page/VegfilterSlice";
-import { clearsaveaddress } from "../../Home Page/Home_Page_API/UserAddressSlice";
-import { clearmobileNumber } from "../../Login Page/Enter_Ph_No/PhNoSlice";
-import { clearauth } from "../../Login Page/Enter_Otp/AuthSlice";
-import { clearItem } from "../../Menu Page/CartSlice";
-import { clearCartId } from "../../Menu Page/CartidSlice";
-import { clearfoodinstruction } from "../../Cart Page/FoodInstructionSlice";
-import { clearsessionid } from "../../Home Page/Home_Page_API/SessionIdSlice";
-import { clearmerchantsData } from "../../Home Page/Home_Page_API/MerchantsdataSlice";
-import { clearsearchdatapositions } from "../../Search Page/SearchDataSlice";
-
-
-
-
-
-
-
+import { profiledata } from "../ProfileSlice";
 
 
 
@@ -42,6 +24,7 @@ const Profilepage = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    document.body.removeAttribute('style');
 
     const auth = useSelector((state:any) => state.perReducers.auth.value);
     const loggedin = auth.token;
@@ -64,11 +47,10 @@ const Profilepage = () => {
 
         if (header && headertext) {
             window.addEventListener('scroll', fixheader)
-            document.body.style.backgroundColor = '#F6F6F6';
-
+            window.scrollTo(0,0);
+            
             return () => {
                 window.removeEventListener('scroll', fixheader);
-                document.body.removeAttribute('style');
             }
         };
 
@@ -89,7 +71,6 @@ const Profilepage = () => {
     useEffect(() => {
 
         if(loggedin) {
-            window.scrollTo(0,0);
             const url = `${import.meta.env.VITE_BASE_URL}/app/user/profile`;
 
             fetch(url, {
@@ -106,24 +87,6 @@ const Profilepage = () => {
         };
 
     },[])
-
-    const logout = () => {
-        dispatch(clearselectvegfilter());
-        dispatch(clearsaveaddress());
-        dispatch(clearmobileNumber());
-        dispatch(clearauth());
-        dispatch(clearItem());
-        dispatch(clearCartId());
-        dispatch(clearfoodinstruction());
-        dispatch(clearsessionid());
-        dispatch(clearmerchantsData());
-        dispatch(clearsearchdatapositions());
-        dispatch(clearprofiledata());
-
-        const historylength = window.history.length - 2;
-        navigate(-historylength);
-    }
-
 
 
 
@@ -148,7 +111,7 @@ const Profilepage = () => {
         <div className="profilecards">
             <p className="profilecardheading">My Account</p>
 
-            <div className="profileitemgroup">
+            <div className="profileitemgroup" onClick={() => navigate("myorders")}>
                 <div className="profileitemleft">
                     <img className="profileitemicon" src={order} alt="orders"/>
                     <p className="profilesubheadings">My Orders</p>
@@ -158,7 +121,7 @@ const Profilepage = () => {
 
             <hr className="ppdivider"/>
 
-            <div className="profileitemgroup">
+            <div className="profileitemgroup" onClick={() => navigate("mycoupons")}>
                 <div className="profileitemleft">
                     <img className="profileitemicon" src={coupon} alt="coupons"/>
                     <p className="profilesubheadings">My Coupons</p>
@@ -170,7 +133,7 @@ const Profilepage = () => {
         <div className="profilecards">
             <p className="profilecardheading">Customer Support & FAQ</p>
 
-            <div className="profileitemgroup">
+            <div className="profileitemgroup" onClick={() => navigate("support")}>
                 <div className="profileitemleft">
                     <img className="profileitemicon" src={support} alt="support"/>
                     <p className="profilesubheadings">Customer Support</p>
@@ -180,7 +143,7 @@ const Profilepage = () => {
 
             <hr className="ppdivider"/>
 
-            <div className="profileitemgroup">
+            <div className="profileitemgroup" onClick={() => navigate("faqs")}>
                 <div className="profileitemleft">
                     <img className="profileitemicon" src={faq} alt="faqs"/>
                     <p className="profilesubheadings">FAQs</p>
@@ -192,7 +155,7 @@ const Profilepage = () => {
         <div className="profilecards">
             <p className="profilecardheading">More</p>
 
-            <div className="profileitemgroup">
+            <div className="profileitemgroup" onClick={() => navigate("termsandconditions")}>
                 <div className="profileitemleft">
                     <img className="profileitemicon" src={term} alt="terms"/>
                     <p className="profilesubheadings">Terms & Conditions</p>
@@ -202,7 +165,7 @@ const Profilepage = () => {
 
             <hr className="ppdivider"/>
             
-            <div className="profileitemgroup">
+            <div className="profileitemgroup" onClick={() => navigate("privacypolicy")}>
                 <div className="profileitemleft">
                     <img className="profileitemicon" src={privacy} alt="privacy"/>
                     <p className="profilesubheadings">Privacy Policy</p>
@@ -212,7 +175,7 @@ const Profilepage = () => {
 
             <hr className="ppdivider"/>
 
-            <div className="profileitemgroup">
+            <div className="profileitemgroup" onClick={() => navigate("paymentpolicy")}>
                 <div className="profileitemleft">
                     <img className="profileitemicon" src={payment} alt="payment"/>
                     <p className="profilesubheadings">Payment Policy</p>
@@ -222,7 +185,7 @@ const Profilepage = () => {
 
             <hr className="ppdivider"/>
 
-            <div className="profileitemgroup">
+            <div className="profileitemgroup" onClick={() => navigate("about")}>
                 <div className="profileitemleft">
                     <img className="profileitemicon" src={about} alt="about"/>
                     <p className="profilesubheadings">About Tipplr</p>
@@ -232,9 +195,11 @@ const Profilepage = () => {
 
         </div>
 
-        <div className="logoutholder" onClick={() => logout()}>
+        <div className="logoutholder" onClick={() => navigate("logout")}>
             <button className="logoutbtn">Log Out</button>
         </div>
+
+        <Outlet/>
 
     </div>)
 }

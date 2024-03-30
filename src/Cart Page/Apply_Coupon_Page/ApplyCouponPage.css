@@ -32,7 +32,7 @@
 
 .accard {
     display: flex;
-    margin: 30px 15px;
+    margin: 15px;
     background-color: white;
     border-radius: 15px;
     overflow: hidden;
@@ -97,14 +97,14 @@
 .tapac {
     font-size: 10px;
     font-weight: 800;
-    padding: 5px;
+    padding-top: 5px;
     color: #4901b4;
 }
 
 .achtext {
     font-size: 14px;
     font-weight: 800;
-    padding: 5px 15px 15px 15px;
+    padding: 15px;
     text-align: center;
 }
 

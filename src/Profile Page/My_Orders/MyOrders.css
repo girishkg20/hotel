@@ -1,0 +1,136 @@
+/* Bottom Loader */
+
+.dots-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    padding: 15px;
+    box-sizing: border-box;
+  }
+  
+  .dot {
+    height: 20px;
+    width: 20px;
+    margin-right: 10px;
+    border-radius: 10px;
+    background-color: #8975E9;
+    animation: pulse 1.5s infinite ease-in-out;
+  }
+  
+  .dot:last-child {
+    margin-right: 0;
+  }
+  
+  .dot:nth-child(1) {
+    animation-delay: -0.3s;
+  }
+  
+  .dot:nth-child(2) {
+    animation-delay: -0.1s;
+  }
+  
+  .dot:nth-child(3) {
+    animation-delay: 0.1s;
+  }
+  
+  @keyframes pulse {
+    0% {
+      transform: scale(0.8);
+      background-color: #8975E9;
+      box-shadow: 0 0 0 0 rgba(178, 212, 252, 0.7);
+    }
+  
+    50% {
+      transform: scale(1.2);
+      background-color: #7427F5;
+      box-shadow: 0 0 0 10px rgba(178, 212, 252, 0);
+    }
+  
+    100% {
+      transform: scale(0.8);
+      background-color: #8975E9;
+      box-shadow: 0 0 0 0 rgba(178, 212, 252, 0.7);
+    }
+  }
+
+/* Bottom Loader */
+
+.myorderscontentsholder {
+    padding: 30px 15px 60px 15px;
+}
+
+.orderscard {
+    padding: 15px;
+    margin-bottom: 15px;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.morestonameholder {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.morestoname {
+    font-size: 16px;
+    font-weight: 800;
+    padding-right: 10px;
+    text-transform: capitalize;
+}
+
+.modelivered {
+    font-size: 12px;
+    font-weight: 800;
+    color: white;
+    background-color: #09aa46;
+    padding: 5px 10px;
+    border-radius: 14px;
+}
+
+.mocancelled {
+    font-size: 12px;
+    font-weight: 800;
+    color: white;
+    background-color: #D44222;
+    padding: 5px 10px;
+    border-radius: 14px;
+}
+
+.moareaname {
+    font-size: 14px;
+    font-weight: 500;
+    color: #6E6D70;
+    text-transform: capitalize;
+    padding-top: 2px;
+}
+
+.moprice {
+    font-size: 14px;
+    font-weight: 800;
+    text-transform: capitalize;
+    padding-top: 15px;
+}
+
+.modivider {
+    border: none;
+    border-bottom: 1px dashed #7427F5;
+    margin: 10px 0;
+}
+
+.moitems {
+    font-size: 14px;
+    font-weight: 800;
+    text-transform: capitalize;
+}
+
+.modatentime {
+    font-size: 12px;
+    font-weight: 500;
+    color: #6E6D70;
+    text-transform: uppercase;
+    padding-top: 5px;
+}
