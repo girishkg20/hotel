@@ -1,11 +1,12 @@
 import "./MyOrders.css";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import Uniloader from "../../Universal Loader/UniLoader";
 
 import backbutton from "./Source/back.png";
+import right from "./Source/right_white.png";
 import noorders from "./Source/no_food_orders.png";
 
 
@@ -59,7 +60,7 @@ const Myorders = () => {
     }
 
     const settingscrolled = () => {
-        if(!scrolled && ordersdata.length < totalorders && newpage!.scrollTop >= (newpage!.scrollHeight - newpage!.clientHeight - 500)) {
+        if(!scrolled && ordersdata.length < totalorders && newpage!.scrollTop >= (newpage!.scrollHeight - newpage!.clientHeight - 120)) {
             setscrolled(true);
         }
     }
@@ -105,6 +106,8 @@ const Myorders = () => {
 
 
 
+
+
     if(loading) {
         return (<div className="newpage"><Uniloader/></div>);
     };
@@ -120,22 +123,22 @@ const Myorders = () => {
 
             <div className="myorderscontentsholder">
                 {
-                    ordersdata.map((eachorder:any) => (<div className="orderscard" key={eachorder._id}>
+                    ordersdata.map((eachorder:any) => (<div className="orderscard" key={eachorder._id} onClick={() => navigate(eachorder._id)}>
 
                         <div className="morestonameholder">
                             <div>
                                 <p className="morestoname">{eachorder.merchant_details.name}</p>
                                 <p className="moareaname">{`${eachorder.merchant_details.area}, ${eachorder.merchant_details.city}`}</p>
                             </div>
-                            {eachorder.status === "order_delivered" && <p className="modelivered">Delivered</p>}
-                            {eachorder.status === "order_cancelled" && <p className="mocancelled">Cancelled</p>}
+                            {eachorder.status === "order_delivered" && <p className="modelivered">Delivered<img src={right} height={"10px"} alt=">"/></p>}
+                            {eachorder.status === "order_cancelled" && <p className="mocancelled">Cancelled<img src={right} height={"10px"} alt=">"/></p>}
                         </div>
                         <p className="moprice">{`₹ ${eachorder.total}`}</p>
                         <hr className="modivider"/>
                         <p className="moitems">{
-                            eachorder.food_items.map((eachfooditem:any) => eachfooditem.quantity + " X " + eachfooditem.name).join(", ")
+                            eachorder.food_items.map((eachfooditem:any) => eachfooditem.quantity + " × " + eachfooditem.name).join(", ")
                         }</p>
-                        <p className="modatentime">{unixtodateandtime(eachorder.order_placed_time)}</p>
+                        <p className="modatentime">{unixtodateandtime(eachorder.created_time)}</p>
                     </div>))
                 }
                 {scrolled &&
@@ -158,6 +161,6 @@ const Myorders = () => {
                 </div>
             </div>
         </>
-    }</div>)
+    }<Outlet/></div>)
 }
-export default Myorders;
+export default Myorders; 

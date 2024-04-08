@@ -8,34 +8,34 @@
     width: 100%;
     padding: 15px;
     box-sizing: border-box;
-  }
+}
   
-  .dot {
+.dot {
     height: 20px;
     width: 20px;
     margin-right: 10px;
     border-radius: 10px;
     background-color: #8975E9;
     animation: pulse 1.5s infinite ease-in-out;
-  }
+}
   
-  .dot:last-child {
+.dot:last-child {
     margin-right: 0;
-  }
+}
   
-  .dot:nth-child(1) {
+.dot:nth-child(1) {
     animation-delay: -0.3s;
-  }
+}
   
-  .dot:nth-child(2) {
+.dot:nth-child(2) {
     animation-delay: -0.1s;
-  }
+}
   
-  .dot:nth-child(3) {
+.dot:nth-child(3) {
     animation-delay: 0.1s;
-  }
+}
   
-  @keyframes pulse {
+@keyframes pulse {
     0% {
       transform: scale(0.8);
       background-color: #8975E9;
@@ -53,7 +53,7 @@
       background-color: #8975E9;
       box-shadow: 0 0 0 0 rgba(178, 212, 252, 0.7);
     }
-  }
+}
 
 /* Bottom Loader */
 
@@ -76,36 +76,44 @@
 }
 
 .morestoname {
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 800;
     padding-right: 10px;
     text-transform: capitalize;
 }
 
+.moareaname {
+    font-size: 14px;
+    font-weight: 600;
+    color: #6E6D70;
+    text-transform: capitalize;
+    padding-top: 2px;
+}
+
 .modelivered {
+    display: flex;
+    align-items: center;
+    gap: 8px;
     font-size: 12px;
-    font-weight: 800;
+    font-weight: 600;
     color: white;
     background-color: #09aa46;
     padding: 5px 10px;
     border-radius: 14px;
+    filter: drop-shadow(0px 4px 9px rgba(9, 170, 70, 0.5));
 }
 
 .mocancelled {
+    display: flex;
+    align-items: center;
+    gap: 8px;
     font-size: 12px;
-    font-weight: 800;
+    font-weight: 600;
     color: white;
     background-color: #D44222;
     padding: 5px 10px;
     border-radius: 14px;
-}
-
-.moareaname {
-    font-size: 14px;
-    font-weight: 500;
-    color: #6E6D70;
-    text-transform: capitalize;
-    padding-top: 2px;
+    filter: drop-shadow(0px 4px 9px rgba(212, 66, 34, 0.5));
 }
 
 .moprice {
@@ -117,13 +125,13 @@
 
 .modivider {
     border: none;
-    border-bottom: 1px dashed #7427F5;
+    border-bottom: 1px dashed #6E6D70;
     margin: 10px 0;
 }
 
 .moitems {
     font-size: 14px;
-    font-weight: 800;
+    font-weight: 600;
     text-transform: capitalize;
 }
 

@@ -11,6 +11,7 @@ import Homepage1 from './Home Page/HomePage1';
 import Searchpage1 from './Search Page/SearchPage1';
 import Profilepage1 from './Profile Page/ProfilePage1';
 import Myorders from './Profile Page/My_Orders/MyOrders';
+import Orderdetails from './Profile Page/Order_Details/OrderDetails';
 import Mycoupons from './Profile Page/My_Coupons/MyCoupons';
 import Support from './Profile Page/Support/Support';
 import Faqs from './Profile Page/Faqs/Faqs';
@@ -33,6 +34,7 @@ import Cartpage1 from './Cart Page/CartPage1';
 import Cartcustpopup from './Cart Page/Cart_Cust_Popup/CartCustPopup';
 import Applycouponpage from './Cart Page/Apply_Coupon_Page/ApplyCouponPage';
 import Addinstructionspage from './Cart Page/Add_Instructions_Page/AddInstructionsPage';
+import Orderpage1 from './Order Page/OrderPage1';
 
 
 
@@ -74,7 +76,13 @@ const Router = createBrowserRouter([
     children: [
       {
         path: "/:hotelid/profile/myorders",
-        element: <Myorders/>
+        element: <Myorders/>,
+        children: [
+          {
+            path: "/:hotelid/profile/myorders/:orderid",
+            element: <Orderdetails/>
+          }
+        ]
       },
       {
         path: "/:hotelid/profile/mycoupons",
@@ -175,6 +183,11 @@ const Router = createBrowserRouter([
       }
     ]
   },
+
+  // {
+  //   path: "/:hotelid/orders/:orderid",
+  //   element: <Orderpage1/>
+  // },
 
   {
     path: "/:hotelid/:merchantid/cart",
