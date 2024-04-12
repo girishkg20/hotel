@@ -1,6 +1,6 @@
 import "./OrderDetails.css";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Outlet, useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import backbutton from "./Source/back.png";
@@ -90,9 +90,15 @@ const Orderdetails = () => {
                 <img className='backbutton' src={backbutton} alt="Back" onClick={() => navigate(-1)}/>
                 <div className='odheadertext'>
                     <p className="odheadertoptext">{`ORDER #${orderdata.order_number}`}</p>
-                    <p className="odheaderbottomtext">{unixtodateandtime(orderdata.created_time)}</p>
+                    <div className="odheaderbottom">
+                        {orderdata.status === "order_delivered" && <p className="oddelivered">Delivered</p>}
+                        {orderdata.status === "order_cancelled" && <p className="odcancelled">Cancelled</p>}
+                        <hr className="odtimestatusdivider"/>
+                        <p className="odheaderbottomtext">{unixtodateandtime(orderdata.created_time)}</p>
+                    </div>
                 </div>
             </div>
+            <p className="odhelpbutton" onClick={() => navigate("support")}>HELP</p>
         </div>
 
         {deliverydiscount > 0 &&
@@ -166,7 +172,7 @@ const Orderdetails = () => {
         </div>
 
         <div className='odcartholders'>
-            {orderdata.total_item_total &&
+            {orderdata.total_item_total > 0 &&
                 <div className='cbdcontainer'>
                     <p className='cbdtextl'>Item Total</p>
                     <p className='cbdtextr'>₹{orderdata.total_item_total.toFixed(2)}</p>
@@ -198,15 +204,15 @@ const Orderdetails = () => {
                     </div>
                     <div className='tandctextholder'>
                         <p>GST</p>
-                        <p>₹{orderdata.total_taxes.toFixed(2)}</p>
+                        <p>₹{orderdata.total_taxes ? orderdata.total_taxes.toFixed(2) : 0}</p>
                     </div>
                     <div className='tandctextholderl'>
                         <p>Total</p>
-                        <p>₹{((orderdata.total_extra_charges ? orderdata.total_extra_charges : 0) + (orderdata.total_packing_charges ? orderdata.total_packing_charges : 0) + (orderdata.total_taxes)).toFixed(2)}</p>
+                        <p>₹{((orderdata.total_extra_charges ? orderdata.total_extra_charges : 0) + (orderdata.total_packing_charges ? orderdata.total_packing_charges : 0) + (orderdata.total_taxes ? orderdata.total_taxes : 0)).toFixed(2)}</p>
                     </div>
                 </div>
 
-                <p className='cbdtextr'>₹{((orderdata.total_extra_charges ? orderdata.total_extra_charges : 0) + (orderdata.total_packing_charges ? orderdata.total_packing_charges : 0) + (orderdata.total_taxes)).toFixed(2)}</p>
+                <p className='cbdtextr'>₹{((orderdata.total_extra_charges ? orderdata.total_extra_charges : 0) + (orderdata.total_packing_charges ? orderdata.total_packing_charges : 0) + (orderdata.total_taxes ? orderdata.total_taxes : 0)).toFixed(2)}</p>
             </div>
             {orderdata.preferred_delivery_charges &&
                 <div className='cbdcontainer'>
@@ -239,7 +245,9 @@ const Orderdetails = () => {
                 <p className='cbdtextlarge'>₹{orderdata.total.toFixed(2)}</p>
             </div>
         </div>
+
         
-    </>}</div>)
+        
+    </>}<Outlet/></div>)
 }
 export default Orderdetails;

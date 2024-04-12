@@ -45,7 +45,7 @@ const Myorders = () => {
                 newpage.removeEventListener('scroll', settingscrolled);
             }
         };
-    },[header])
+    },[header, scrolled])
 
     const fixheader = () => {
         

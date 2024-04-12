@@ -80,7 +80,13 @@ const Router = createBrowserRouter([
         children: [
           {
             path: "/:hotelid/profile/myorders/:orderid",
-            element: <Orderdetails/>
+            element: <Orderdetails/>,
+            children: [
+              {
+                path: "/:hotelid/profile/myorders/:orderid/support",
+                element: <Support/>,
+              }
+            ]
           }
         ]
       },

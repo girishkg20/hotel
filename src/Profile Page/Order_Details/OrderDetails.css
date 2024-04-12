@@ -4,7 +4,6 @@
     align-items: center;
     justify-content: space-between;
     background-color: white;
-    border-bottom: 1px solid #EBEBEB;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
     position: sticky;
     top: 0;
@@ -25,14 +24,53 @@
     text-overflow: ellipsis;
 }
 
+.odheaderbottom {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.oddelivered {
+    font-size: 12px;
+    font-weight: 800;
+    color: #09aa46;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.odcancelled {
+    font-size: 12px;
+    font-weight: 800;
+    color: #D44222;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.odtimestatusdivider {
+    height: 10px;
+    border: none;
+    margin: 0;
+    padding-top: 1px;
+    border-left: 1px solid #6E6D70;
+}
+
 .odheaderbottomtext {
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 500;
     color: #6E6D70;
     text-transform: uppercase;
-    padding-top: 2px;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.odhelpbutton {
+    font-size: 14px;
+    font-weight: 800;
+    color: #FFFFFF;
+    background-color: #7427F5;
+    padding: 5px 15px;
+    border-radius: 14.5px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
 }
 
 .odsavingsheader {
@@ -42,7 +80,7 @@
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
     border-radius: 0 0 18px 18px;
     position: sticky;
-    top: 64px;
+    top: 60px;
     z-index: 1;
 }
 
@@ -180,5 +218,5 @@
 }
 
 .odcartholders {
-    padding: 15px;
+    padding: 20px 15px;
 }
