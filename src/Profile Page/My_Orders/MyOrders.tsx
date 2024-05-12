@@ -130,8 +130,11 @@ const Myorders = () => {
                                 <p className="morestoname">{eachorder.merchant_details.name}</p>
                                 <p className="moareaname">{`${eachorder.merchant_details.area}, ${eachorder.merchant_details.city}`}</p>
                             </div>
-                            {eachorder.status === "order_delivered" && <p className="modelivered">Delivered<img src={right} height={"10px"} alt=">"/></p>}
-                            {eachorder.status === "order_cancelled" && <p className="mocancelled">Cancelled<img src={right} height={"10px"} alt=">"/></p>}
+                            {
+                                eachorder.status === "order_delivered" ? <p className="modelivered">Delivered<img src={right} height={"10px"} alt=">"/></p> :
+                                eachorder.status === "order_cancelled" ? <p className="mocancelled">Cancelled<img src={right} height={"10px"} alt=">"/></p> :
+                                <p className="moinprogress">In Progress<img src={right} height={"10px"} alt=">"/></p>
+                            }
                         </div>
                         <p className="moprice">{`₹ ${eachorder.total}`}</p>
                         <hr className="modivider"/>

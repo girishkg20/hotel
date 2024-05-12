@@ -1,0 +1,34 @@
+.rndescription {
+    font-size: 14px;
+    font-weight: 600;
+    padding: 5px 0 0 0;
+    color: #787878;
+}
+
+.rnholder {
+    padding: 10px 0;
+}
+
+.rntext {
+    width: 100%;
+    padding: 5px 0;
+    margin: 10px 0;
+    border: none;
+    border-bottom: 1px solid #EBEBEB;
+    outline: none;
+    font-family: 'manrope';
+    font-size: 16px;
+    font-weight: 600;
+    color: #383838;
+}
+
+.rntext:focus {
+    border-bottom: 1px solid #7427F5;
+}
+
+.requirederror {
+    font-size: 14px;
+    font-weight: 600;
+    color: #F35858;
+    padding-bottom: 15px;
+}

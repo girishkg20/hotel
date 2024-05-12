@@ -20,12 +20,16 @@ import applycoupon from './Source/apply coupon.png';
 import address from './Source/location.png';
 import tick from './Source/tick.png';
 import emptycart from './Source/emptycart.png';
+import logo from './Source/Logo.jpg';
 import { cartId, clearCartId } from '../../Menu Page/CartidSlice';
 import { addItem, clearItem } from '../../Menu Page/CartSlice';
+import { clearroomnumber } from '../RoomnumberSlice';
+import { profiledata } from '../../Profile Page/ProfileSlice';
 import Cartpagedata from '../Cart_Page_Data/CartPageData';
 import Couponappliedpopup from '../Confetti_Animation/ConfettiAnimation';
 import Uniloader from '../../Universal Loader/UniLoader';
 
+declare var Razorpay: any;
 
 
 
@@ -51,6 +55,8 @@ const Cartpage = () => {
     const userdata = useSelector((state:any) => state.perReducers.auth.value);
     const actualpayload = useSelector((state:any) => state.perReducers.addItem.value);
     const cookinginstructions = useSelector((state:any) => state.foodinstruction.value);
+    const roomnumber = useSelector((state:any) => state.roomnumber.value);
+    const profile = useSelector((state:any) => state.perReducers.profiledata.value);
 
     const loggedin = userdata.token;
 
@@ -133,7 +139,7 @@ const Cartpage = () => {
     }
 
     useEffect(() => {
-        if(Usercart.promo_used && Usercart.promo_used.value) {
+        if(Usercart && Usercart.promo_used && Usercart.promo_used.value) {
             setvisible(true);
 
             setTimeout(() => {
@@ -141,6 +147,26 @@ const Cartpage = () => {
             }, 3500);
         }
     },[Usercart])
+
+    useEffect(() => {
+
+        if(loggedin) {
+            const url = `${import.meta.env.VITE_BASE_URL}/app/user/profile`;
+
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': loggedin
+                }
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                Dispatch(profiledata(data.response.data));
+            })
+        };
+
+    },[])
 
     const pushtocart = (eachfooditem:any) => {
 
@@ -184,8 +210,129 @@ const Cartpage = () => {
 
         window.addEventListener("popstate", redirecttoresto);
         navigate(-1);
-    }
+    };
+
+    const navtotrack = (orderid:any) => {
+        Dispatch(clearItem());
+        Dispatch(clearCartId());
+
+        const hotelid = window.location.pathname.split("/")[1];
+        navigate(`/${hotelid}/trackorder/${orderid}`);
+    };
+
+    useEffect(() => {
+        if(roomnumber) {
+            const order = {
+                "merchant_id": Usercart.merchant_id,
+                "food_items": Usercart.food_items,
+                "order_type": "delivery",
+                "promo_used": Usercart.promo_used,
+                "external_promo_used": {},
+                "delivery_partner": deliveryquote.data[0].partner_id,
+                "delivery_charges": Usercart.delivery_charges,
+                "actual_delivery_charges": deliveryquote.data[0].actual_fare,
+                "preferred_delivery_charges": deliveryquote.data[0].estimated_fare,
+                "delivery_distance": deliveryquote.data[0].distance,
+                "hotel_merchant_id": deliveryaddress.merchant_sku,
+                "room_number": roomnumber,
+                "user_address_id": deliveryaddress.tagged_user_id,
+                "user_cart_id": Usercart._id
+            }
+
+            if(loggedin) {
+                const url = `${import.meta.env.VITE_BASE_URL}/app/user/food-order`;
     
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': loggedin
+                    },
+                    body: JSON.stringify(order)
+                })
+                .then((response) => response.json())
+                .then((data:any) => {
+
+                    Dispatch(clearroomnumber());
+
+                    const orderid = data.response.data._id;
+                    const payable = data.response.data.total;
+
+                    const url = `${import.meta.env.VITE_BASE_URL}/app/user/food-order/${orderid}/payment`;
+                    const payment = {
+                        "payment_gateway": "razorpay",
+                        "amount": payable
+                    }
+
+                    fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': loggedin
+                        },
+                        body: JSON.stringify(payment)
+                    })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        
+                        const options = {
+                            "key": data.response.razorpay_key, // Enter the Key ID generated from the Dashboard
+                            "amount": data.response.data.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+                            "currency": "INR",
+                            "name": "TIPPLR", //your business name
+                            "description": "Food Order",
+                            "image": logo,
+                            "order_id": data.response.order_id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+                            "handler": (response:any) => {
+
+                                const url = `${import.meta.env.VITE_BASE_URL}/app/user/food-order/${data.response.data.payment_request_id}/confirm`;
+                                const payments = {
+                                    "payments": [
+                                        {
+                                            "transaction_number": data.response.data.transaction_number,
+                                            "payment_gateway_transaction_id": response.razorpay_payment_id
+                                        }
+                                    ]
+                                };
+                                
+                                fetch(url, {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'Authorization': loggedin
+                                    },
+                                    body: JSON.stringify(payments)
+                                })
+                                .then((response) => response.json())
+                                .then((data) => {
+                                    navtotrack(data.response.data);
+                                })
+
+                            },
+                            "prefill": { //We recommend using the prefill parameter to auto-fill customer's contact information especially their phone number
+                                "name": `${profile.first_name} ${profile.last_name}`, //your customer's name
+                                "email": profile.email_address,
+                                "contact": profile.phone_number //Provide the customer's phone number for better conversion rates 
+                            },
+                            // "notes": {
+                            //     "address": "Razorpay Corporate Office"
+                            // },
+                            "theme": {
+                                "color": "#7427F5"
+                            }
+                        };
+
+                        const rzp1 = new Razorpay(options);
+                        rzp1.open();
+
+                    })
+
+                })
+            };
+
+        }
+    },[roomnumber])
+
     useEffect(() => {
         window.scrollTo(0,0);
 
@@ -250,6 +397,8 @@ const Cartpage = () => {
                     })
                 }
             })
+        }else{
+            setloading(false);
         }
 
     },[])
@@ -584,7 +733,7 @@ const Cartpage = () => {
                             <p className='cpaytext'>Amount to Pay</p>
                             <p className='cpayamount'>₹{Usercart.total.toFixed(2)}</p>
                         </div>
-                        <button className='cartpaybutton'>Proceed to Pay</button>
+                        <button className='cartpaybutton' onClick={() => navigate("userdetails")}>Proceed to Pay</button>
                     </div>
                 </div>
 

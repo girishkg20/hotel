@@ -295,7 +295,7 @@ const Itemlisting = () => {
     };
 
     useEffect(()=>{
-        if(Usercart.food_items && Usercart.food_items.length > 0) {
+        if(Usercart && Usercart.food_items && Usercart.food_items.length > 0) {
 
             const cartfooditems:object[] = [];
             let allitemcount = 0;
@@ -385,7 +385,7 @@ const Itemlisting = () => {
                                                 )}
                                                 {eachfooditem.availablity.availability == false
                                                     ? <p className='notavailable'>{eachfooditem.availablity.availability_message}</p>
-                                                    : (Usercart.food_items && Usercart.food_items.some((fooditem:any)=>(fooditem._id == eachfooditem._id)))
+                                                    : (Usercart && Usercart.food_items && Usercart.food_items.some((fooditem:any)=>(fooditem._id == eachfooditem._id)))
                                                     ? <>
                                                         <button className="addedbutton">
                                                             <p className='addsub' onClick={() => {checkAuth({...eachfooditem, quantity:-1})}}>-</p>

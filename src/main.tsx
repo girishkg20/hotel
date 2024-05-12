@@ -34,7 +34,8 @@ import Cartpage1 from './Cart Page/CartPage1';
 import Cartcustpopup from './Cart Page/Cart_Cust_Popup/CartCustPopup';
 import Applycouponpage from './Cart Page/Apply_Coupon_Page/ApplyCouponPage';
 import Addinstructionspage from './Cart Page/Add_Instructions_Page/AddInstructionsPage';
-import Orderpage1 from './Order Page/OrderPage1';
+import Roomnumberpopup from './Cart Page/Room_Number_Popup/RoomNumberPopup';
+import Trackorderpage1 from './Track Order Page/TrackOrderPage1';
 
 
 
@@ -190,10 +191,20 @@ const Router = createBrowserRouter([
     ]
   },
 
-  // {
-  //   path: "/:hotelid/orders/:orderid",
-  //   element: <Orderpage1/>
-  // },
+  {
+    path: "/:hotelid/trackorder/:orderid",
+    element: <Trackorderpage1/>
+  },
+  {
+    path: "/:hotelid/trackorder/:orderid/details",
+    element: <Orderdetails/>,
+    children: [
+      {
+        path: "/:hotelid/trackorder/:orderid/details/support",
+        element: <Support/>,
+      }
+    ]
+  },
 
   {
     path: "/:hotelid/:merchantid/cart",
@@ -210,7 +221,11 @@ const Router = createBrowserRouter([
       {
         path: "/:hotelid/:merchantid/cart/instructions",
         element: <Addinstructionspage/>
-      }
+      },
+      {
+        path: "/:hotelid/:merchantid/cart/userdetails",
+        element: <Roomnumberpopup/>
+      },
     ]
   },
 

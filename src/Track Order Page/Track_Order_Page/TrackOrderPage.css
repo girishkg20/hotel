@@ -1,0 +1,192 @@
+.map {
+    width: 100%;
+    height: 65vh;
+    position: sticky !important;
+    top: 0;
+}
+
+.gm-style iframe + div {
+    display: none;
+}
+
+.mapbackbutton {
+    height: 20px;
+    width: 24px;
+    padding: 10px 8px 10px 8px;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 1;
+}
+
+.statusbarholder {
+    position: fixed;
+    top: 32.5vh;
+    right: 15px;
+    transform: translateY(-50%);
+}
+
+.statusbar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 8px;
+    background-color: white;
+    border-radius: 33px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+}
+
+.statusbar hr {
+    height: 40px;
+    margin: 5px 0;
+    border: none;
+    border-left: 2px solid #C4C4C4;
+}
+
+.trackbottomholder {
+    background-color: white;
+    position: sticky;
+    border-radius: 23px 23px 0 0;
+    box-shadow: 0px -10px 20px rgba(0, 0, 0, 0.5);
+    min-height: 35vh;
+}
+
+.trackorderstatusholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.trackorderstatus {
+    font-size: 16px;
+    font-weight: 800;
+    color: white;
+    background-color: #7427F5;
+    text-align: center;
+    padding: 10px 20px;
+    border-radius: 20.5px;
+    overflow: hidden;
+    text-wrap: nowrap;
+    text-overflow: ellipsis;
+    margin: -20.5px 15px 0 15px;
+    box-shadow: 0px -5px 20px rgba(0, 0, 0, 0.5);
+}
+
+.tobody {
+    padding: 15px;
+}
+
+.todescriptiondivider {
+    margin: 0;
+    border: none;
+    border-top: 1px solid #EBEBEB;
+}
+
+.todescriptionholder {
+    padding: 10px 0;
+}
+
+.todescription {
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.riderholder {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 0;
+}
+
+.riderleft {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.ridername {
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.riderdesc {
+    font-size: 14px;
+    font-weight: 600;
+    color: #777575;
+    padding-top: 3px;
+}
+
+.ridermob {
+    font-size: 14px;
+    font-weight: 600;
+    padding-top: 3px;
+}
+
+
+
+
+.torestoname {
+    font-size: 16px;
+    font-weight: 800;
+    padding: 15px 0 7px 0;
+    text-transform: capitalize;
+}
+
+.toordernu {
+    font-size: 14px;
+    font-weight: 600;
+    color: #777575;
+    padding-top: 3px;
+    text-transform: capitalize;
+}
+
+.toorderdate {
+    font-size: 14px;
+    font-weight: 600;
+    color: #777575;
+    padding-top: 3px;
+    text-transform: uppercase;
+}
+
+.toodbutton {
+    border: none;
+    background-color: transparent;
+    padding: 5px 10px;
+    margin: 15px 0;
+    font-size: 14px;
+    font-weight: 800;
+    color: #7427F5;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border: 1px solid #383838;
+    border-radius: 16px;
+}
+
+.tosupportcard {
+    background-color: #7427F5;
+    border-radius: 15px;
+    padding: 10px 15px;
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-decoration: none;
+}
+
+.tosupportheading {
+    font-size: 16px;
+    font-weight: 800;
+    color: white;
+}
+
+.tosupportdesc {
+    font-size: 13px;
+    font-weight: 400;
+    color: white;
+    padding-top: 2px;
+}

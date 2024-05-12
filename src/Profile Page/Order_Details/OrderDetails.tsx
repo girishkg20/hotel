@@ -91,8 +91,11 @@ const Orderdetails = () => {
                 <div className='odheadertext'>
                     <p className="odheadertoptext">{`ORDER #${orderdata.order_number}`}</p>
                     <div className="odheaderbottom">
-                        {orderdata.status === "order_delivered" && <p className="oddelivered">Delivered</p>}
-                        {orderdata.status === "order_cancelled" && <p className="odcancelled">Cancelled</p>}
+                        {
+                            orderdata.status === "order_delivered" ? <p className="oddelivered">Delivered</p> :
+                            orderdata.status === "order_cancelled" ? <p className="odcancelled">Cancelled</p> :
+                            <p className="odinprogress">In Progress</p>
+                        }
                         <hr className="odtimestatusdivider"/>
                         <p className="odheaderbottomtext">{unixtodateandtime(orderdata.created_time)}</p>
                     </div>

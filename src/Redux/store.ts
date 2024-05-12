@@ -15,6 +15,7 @@ import SessionIdSlice from "../Home Page/Home_Page_API/SessionIdSlice";
 import MerchantsdataSlice from "../Home Page/Home_Page_API/MerchantsdataSlice";
 import SearchDataSlice from "../Search Page/SearchDataSlice";
 import ProfileSlice from "../Profile Page/ProfileSlice";
+import RoomnumberSlice from "../Cart Page/RoomnumberSlice";
 
 
 const PersistConfig = {
@@ -49,6 +50,7 @@ export const store = configureStore({
         mobileNumber: Phnoslice,
         foodinstruction: FoodInstructionSlice,
         searchdatapositions: SearchDataSlice,
+        roomnumber: RoomnumberSlice,
         
         perReducers: persistedReducer,
         sesReducers: sessionReducers,

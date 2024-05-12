@@ -413,7 +413,7 @@ const Termsandconditions = () => {
             <p>&nbsp;</p>
             <p><strong><u>REDRESSAL MECHANISM</u></strong></p>
             <p>&nbsp;</p>
-            <p>Any complaints, abuse or concerns with regards to content and or comment or breach of these terms shall be immediately informed to the designated Grievance Officer as mentioned below via in writing or through email signed with the electronic signature to&nbsp;<a href="mailto:grievance@tipplr.in">grievance@tipplr.in</a>&nbsp;or call on +91-8929221233.</p>
+            <p>Any complaints, abuse or concerns with regards to content and or comment or breach of these terms shall be immediately informed to the designated Grievance Officer as mentioned below via in writing or through email signed with the electronic signature to <a href="mailto:grievance@tipplr.in">grievance@tipplr.in</a> or call on <a href="tel:91 8929221233">+91-8929221233</a>.</p>
             <p>&nbsp;</p>
             <p>Grievance Redressal Officer</p>
             <p>Tipplr</p>

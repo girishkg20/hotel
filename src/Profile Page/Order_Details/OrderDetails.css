@@ -46,6 +46,14 @@
     text-overflow: ellipsis;
 }
 
+.odinprogress {
+    font-size: 12px;
+    font-weight: 800;
+    color: #F9B00C;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .odtimestatusdivider {
     height: 10px;
     border: none;

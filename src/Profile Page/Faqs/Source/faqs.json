@@ -2,7 +2,7 @@
     {
         "id": 1,
         "question": "What is Tipplr Customer Support number ?",
-        "answer": "You can reach out to Tipplr customer support number on +918929221233 or write to us on support@tipplr.in"
+        "answer": "You can reach out to Tipplr customer support number on +91 8929221233 or write to us on support@tipplr.in"
     },
     {
         "id": 2,
@@ -12,56 +12,66 @@
     {
         "id": 3,
         "question": "I want to cancel the order",
-        "answer": "We will do our best to accommodate your request if the order is not placed to the restaurant (Customer service number: +918929221233 ). Please note that we will have a right to charge a cancellation fee up to full order value to compensate our restaurant and delivery partners if your order has been confirmed."
+        "answer": "We will do our best to accommodate your request if the order is not placed to the restaurant (Customer service number: +91 8929221233 ). Please note that we will have a right to charge a cancellation fee up to full order value to compensate our restaurant and delivery partners if your order has been confirmed."
     },
     {
         "id": 4,
-        "question": "What is Tipplr Customer Support number ?",
-        "answer": "You can reach out to Tipplr customer support"
+        "question": "Can I edit my order",
+        "answer": "Your order can be edited before it reaches the restaurant. You could contact customer support team via chat or call to do so. Once order is placed and restaurant starts preparing your food, you may not edit its contents."
     },
     {
         "id": 5,
-        "question": "This is from Json File",
-        "answer": "Add FAQ's into this JSON file and i will update"
+        "question": "Is Tipplr accountable for Quality / Quantity",
+        "answer": "Quantity and quality of the food is the restaurant's responsibility. However in case of issues with the quality or quantity, kindly submit your feedback and we will pass it on to the restaurant."
     },
     {
         "id": 6,
-        "question": "This is from Json File",
-        "answer": "Add FAQ's into this JSON file and i will update"
+        "question": "Do you charge for Delivery ?",
+        "answer": "Delivery fee varies from city to city and is applicable if order value is below a certain amount. Additionally, certain restaurants might have fixed delivery fees. Delivery fee (if any) is specified on the 'Review Order' page."
     },
     {
         "id": 7,
-        "question": "This is from Json File",
-        "answer": "Add FAQ's into this JSON file and i will update"
+        "question": "How long will you take to deliver ?",
+        "answer": "Standard delivery times vary by the location selected and prevailing conditions. Once you select your location, an estimated delivery time is mentioned for each restaurant."
     },
     {
         "id": 8,
-        "question": "This is from Json File",
-        "answer": "Add FAQ's into this JSON file and i will update"
+        "question": "What are your delivery hours ?",
+        "answer": "Our delivery hours vary for different locations and depends on availability of supply from restaurant partners."
     },
     {
         "id": 9,
-        "question": "This is from Json File",
-        "answer": "Add FAQ's into this JSON file and i will update"
+        "question": "Who are tipplr delivery partners",
+        "answer": "Tipplr has partnered with Dunzo and QWQER as the official delivery partners."
     },
     {
         "id": 10,
-        "question": "This is from Json File",
-        "answer": "Add FAQ's into this JSON file and i will update"
+        "question": "Do you support bulk orders ?",
+        "answer": "Yes, please speak to our customer support executive or write to us on support@tipplr.in and we will help you with the bulk orders."
     },
     {
         "id": 11,
-        "question": "This is from Json File",
-        "answer": "Add FAQ's into this JSON file and i will update"
+        "question": "Can I change address / number ?",
+        "answer": "Any major change in delivery address is not possible after you have placed an order with us. However, slight modifications like changing the flat number, street name, landmark etc. are allowed. If you have received delivery executive details, you can directly call him, else you could contact our customer service team."
     },
     {
         "id": 12,
-        "question": "This is from Json File",
-        "answer": "Add FAQ's into this JSON file and i will update"
+        "question": "What payment methods do you accept ?",
+        "answer": "We accept all Credit/Debit cards, Net banking and all UPI payment options. We do not accept Cash on Delivery or any vouchers such as Sodexo."
     },
     {
         "id": 13,
-        "question": "This is from Json File",
-        "answer": "Add FAQ's into this JSON file and i will update"
+        "question": "I cannot find the restaurant I want to order from ?",
+        "answer": "Please write to us on hello@tipplr.in and provide us the name of the restaurant that you want order from, we will let our team know about this and do our best to have your favourite restaurant on our platform."
+    },
+    {
+        "id": 14,
+        "question": "I want an Invoice for my order ?",
+        "answer": "Please write to us on support@tipplr.in and we will send you the invoice."
+    },
+    {
+        "id": 15,
+        "question": "What is the Tipplr wallet and can I use it ?",
+        "answer": "The Tipplr wallet is not for individual customers but rather for our corporate partners to use on a prepaid basis."
     }
 ]
