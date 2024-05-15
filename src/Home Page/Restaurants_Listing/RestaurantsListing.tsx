@@ -20,22 +20,27 @@ const Restaurantslisting = () => {
       <div className="restaurantholder" id="restaurantscontainer">
         {Data && Data.map((eachRestaurant: any) => (
           <div key={eachRestaurant._id} className="restaurantcard" onClick={()=>navigate(eachRestaurant._id)}>
-            <img
-              className="restaurantimg"
-              loading="lazy"
-              src={eachRestaurant.cover_image ?? Default_Cover_Image}
-            />
 
-            {eachRestaurant.discount_banner ? (
-              <div className="offerbox">
+            <div className="restoimgdiscountsholder">
+              {eachRestaurant.discount_banner && (
                 <div className="discount">
                   <img className="discountimg" src={discountimg} />
                   <p>{eachRestaurant.discount_banner}</p>
                 </div>
-                
-                <p>{eachRestaurant.delivery_discount_banner}</p>
-              </div>
-            ) : null}
+              )}
+
+              <img
+                className="restaurantimg"
+                loading="lazy"
+                src={eachRestaurant.cover_image ?? Default_Cover_Image}
+              />
+
+              {eachRestaurant.delivery_discount_banner && (
+                <div className="offerbox">
+                  <p>{eachRestaurant.delivery_discount_banner}</p>
+                </div>
+              )}
+            </div>
 
             <div className="namerating">
               <p className="restaurantname">{eachRestaurant.name}</p>
@@ -75,6 +80,7 @@ const Restaurantslisting = () => {
                 </div>
               }
             </div>
+
           </div>
         ))}
       </div>

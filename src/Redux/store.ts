@@ -29,8 +29,8 @@ const SessionConfig = {
 }
 
 const perReducers = combineReducers({
-    saveaddress: UserAddressSlice,
     auth: AuthSlice,
+    saveaddress: UserAddressSlice,
     addItem: CartSlice,
     cartId: CartidSlice,
     merchantsData: MerchantsdataSlice,

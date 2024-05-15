@@ -7,11 +7,11 @@ import { Link } from "react-router-dom";
 //components
 import Brandbanner from '../Brand_Banner/BrandBanner';
 import Appbar from '../App_Bar/AppBar';
-import Breakfastbanner from '../Breakfast_Banner/BreakfastBanner.jsx';
 import Topcuisines from '../Top_Cuisines/TopCuisines.jsx';
 import Restaurantslisting from '../Restaurants_Listing/RestaurantsListing.jsx';
 import Endimage from '../End_Image/EndImage.jsx';
 import Uniloader from '../../Universal Loader/UniLoader';
+import Statusbar from "../Status_Bar/StatusBar";
 
 //Resources
 import Homepagedata from '../Home_Page_API/HomePageData.jsx';
@@ -69,6 +69,8 @@ const Homepage = () => {
         <img src={norestaurants} alt="!" width={192}/>
         <h6 className="nrmessage">Unfortunately, we are not serviceable at this location :&#40;</h6>
       </div>
+
+      <Statusbar />
     </>)
 
   };
@@ -76,10 +78,10 @@ const Homepage = () => {
   return (<>
     <Brandbanner />
     <Appbar />
-    <Breakfastbanner />
     <Topcuisines />
     <Restaurantslisting />
     <Endimage />
+    <Statusbar />
   </>);
 
 };

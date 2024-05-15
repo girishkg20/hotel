@@ -36,39 +36,39 @@ const Trackorderpage = () => {
     const userdata = useSelector((state:any) => state.perReducers.auth.value);
     const loggedin = userdata.token;
 
-    // const getorderdetails = () => {
-    //     if(loggedin && orderid) {
-    //         const url = `${import.meta.env.VITE_BASE_URL}/app/user/food-order/${orderid}`
-            
-    //         fetch(url, {
-    //             method: "GET",
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //                 'Authorization': loggedin
-    //             }
-    //         })
-    //         .then((response) => response.json())
-    //         .then((data) => setorderdata(data.response.data));
-    //     };
-    // };
-
-    ////// REMOVE THIS AND UNCOMMENT THE ABOVE FUNCTION
     const getorderdetails = () => {
         if(loggedin && orderid) {
-            const url = `https://secondary.tipplr.in/food-order/${orderid}`;
+            const url = `${import.meta.env.VITE_BASE_URL}/app/user/food-order/${orderid}?delivery_details=1`
             
             fetch(url, {
                 method: "GET",
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYWRtaW4tMTY3ODA4NDIzMDI5NTkzMjA3IiwiaWF0IjoxNzE0NzIxMjM4LCJleHAiOjE3MTczMTMyMzh9.G-otA4Ts-lUn5mxOMFt-swbQbtD738C7fwKpFvf-ZXs"
+                    'Authorization': loggedin
                 }
             })
             .then((response) => response.json())
             .then((data) => setorderdata(data.response.data));
         };
     };
-    ////// REMOVE THIS AND UNCOMMENT THE ABOVE FUNCTION
+
+    // //// REMOVE THIS AND UNCOMMENT THE ABOVE FUNCTION
+    // const getorderdetails = () => {
+    //     if(orderid) {
+    //         const url = `https://secondary.tipplr.in/food-order/${orderid}/delivery-status`;
+            
+    //         fetch(url, {
+    //             method: "GET",
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //                 'Authorization': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYWRtaW4tMTY3ODA4NDIzMDI5NTkzMjA3IiwiaWF0IjoxNzE0NzIxMjM4LCJleHAiOjE3MTczMTMyMzh9.G-otA4Ts-lUn5mxOMFt-swbQbtD738C7fwKpFvf-ZXs"
+    //             }
+    //         })
+    //         .then((response) => response.json())
+    //         .then((data) => setorderdata(data.response.data));
+    //     };
+    // };
+    // //// REMOVE THIS AND UNCOMMENT THE ABOVE FUNCTION
 
     useEffect(() => {
         getorderdetails();
@@ -125,17 +125,17 @@ const Trackorderpage = () => {
 
                 if(orderdata.status === "order_accepted" || orderdata.status === "ready_for_pickup") {
                     cookingimg.src = cookingp;
-                    cookinghr.style.borderColor = "#7427F5";
+                    cookinghr.style.borderColor = "#6410F5";
 
                     outimg.src = out;
                     outhr.style.borderColor = "#C4C4C4";
                 }else{
                     if(orderdata.status === "order_out_for_delivery") {
                         cookingimg.src = cookingp;
-                        cookinghr.style.borderColor = "#7427F5";
+                        cookinghr.style.borderColor = "#6410F5";
     
                         outimg.src = outp;
-                        outhr.style.borderColor = "#7427F5";
+                        outhr.style.borderColor = "#6410F5";
                     }else{
                         cookingimg.src = cooking;
                         cookinghr.style.borderColor = "#C4C4C4";
@@ -146,11 +146,7 @@ const Trackorderpage = () => {
                 }
 
             };
-
-
-
-            console.log(orderdata);
-            
+ 
         }
     },[orderdata])
     
@@ -180,8 +176,8 @@ const Trackorderpage = () => {
             suppressMarkers: true,
             polylineOptions: {
                 strokeColor: '#7427F5',
-                strokeOpacity: 0.5,
-                strokeWeight: 8
+                strokeOpacity: 1,
+                // strokeWeight: 3
             }
         });
 
@@ -271,7 +267,7 @@ const Trackorderpage = () => {
         <div className="statusbarholder">
             <div className="statusbar">
                 <img src={placedp} alt="placed" width={"34px"}/>
-                <hr style={{borderColor: "#7427F5"}}/>
+                <hr style={{borderColor: "#6410F5"}}/>
                 <img id='cooking' src={cooking} alt="preparing" width={"45px"}/>
                 <hr id='cookinghr'/>
                 <img id='out' src={out} alt="out" width={"45px"}/>
@@ -337,14 +333,8 @@ const Trackorderpage = () => {
                     <img src={support} alt="support" width={"42px"}/>
                 </a>
 
-
-
             </div>
-
-
         </div>
-
-        
     </>}</>)
 }
 export default Trackorderpage;

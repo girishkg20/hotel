@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import './EnterOTP.css';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { auth } from './AuthSlice';
 
 
@@ -16,7 +15,9 @@ const Enterotp = () => {
 
     const navigate = useNavigate();
     const Dispatch = useDispatch();
-    const MobileNumber = useSelector((state: any) => state.mobileNumber.value)
+    const MobileNumber = useSelector((state: any) => state.mobileNumber.value);
+    const sessionID = useSelector((state:any) => state.sesReducers.sessionid.value);
+    const deliveryaddress = useSelector((state:any) => state.perReducers.saveaddress.value);
 
     let starttime = 29;
     let startinterval: any;
@@ -129,11 +130,49 @@ const Enterotp = () => {
             body: JSON.stringify(payload)
         })
         .then(response => response.json())
-        .then(data => settoken(data.response.token))
+        .then(data => {
+            settoken(data.response.token);
+
+            //log
+            const url = `${import.meta.env.VITE_BASE_URL}/hotel/session_id/${sessionID}`;
+            const payload = {
+                page_name: "Verified",
+                phone_number: MobileNumber,
+                hotel_merchant_id: deliveryaddress._id
+            }
+            
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload)
+            }).catch((error) => console.log(error));
+            //log
+
+        })
     }
 
     useEffect(() => {
         getOTP();
+
+        //log
+        const url = `${import.meta.env.VITE_BASE_URL}/hotel/session_id/${sessionID}`;
+        const payload = {
+            page_name: "Enter OTP Page",
+            phone_number: MobileNumber,
+            hotel_merchant_id: deliveryaddress._id
+        }
+        
+        fetch(url, {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload)
+        }).catch((error) => console.log(error));
+        //log
+
     },[]);
 
     const resendOTP = () => {

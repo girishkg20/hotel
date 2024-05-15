@@ -5,13 +5,15 @@ import { mobileNumber } from './PhNoSlice';
 
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 
 const Phno = () => {
     const navigate = useNavigate();
     const Dispatch = useDispatch();
+
+    const sessionID = useSelector((state:any) => state.sesReducers.sessionid.value);
 
     const [resetbutton, setresetbutton] = useState<HTMLButtonElement | null>();
     const [enterednumber, setenterednumber] = useState<HTMLInputElement | null>();
@@ -25,6 +27,21 @@ const Phno = () => {
         setenterednumber(document.getElementById("numberbox") as HTMLInputElement | null);
         setboxboarder(document.getElementById("numberboxbar") as HTMLFormElement | null);
         setOTPbutton(document.getElementById("getotpbutton") as HTMLButtonElement | null);
+
+        //log
+        const url = `${import.meta.env.VITE_BASE_URL}/hotel/session_id/${sessionID}`;
+        const payload = {
+            page_name: "Login Page"
+        }
+        
+        fetch(url, {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload)
+        }).catch((error) => console.log(error));
+        //log
     },[]);
 
     function valuecheck() {

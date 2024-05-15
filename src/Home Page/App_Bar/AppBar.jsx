@@ -26,7 +26,7 @@ const Appbar = () => {
   }, [head]);
 
   function Headfix() {
-    if (window.scrollY > position) {
+    if (window.scrollY >= position) {
       head.classList.add("sticky");
     } else {
       head.classList.remove("sticky");
@@ -57,8 +57,6 @@ const Appbar = () => {
         </div>
 
       </div>
-
-      <hr className="linehidden" />
     </>
   );
 };

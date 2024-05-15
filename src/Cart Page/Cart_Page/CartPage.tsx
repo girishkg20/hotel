@@ -57,6 +57,7 @@ const Cartpage = () => {
     const cookinginstructions = useSelector((state:any) => state.foodinstruction.value);
     const roomnumber = useSelector((state:any) => state.roomnumber.value);
     const profile = useSelector((state:any) => state.perReducers.profiledata.value);
+    const sessionID = useSelector((state:any) => state.sesReducers.sessionid.value);
 
     const loggedin = userdata.token;
 
@@ -74,10 +75,10 @@ const Cartpage = () => {
         if(deliveryquote && Usercart) {
 
             setitemdiscount(Usercart.delivery_discount);
-            const deldiscount = deliveryquote.data[0].estimated_fare - Usercart.available_delivery_discount;
+            const deldiscount = deliveryquote.estimated_fare - Usercart.available_delivery_discount;
         
             if(deldiscount < 0) {
-                setdeliverydiscount(deliveryquote.data[0].estimated_fare);
+                setdeliverydiscount(deliveryquote.estimated_fare);
             }else{
                 setdeliverydiscount(Usercart.available_delivery_discount);
             }
@@ -228,11 +229,11 @@ const Cartpage = () => {
                 "order_type": "delivery",
                 "promo_used": Usercart.promo_used,
                 "external_promo_used": {},
-                "delivery_partner": deliveryquote.data[0].partner_id,
+                "delivery_partner": deliveryquote.partner_id,
                 "delivery_charges": Usercart.delivery_charges,
-                "actual_delivery_charges": deliveryquote.data[0].actual_fare,
-                "preferred_delivery_charges": deliveryquote.data[0].estimated_fare,
-                "delivery_distance": deliveryquote.data[0].distance,
+                "actual_delivery_charges": deliveryquote.actual_fare,
+                "preferred_delivery_charges": deliveryquote.estimated_fare,
+                "delivery_distance": deliveryquote.distance,
                 "hotel_merchant_id": deliveryaddress.merchant_sku,
                 "room_number": roomnumber,
                 "user_address_id": deliveryaddress.tagged_user_id,
@@ -305,6 +306,21 @@ const Cartpage = () => {
                                 })
                                 .then((response) => response.json())
                                 .then((data) => {
+                                    //log
+                                    const url = `${import.meta.env.VITE_BASE_URL}/hotel/session_id/${sessionID}`;
+                                    const payload = {
+                                        page_name: "Order Placed"
+                                    }
+                                    
+                                    fetch(url, {
+                                        method: 'POST',
+                                        headers: {
+                                        'Content-Type': 'application/json',
+                                        },
+                                        body: JSON.stringify(payload)
+                                    }).catch((error) => console.log(error));
+                                    //log
+
                                     navtotrack(data.response.data);
                                 })
 
@@ -349,6 +365,21 @@ const Cartpage = () => {
             .then(response => response.json())
             .then(data => {
 
+                //log
+                const url = `${import.meta.env.VITE_BASE_URL}/hotel/session_id/${sessionID}`;
+                const payload = {
+                    page_name: `Cart Page - ${data.response.data.food_items ? data.response.data.food_items.length : "No"} Items Found`
+                }
+                
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                    'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(payload)
+                }).catch((error) => console.log(error));
+                //log
+
                 if(data.response.data.food_items && data.response.data.food_items.length > 0) {
 
                     const createdcart = data.response.data;
@@ -377,7 +408,7 @@ const Cartpage = () => {
                         body: JSON.stringify(payload)
                     })
                     .then(response => response.json())
-                    .then(data => setdeliveryquote(data.response))
+                    .then(data => setdeliveryquote(data.response.data[0]))
                     
                 }else{
                     const url = `${import.meta.env.VITE_BASE_URL}/app/user/food-order/cart/${Usercart._id}`
@@ -425,7 +456,7 @@ const Cartpage = () => {
                     Dispatch(cartId(createdcart));
                     setloading(false);
 
-                    const deliveryprice = +(deliveryquote.data[0].estimated_fare - createdcart.available_delivery_discount).toFixed(2);
+                    const deliveryprice = +(deliveryquote.estimated_fare - createdcart.available_delivery_discount).toFixed(2);
 
                     if(deliveryprice > 0) {
                         const url = `${import.meta.env.VITE_BASE_URL}/app/user/food-order/cart/${createdcart._id}`;
@@ -449,9 +480,34 @@ const Cartpage = () => {
                         .then(response => response.json())
                         .then(data => {
                             const createdcart = data.response.data;
-                            Dispatch(cartId(createdcart)); 
+                            Dispatch(cartId(createdcart));
                         })
                     }
+                })
+                .then(() => {
+
+                    //log
+                    const url = `${import.meta.env.VITE_BASE_URL}/hotel/food-order/requests/logs`;
+                    const payload = {
+                        merchant_id: Usercart.merchant_id,
+                        hotel_merchant_id: deliveryaddress._id,
+                        meta_data: {
+                          cart: Usercart,
+                          distance: deliveryquote.distance,
+                          delivery_charges: deliveryquote.estimated_fare
+                        },
+                        user_address_id: deliveryaddress.tagged_user_id,
+                        phone_number: profile.phone_number
+                    }
+                    
+                    fetch(url, {
+                        method: 'POST',
+                        headers: {
+                        'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(payload)
+                    }).catch((error) => console.log(error));
+                    //log
                 })
             }
 
@@ -685,16 +741,16 @@ const Cartpage = () => {
                         <p className='cbdtextl'>Delivery Charges</p>
                         <div className='cbddeliveryfee'>
                             {Usercart.available_delivery_discount && deliveryquote
-                                ? (deliveryquote.data[0].estimated_fare - Usercart.available_delivery_discount) > 0
+                                ? (deliveryquote.estimated_fare - Usercart.available_delivery_discount) > 0
                                     ? <>
-                                        <p className='cbdtextrscratch'>₹{deliveryquote.data[0].estimated_fare}</p>
-                                        <p className='cbdtextr'>₹{(deliveryquote.data[0].estimated_fare - Usercart.available_delivery_discount).toFixed(2)}</p>
+                                        <p className='cbdtextrscratch'>₹{deliveryquote.estimated_fare}</p>
+                                        <p className='cbdtextr'>₹{(deliveryquote.estimated_fare - Usercart.available_delivery_discount).toFixed(2)}</p>
                                     </>
                                     : <>
-                                        <p className='cbdtextrscratch'>₹{deliveryquote.data[0].estimated_fare}</p>
+                                        <p className='cbdtextrscratch'>₹{deliveryquote.estimated_fare}</p>
                                         <p className='cbdfree'>FREE</p>
                                     </>
-                                : deliveryquote && <p className='cbdtextr'>₹{deliveryquote.data[0].estimated_fare}</p>
+                                : deliveryquote && <p className='cbdtextr'>₹{deliveryquote.estimated_fare}</p>
                             }
                         </div>
                     </div>

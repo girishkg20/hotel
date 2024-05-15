@@ -17,6 +17,7 @@ import { cartId, clearCartId } from '../CartidSlice';
 const Itemlisting = () => {
 
     const filterclicked = useSelector((state:any) => state.VegFilterSlice.value);
+    const sessionID = useSelector((state:any) => state.sesReducers.sessionid.value);
 
     const { menu } = useContext(Menupagedata);
     const Dispatch = useDispatch();
@@ -268,6 +269,22 @@ const Itemlisting = () => {
             .then(data => {
                 const createdcart = data.response.data;
                 Dispatch(cartId(createdcart));
+
+                //log
+                const url = `${import.meta.env.VITE_BASE_URL}/hotel/session_id/${sessionID}`;
+                const payload = {
+                    page_name: "Menu Page - Item Added to Cart"
+                }
+                
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                    'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(payload)
+                }).catch((error) => console.log(error));
+                //log
+
             })
 
         }else{

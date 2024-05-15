@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 const Menupageapi = ({ children }: any) => {
 
     const Useraddress = useSelector((state:any) => state.perReducers.saveaddress.value);
+    const sessionID = useSelector((state:any) => state.sesReducers.sessionid.value);
     
     const [menu, setMenu] = useState<any>([]);
     const [Actualdistance, setActualdistance] = useState<any>([]);
@@ -32,6 +33,22 @@ const Menupageapi = ({ children }: any) => {
                     window.scrollTo(0,0);
                     setMenu(data.response);
 
+                    //log
+                    const url = `${import.meta.env.VITE_BASE_URL}/hotel/session_id/${sessionID}`;
+                    const payload = {
+                        page_name: `Menu Page - ${data.response.merchant.name} (${data.response.merchant.area_name})`,
+                        // phone_number: "9999999999"
+                    }
+                    
+                    fetch(url, {
+                        method: 'POST',
+                        headers: {
+                        'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(payload)
+                    }).catch((error) => console.log(error));
+                    //log
+
                     const UseraddressURL = `${import.meta.env.VITE_BASE_URL}/hotel/delivery-quotes/merchant`;
 
                     const PostData = {
@@ -51,9 +68,9 @@ const Menupageapi = ({ children }: any) => {
                     };
 
                     fetch(UseraddressURL, Options)
-                        .then((response) => response.json())
-                        .then((data) => setActualdistance(data.response))
-                        .catch((error) => console.log(error));
+                    .then((response) => response.json())
+                    .then((data) => setActualdistance(data.response))
+                    .catch((error) => console.log(error));
 
                 })
                 .catch((error) => console.log(error));

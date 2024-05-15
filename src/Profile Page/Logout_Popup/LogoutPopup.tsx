@@ -14,6 +14,7 @@ import { clearfoodinstruction } from "../../Cart Page/FoodInstructionSlice";
 import { clearsessionid } from "../../Home Page/Home_Page_API/SessionIdSlice";
 import { clearmerchantsData } from "../../Home Page/Home_Page_API/MerchantsdataSlice";
 import { clearsearchdatapositions } from "../../Search Page/SearchDataSlice";
+import { clearroomnumber } from '../../Cart Page/RoomnumberSlice';
 
 
 
@@ -35,6 +36,7 @@ const Logoutpopup = () => {
         dispatch(clearmerchantsData());
         dispatch(clearsearchdatapositions());
         dispatch(clearprofiledata());
+        dispatch(clearroomnumber());
 
         const historylength = window.history.length - 2;
         navigate(-historylength);
