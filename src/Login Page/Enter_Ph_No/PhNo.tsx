@@ -3,7 +3,7 @@ import reset from "./Source/reset.png"
 import prefixdivider from "./Source/right.png"
 import { mobileNumber } from './PhNoSlice';
 
-import { useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -121,9 +121,11 @@ const Phno = () => {
             <button id='getotpbutton' className='getotpbutton' disabled={OTPbuttonstate} onClick={sendOTP}>Get OTP</button>
 
             <p className='TandC'>By proceeding, I accept the<br/>
-                <a href='https://tipplr.in/terms-conditions/' target="_blank"><b>Terms & Conditions</b></a> and&nbsp;
-                <a href='https://tipplr.in/privacy-policy/' target='_blank'><b>Privacy Policy</b></a>
+                <span onClick={() => navigate("termsandconditions")}>Terms & Conditions</span> and&nbsp;
+                <span onClick={() => navigate("privacypolicy")}>Privacy Policy</span>
             </p>
+
+            <Outlet/>
 
         </div>
     </>);

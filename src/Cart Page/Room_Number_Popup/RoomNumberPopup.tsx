@@ -100,7 +100,7 @@ const Roomnumberpopup = () => {
                     <input className='rntext' id="lastname" type="text" placeholder="Last Name*"/>
                     <input className='rntext' id="room" type="text" placeholder="Room Number*"/>
                 </div>
-                {error && <p className="requirederror">All fields are required!</p>}
+                {error && <p className="rnrequirederror">All fields are required!</p>}
                 <div className='twobuttons'>
                     <button className='nobutton' onClick={() => navigate(-1)}>Cancel</button>
                     <button className='resetbutton' onClick={addroomnumber}>Submit</button>
@@ -116,7 +116,7 @@ const Roomnumberpopup = () => {
                 <div className="rnholder">
                     <input className='rntext' id="room" type="text" placeholder="Room Number*"/>
                 </div>
-                {error && <p>All fields are required!</p>}
+                {error && <p className="rnrequirederror">All fields are required!</p>}
                 <div className='twobuttons'>
                     <button className='nobutton' onClick={() => navigate(-1)}>Cancel</button>
                     <button className='resetbutton' onClick={addroomnumber}>Submit</button>

@@ -223,6 +223,7 @@ const Cartpage = () => {
 
     useEffect(() => {
         if(roomnumber) {
+            setloading(true);
             const order = {
                 "merchant_id": Usercart.merchant_id,
                 "food_items": Usercart.food_items,
@@ -340,6 +341,7 @@ const Cartpage = () => {
 
                         const rzp1 = new Razorpay(options);
                         rzp1.open();
+                        setloading(false);
 
                     })
 

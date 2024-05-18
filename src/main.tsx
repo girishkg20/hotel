@@ -182,7 +182,17 @@ const Router = createBrowserRouter([
     children: [
       {
         path: "/:hotelid/auth/login",
-        element: <Phno/>
+        element: <Phno/>,
+        children: [
+          {
+            path: "/:hotelid/auth/login/termsandconditions",
+            element: <Termsandconditions/>
+          },
+          {
+            path: "/:hotelid/auth/login/privacypolicy",
+            element: <Privacypolicy/>
+          }
+        ]
       },
       {
         path: "/:hotelid/auth/otp",

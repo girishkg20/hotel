@@ -105,6 +105,12 @@
     word-spacing: 1px;
 }
 
+.TandC span {
+    color: #7427F5;
+    font-weight: 800;
+    text-decoration: underline;
+}
+
 .errormsgph {
     color: #D44222;
     text-align: center;
