@@ -8,8 +8,8 @@ import search from './Source/search.png';
 import fssai from './Source/fssai_logo.png';
 import { useContext, useEffect, useState } from 'react';
 import Menupagedata from '../Menu_Page_API/MenuPageData';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectvegfilter } from '../VegfilterSlice';
 import restaurantclosed from './Source/restaurant_closed.png';
 import Uniloader from '../../Universal Loader/UniLoader';
@@ -18,6 +18,18 @@ import Uniloader from '../../Universal Loader/UniLoader';
 const Menupage = () => {
 
     const Dispatch = useDispatch();
+    const navigate = useNavigate();
+    const {merchantid} = useParams();
+
+    const auth = useSelector((state:any) => state.perReducers.auth.value);
+    const loggedin = auth.token;
+
+    useEffect(() => {
+        if(!loggedin) {
+            const url = location.pathname.replace(`${merchantid}`, 'auth/login');
+            navigate(url, {replace: true});
+        }
+    },[])
     
     const {menu} = useContext(Menupagedata);
     const [Restaurantname, setRestaurantname] = useState<any>();
@@ -26,7 +38,6 @@ const Menupage = () => {
     const [address, setaddress] = useState<any>();
     const [restaurantimage, setrestaurantimage] = useState<any>();
     const [loading, setloading] = useState<boolean>(true);
-    const navigate = useNavigate();
     
     useEffect(() => {
 
@@ -109,7 +120,9 @@ const Menupage = () => {
     const whenscroll = () => {
         if (header && headertext && searchbtn) {
             fixheader();
-            addsearchbutton();
+            if(Object.keys(menu.foodItemCategory).length > 0) {
+                addsearchbutton();
+            }
         }
     }
 
@@ -141,23 +154,27 @@ const Menupage = () => {
 
         <div className='menupagetop' style={{backgroundImage: `url(${restaurantimage})`}}><Merchantinfo/></div>
                  
-        <div id='msearchbar'>
-            <div className="msearchbarholder">
-                <form className="hpsearchbar">
-                    <img className="hpsearchlogo" src={search}/>
-                    <input className="hpsearchbox" onClick={() => navigate('search')} onFocus={(e) => e.target.blur()} placeholder="Search for dishes"/>
-                </form>
+        {Object.keys(menu.foodItemCategory).length > 0 &&
+            <div id='msearchbar'>
+                <div className="msearchbarholder">
+                    <form className="hpsearchbar">
+                        <img className="hpsearchlogo" src={search}/>
+                        <input className="hpsearchbox" onClick={() => navigate('search')} onFocus={(e) => e.target.blur()} placeholder="Search for dishes"/>
+                    </form>
+                </div>
             </div>
-        </div>
+        }
 
-        <div className='filters'>
-            <hr className='filterline'/>
-            <div className='vegbutton' id='vegbutton' onClick={select}>
-                <img className='vegimg' src={veg} alt="Veg" />
-                <p className='vegtext'>Veg</p>
-                <img className='reset' id='reset' src={reset} alt="reset"/>
+        {Object.keys(menu.foodItemCategory).length > 0 &&
+            <div className='filters'>
+                <hr className='filterline'/>
+                <div className='vegbutton' id='vegbutton' onClick={select}>
+                    <img className='vegimg' src={veg} alt="Veg" />
+                    <p className='vegtext'>Veg</p>
+                    <img className='reset' id='reset' src={reset} alt="reset"/>
+                </div>
             </div>
-        </div>
+        }
 
         <Itemlisting/>
 

@@ -21,6 +21,7 @@ import address from './Source/location.png';
 import tick from './Source/tick.png';
 import emptycart from './Source/emptycart.png';
 import logo from './Source/Logo.jpg';
+
 import { cartId, clearCartId } from '../../Menu Page/CartidSlice';
 import { addItem, clearItem } from '../../Menu Page/CartSlice';
 import { clearroomnumber } from '../RoomnumberSlice';
