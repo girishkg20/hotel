@@ -40,7 +40,7 @@ const Homepage = () => {
   useEffect(() => {
     
     if(Data) {
-      setloading(false);
+      setloading(true);
     }
 
     if(Data && Data.length > 0) {

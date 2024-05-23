@@ -238,14 +238,17 @@
 
 .sunshine {
   animation: sunshines 3s infinite;
+  opacity: 0;
 }
 
 .sunshine1 {
   animation: sunshines 3s infinite 1s;
+  opacity: 0;
 }
 
 .sunshine2 {
   animation: sunshines 3s infinite 2s;
+  opacity: 0;
 }
 
 @keyframes sunshines {
