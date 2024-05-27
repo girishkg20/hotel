@@ -237,24 +237,24 @@
 }
 
 .sunshine {
-  animation: sunshines 3s infinite;
+  animation: sunshines 1.8s infinite;
   opacity: 0;
 }
 
 .sunshine1 {
-  animation: sunshines 3s infinite 1s;
+  animation: sunshines 1.8s infinite 0.6s;
   opacity: 0;
 }
 
 .sunshine2 {
-  animation: sunshines 3s infinite 2s;
+  animation: sunshines 1.8s infinite 1.2s;
   opacity: 0;
 }
 
 @keyframes sunshines {
   0% {
     transform: scale(1);
-    opacity: 0.6;
+    opacity: 0.4;
   }
 
   100% {
