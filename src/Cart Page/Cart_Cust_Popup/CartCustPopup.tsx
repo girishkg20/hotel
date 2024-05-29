@@ -20,7 +20,10 @@ import { addItem } from "../../Menu Page/CartSlice";
 const Cartcustpopup = () => {
     const {fooditemdata} = useContext(Cartpagedata);
     const fooditem = fooditemdata && fooditemdata.original_food_item;
-    const Fooditem = {...fooditemdata}
+
+    const [quantity, setquantity] = useState<number>(fooditemdata.quantity);
+
+    const Fooditem = {...fooditemdata, quantity: quantity};
     
     const navigate = useNavigate();
     const Dispatch = useDispatch();
@@ -33,10 +36,10 @@ const Cartcustpopup = () => {
     document.body.style.overflow = "hidden";
 
     useEffect(() => {
-        if(!fooditemdata) {
+        if(!fooditemdata || quantity < 1) {
             navigate(-1)
         }
-    },[fooditemdata])
+    },[fooditemdata, quantity])
 
     useEffect(() => {
         const AllSteps = document.querySelectorAll("#AddonStepsCard");
@@ -370,11 +373,17 @@ const Cartcustpopup = () => {
                     </div>
 
                     <div className="custfooter">
+                        <button className="cfaddedbutton">
+                            <p className='addsub' onClick={() => setquantity(quantity-1)}>-</p>
+                            <p>{quantity}</p>
+                            <p className='addsub' onClick={() => setquantity(quantity+1)}>+</p>
+                        </button>
+
                         {totalcards == activecard + 1
-                            ?<button className="additembtn" onClick={() => submitAll(`${eachaddon.title}_${index}`)}>
+                            ?<button className="cfadditembtn" onClick={() => submitAll(`${eachaddon.title}_${index}`)}>
                                 <p>Add Item</p>
                             </button>
-                            :<button className="additembtn" onClick={() => nextStep(`${eachaddon.title}_${index}`)}>
+                            :<button className="cfadditembtn" onClick={() => nextStep(`${eachaddon.title}_${index}`)}>
                                 <p>{`Step ( ${activecard + 1}/${totalcards} ) - Continue`}</p>
                             </button>
                         }
@@ -411,7 +420,13 @@ const Cartcustpopup = () => {
                 </div>))}
 
                 <div className="custfooter">
-                    <button className="additembtn" onClick={() => submitAddons('alladdons')}>
+                    <button className="cfaddedbutton">
+                        <p className='addsub' onClick={() => setquantity(quantity-1)}>-</p>
+                        <p>{quantity}</p>
+                        <p className='addsub' onClick={() => setquantity(quantity+1)}>+</p>
+                    </button>
+
+                    <button className="cfadditembtn" onClick={() => submitAddons('alladdons')}>
                         <p>Add Item </p>
                     </button>
                 </div>
@@ -470,11 +485,17 @@ const Cartcustpopup = () => {
 
 
                         <div className="custfooter">
+                            <button className="cfaddedbutton">
+                                <p className='addsub' onClick={() => setquantity(quantity-1)}>-</p>
+                                <p>{quantity}</p>
+                                <p className='addsub' onClick={() => setquantity(quantity+1)}>+</p>
+                            </button>
+
                             {totalcards == activecard + 1
-                                ?<button className="additembtn" onClick={()=>custsubmit(`${eachcustomisation.step_name}_${index}`)}>
+                                ?<button className="cfadditembtn" onClick={()=>custsubmit(`${eachcustomisation.step_name}_${index}`)}>
                                     <p>Add Item</p>
                                 </button>
-                                :<button className="additembtn" onClick={()=>custsubmit(`${eachcustomisation.step_name}_${index}`)}>
+                                :<button className="cfadditembtn" onClick={()=>custsubmit(`${eachcustomisation.step_name}_${index}`)}>
                                     <p>{`Step ( ${activecard + 1}/${totalcards} ) - Continue`}</p>
                                 </button>
                             }

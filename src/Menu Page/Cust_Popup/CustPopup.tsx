@@ -17,9 +17,15 @@ import { addItem } from "../CartSlice";
 
 
 const Custpopup = () => {
+
+    const [totalcards, settotalcards] = useState(0);
+    const [activecard, setactivecard] = useState(0);
+    const [varient, setvarient] = useState<any>([]);
+    const [quantity, setquantity] = useState<number>(1);
+    
     const {fooditemdata} = useContext(Menupagedata);
     const fooditem = fooditemdata?.cart_data.food_items[0].original_food_item;
-    const Fooditem = {...fooditemdata?.cart_data.food_items[0]};
+    const Fooditem = {...fooditemdata?.cart_data.food_items[0], quantity: quantity};
     const payload = {...fooditemdata,
         cart_data: {...fooditemdata?.cart_data,
             food_items: [Fooditem],
@@ -28,18 +34,14 @@ const Custpopup = () => {
     
     const navigate = useNavigate();
     const Dispatch = useDispatch();
-
-    const [totalcards, settotalcards] = useState(0);
-    const [activecard, setactivecard] = useState(0);
-    const [varient, setvarient] = useState<any>([]);
     
-    document.body.style.overflow = "hidden"
+    document.body.style.overflow = "hidden";
 
     useEffect(() => {
-        if(!fooditemdata) {
+        if(!fooditemdata || quantity < 1) {
             navigate(-1)
         }
-    },[fooditemdata])
+    },[fooditemdata, quantity])
 
     // if(fooditemdata){
     //     document.body.style.overflow = "hidden"
@@ -323,11 +325,17 @@ const Custpopup = () => {
                     </div>
 
                     <div className="custfooter">
+                        <button className="cfaddedbutton">
+                            <p className='addsub' onClick={() => setquantity(quantity-1)}>-</p>
+                            <p>{quantity}</p>
+                            <p className='addsub' onClick={() => setquantity(quantity+1)}>+</p>
+                        </button>
+
                         {totalcards == activecard + 1
-                            ?<button className="additembtn" onClick={() => submitAll(`${eachaddon.title}_${index}`)}>
+                            ?<button className="cfadditembtn" onClick={() => submitAll(`${eachaddon.title}_${index}`)}>
                                 <p>Add Item</p>
                             </button>
-                            :<button className="additembtn" onClick={() => nextStep(`${eachaddon.title}_${index}`)}>
+                            :<button className="cfadditembtn" onClick={() => nextStep(`${eachaddon.title}_${index}`)}>
                                 <p>{`Step ( ${activecard + 1}/${totalcards} ) - Continue`}</p>
                             </button>
                         }
@@ -364,7 +372,13 @@ const Custpopup = () => {
                 </div>))}
 
                 <div className="custfooter">
-                    <button className="additembtn" onClick={() => submitAddons('alladdons')}>
+                    <button className="cfaddedbutton">
+                        <p className='addsub' onClick={() => setquantity(quantity-1)}>-</p>
+                        <p>{quantity}</p>
+                        <p className='addsub' onClick={() => setquantity(quantity+1)}>+</p>
+                    </button>
+
+                    <button className="cfadditembtn" onClick={() => submitAddons('alladdons')}>
                         <p>Add Item </p>
                     </button>
                 </div>
@@ -423,11 +437,17 @@ const Custpopup = () => {
 
 
                         <div className="custfooter">
+                            <button className="cfaddedbutton">
+                                <p className='addsub' onClick={() => setquantity(quantity-1)}>-</p>
+                                <p>{quantity}</p>
+                                <p className='addsub' onClick={() => setquantity(quantity+1)}>+</p>
+                            </button>
+
                             {totalcards == activecard + 1
-                                ?<button className="additembtn" onClick={()=>custsubmit(`${eachcustomisation.step_name}_${index}`)}>
+                                ?<button className="cfadditembtn" onClick={()=>custsubmit(`${eachcustomisation.step_name}_${index}`)}>
                                     <p>Add Item</p>
                                 </button>
-                                :<button className="additembtn" onClick={()=>custsubmit(`${eachcustomisation.step_name}_${index}`)}>
+                                :<button className="cfadditembtn" onClick={()=>custsubmit(`${eachcustomisation.step_name}_${index}`)}>
                                     <p>{`Step ( ${activecard + 1}/${totalcards} ) - Continue`}</p>
                                 </button>
                             }

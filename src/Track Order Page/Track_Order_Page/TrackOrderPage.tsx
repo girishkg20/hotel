@@ -1,10 +1,10 @@
 import './TrackOrderPage.css';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import backbutton from "./Source/back.png";
-import helmet from "./Source/helmet.png";
+import bike from "./Source/bike.png";
 import pin from "./Source/userlocation.png";
 import restopin from "./Source/restaurant.png";
 import cooking from "./Source/cooking.svg";
@@ -32,6 +32,11 @@ const Trackorderpage = () => {
 
     const [orderdata, setorderdata] = useState<any>();
     const [latlongs, setlatlongs] = useState<any>();
+    const [mapvisible, setmapvisible] = useState<boolean>(false);
+    const [orderstatus, setorderstatus] = useState<any>();
+    const [intervalid, setintervalid] = useState<any>();
+
+    const riderlatlong = useRef<any>();
 
     const userdata = useSelector((state:any) => state.perReducers.auth.value);
     const loggedin = userdata.token;
@@ -48,7 +53,10 @@ const Trackorderpage = () => {
                 }
             })
             .then((response) => response.json())
-            .then((data) => setorderdata(data.response.data));
+            .then((data) => {
+                setorderdata(data.response.data);
+                setorderstatus(data.response.data.status);
+            });
         };
     };
 
@@ -65,7 +73,10 @@ const Trackorderpage = () => {
     //             }
     //         })
     //         .then((response) => response.json())
-    //         .then((data) => setorderdata(data.response.data));
+    //         .then((data) => {
+    //             setorderdata(data.response.data);
+    //             setorderstatus(data.response.data.status);
+    //         });
     //     };
     // };
     // //// REMOVE THIS AND UNCOMMENT THE ABOVE FUNCTION
@@ -107,7 +118,8 @@ const Trackorderpage = () => {
                 ]
 
                 if(boy_lat && boy_long) {
-                    latlong.push({lat: boy_lat, lng: boy_long})
+                    latlong.push({lat: boy_lat, lng: boy_long});
+                    riderlatlong.current = {lat: boy_lat, lng: boy_long};
                 };
     
                 setlatlongs(latlong);
@@ -184,8 +196,8 @@ const Trackorderpage = () => {
         const calculateAndDisplayRoute = (directionsService: google.maps.DirectionsService, directionsRenderer: google.maps.DirectionsRenderer) => {
           
             directionsService.route({
-                origin: latlongs[2],
-                destination: latlongs[0],
+                origin: position[2],
+                destination: position[0],
                 travelMode: google.maps.TravelMode['DRIVING'],
             })
             .then((response) => {
@@ -211,7 +223,7 @@ const Trackorderpage = () => {
         deliverypointer.height = 37;
 
         const deliveryMarker = new AdvancedMarkerElement({
-            position: latlongs[0],
+            position: position[0],
             map: map,
             title: 'Delivery Point',
             content: deliverypointer,
@@ -222,7 +234,7 @@ const Trackorderpage = () => {
         restopointer.height = 37;
 
         const restoMarker = new AdvancedMarkerElement({
-            position: latlongs[1],
+            position: position[1],
             map: map,
             title: 'Restaurant',
             content: restopointer,
@@ -230,23 +242,39 @@ const Trackorderpage = () => {
 
         const riderpointer = document.createElement('img');
         riderpointer.style.transform = "translate(10px, 10px)";
-        riderpointer.src = helmet;
-        riderpointer.height = 30;
+        riderpointer.src = bike;
+        riderpointer.height = 37;
 
         const riderMarker = new AdvancedMarkerElement({
-            position: latlongs[2],
+            position: position[2],
             map: map,
             title: 'Rider',
             content: riderpointer,
         });
 
+        const updateRiderPosition = () => {
+            riderMarker.position = riderlatlong.current;
+        };
+
+        const intid = setInterval(updateRiderPosition, 30000);
+        setintervalid(intid);
+
+        setmapvisible(true);
     };
 
     useEffect(() => {
-        if(latlongs) {
+        return () => clearInterval(intervalid);
+    },[intervalid])
+
+    useEffect(() => {
+        setmapvisible(false);
+    },[orderstatus])
+
+    useEffect(() => {
+        if(latlongs && !mapvisible) {
             initMap();
         }
-    },[latlongs])
+    },[latlongs, mapvisible])
 
     const unixtodateandtime = (unix:any) => {
 
@@ -302,7 +330,7 @@ const Trackorderpage = () => {
                 {orderdata.delivery_agent.delivery_agent_name && <>
                     <div className="riderholder">
                         <div className="riderleft">
-                            <img src={deliveryboy} alt="rider" width={80}/>
+                            <img src={deliveryboy} alt="rider" width={72}/>
                             <div>
                                 <p className="ridername">Hi, I'm {orderdata.delivery_agent.delivery_agent_name}</p>
                                 <p className="riderdesc">(Delivery Partner)</p>
@@ -310,7 +338,7 @@ const Trackorderpage = () => {
                             </div>
                         </div>
                         <a href={`tel:+91 ${orderdata.delivery_agent.delivery_agent_phone}`}>
-                            <img src={call} alt="call" width={50}/>
+                            <img src={call} alt="call" width={42}/>
                         </a>
                     </div>
                     <hr className='todescriptiondivider'/>
