@@ -8,6 +8,7 @@ import offer from "./Source/offer.png";
 import veg from './Source/veg.png';
 import egg from './Source/egg.png';
 import non_veg from './Source/non-veg.png';
+import invoice from './Source/invoice.png';
 
 
 
@@ -132,6 +133,15 @@ const Orderdetails = () => {
             </>}
             
         </div>
+
+        {orderdata.order_invoice_url &&
+            <div className="odinvoiceholder">
+                <a className="oddownloadinvoice" href={orderdata.order_invoice_url} target="_blank">
+                    <img src={invoice} alt="invoice" height={20}/>
+                    <p>Download Invoice</p>
+                </a>
+            </div>
+        }
 
         <div className="odfooditemsholder">
 

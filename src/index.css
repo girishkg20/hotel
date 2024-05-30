@@ -11,7 +11,7 @@
     display: none;
 }
 
-input, button {
+input, button, textarea {
     font-family: inherit;
     color: inherit;
     outline-color: #7427F5;
@@ -30,3 +30,38 @@ body {
 strong {
     font-weight: 800;
 }
+
+
+
+
+
+
+
+/* button {
+    position: relative;
+}
+
+button:active::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: black;
+    transform: translate(-50%, -50%);
+    opacity: 1;
+    animation: btnsAnimation 0.3s ease-out;
+}
+
+@keyframes btnsAnimation {
+    0% {
+        opacity: 0.3;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(5);
+    }
+} */

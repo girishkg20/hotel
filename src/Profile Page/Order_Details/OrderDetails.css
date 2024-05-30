@@ -159,6 +159,27 @@
     margin: 2px 0 0 28px;
 }
 
+.odinvoiceholder {
+    padding: 0 15px 15px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.oddownloadinvoice {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #383838;
+    text-decoration: none;
+    padding: 8px 10px;
+    border-radius: 10px;
+    border: 1px solid #D9D9D9;
+}
+
 .odfooditemsholder {
     background-color: #F6F6F6;
     padding: 0 15px;

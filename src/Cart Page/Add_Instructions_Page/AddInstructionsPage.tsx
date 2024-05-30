@@ -62,7 +62,7 @@ const Addinstructionspage = () => {
             </div>
 
             <div className="custfooter">
-                <button className="additembtn" onClick={() => addinstructions()}>
+                <button className="cfadditembtn" onClick={() => addinstructions()}>
                     <p>Add Instruction</p>
                 </button>
             </div>
