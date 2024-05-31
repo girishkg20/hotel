@@ -12,6 +12,8 @@ const Homepageapi = ({ children }: { children: React.ReactNode }) => {
   const Dispatch = useDispatch();
   let {hotelid} = useParams();
 
+  console.log(window.location.hostname);
+
   const [sessid, setsessid] = useState<string>();
 
   const sessionID = useSelector((state:any) => state.sesReducers.sessionid.value);
