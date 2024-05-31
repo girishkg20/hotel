@@ -83,6 +83,28 @@ const Orderdetails = () => {
         }
     }
 
+    const downloadpdf = () => {
+        const url = orderdata.order_invoice_url;
+        const filename = url.split("/").pop();
+
+        fetch(url)
+        .then(response => response.blob())
+        .then(file => {
+            const fileurl = URL.createObjectURL(file);
+
+            const element = document.createElement('a');
+            element.href = fileurl;
+            element.download = filename;
+
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+
+            URL.revokeObjectURL(fileurl);
+        })
+    };
+
+
 
     return(<div className="newpage">{orderdata && <>
 
@@ -136,10 +158,10 @@ const Orderdetails = () => {
 
         {orderdata.order_invoice_url &&
             <div className="odinvoiceholder">
-                <a className="oddownloadinvoice" href={orderdata.order_invoice_url} target="_blank">
+                <button className="oddownloadinvoice" onClick={downloadpdf}>
                     <img src={invoice} alt="invoice" height={20}/>
                     <p>Download Invoice</p>
-                </a>
+                </button>
             </div>
         }
 
